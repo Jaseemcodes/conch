@@ -142,6 +142,9 @@ export default function App() {
           }>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/index.htm" element={<Home />} />
+              <Route path="/index.html" element={<Home />} />
+              <Route path="/index.php" element={<Home />} />
               <Route path="/about.htm" element={<About />} />
               <Route path="/countries.php" element={<PopularCountries />} />
               <Route path="/location.php" element={<PopularLocations />} />
