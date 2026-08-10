@@ -29,6 +29,15 @@ app.use(express.static(path.join(__dirname, 'dist'), {
   }
 }));
 
+// Explicit static file routes for SEO bots
+app.get('/robots.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+});
+
 // Handle React Router SPA routing fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
