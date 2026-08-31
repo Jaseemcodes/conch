@@ -38,6 +38,10 @@ app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
 });
 
+app.get('/googlef5645ebef820ac0a.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'googlef5645ebef820ac0a.html'));
+});
+
 // Handle React Router SPA routing fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
