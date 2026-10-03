@@ -4,41 +4,38 @@ import api from "../utils/api";
 
 import { applyPageSEO } from "../utils/seo";
 
-// HeroSection and StatsSection are eagerly loaded (above-the-fold content)
+// HeroSection, StatsSection, AboutConchSection, ConchSolutionsSection, ConchPricingCatalogSection and ConchBestSellerSection are eagerly loaded (above-the-fold content)
 import HeroSection from "../components/sections/HeroSection";
 import StatsSection from "../components/sections/StatsSection";
+import AboutConchSection from "../components/sections/AboutConchSection";
+import ConchSolutionsSection from "../components/sections/ConchSolutionsSection";
+import ConchPricingCatalogSection from "../components/sections/ConchPricingCatalogSection";
+import ConchBestSellerSection from "../components/sections/ConchBestSellerSection";
 
 // Below-the-fold sections are lazy loaded to reduce initial JS payload
 const WhatMedicinesSection = lazy(() => import("../components/sections/WhatMedicinesSection"));
-const EasySection = lazy(() => import("../components/sections/EasySection"));
-const FlagsSection = lazy(() => import("../components/sections/FlagsSection"));
-const DocSection = lazy(() => import("../components/sections/DocSection"));
-const CtaBannerSection = lazy(() => import("../components/sections/CtaBannerSection"));
-const ProcessSection = lazy(() => import("../components/sections/ProcessSection"));
 const TestimonialsSection = lazy(() => import("../components/sections/TestimonialsSection"));
 
 // Map section database keys to local components
 const componentMap = {
   "hero": HeroSection,
   "stats": StatsSection,
-  "what-medicines": WhatMedicinesSection,
-  "easy-courier": EasySection,
-  "flags": FlagsSection,
-  "documents": DocSection,
-  "cta-banner": CtaBannerSection,
-  "process": ProcessSection,
+  "about-conch": AboutConchSection,
+  "conch-solutions": ConchSolutionsSection,
+  "what-medicines": ConchSolutionsSection,
+  "pricing-catalog": ConchPricingCatalogSection,
+  "bestseller": ConchBestSellerSection,
+  "process": ConchBestSellerSection,
   "testimonials": TestimonialsSection
 };
 
 const DEFAULT_SECTIONS = [
   { key: "hero" },
-  { key: "stats", title: "Our Milestone & Network Achievements" },
-  { key: "what-medicines" },
-  { key: "easy-courier" },
-  { key: "flags" },
-  { key: "documents" },
-  { key: "cta-banner" },
-  { key: "process" },
+  { key: "stats", title: "WHY CHOOSE CONCH GAS" },
+  { key: "about-conch" },
+  { key: "conch-solutions" },
+  { key: "pricing-catalog" },
+  { key: "bestseller" },
   { key: "testimonials" }
 ];
 
@@ -53,7 +50,13 @@ export default function Home() {
       try {
         const res = await api.get("/homepage");
         if (res.data && res.data.success && res.data.data && res.data.data.length > 0) {
-          setSections(res.data.data);
+          const cleanSections = res.data.data.filter(s => 
+            s.key !== "easy-courier" && 
+            s.key !== "flags" && 
+            s.key !== "documents" && 
+            s.key !== "cta-banner"
+          );
+          setSections(cleanSections);
         }
       } catch (err) {
         console.error("Failed to load dynamic homepage configuration in background:", err);
@@ -103,8 +106,16 @@ export default function Home() {
             const Component = componentMap[section.key];
             if (!Component) return null;
             
-            // HeroSection and StatsSection are eagerly imported — render them directly without Suspense delay
-            if (section.key === "hero" || section.key === "stats") {
+            // Eagerly imported sections render directly without Suspense delay
+            if (
+              section.key === "hero" || 
+              section.key === "stats" || 
+              section.key === "about-conch" || 
+              section.key === "conch-solutions" || 
+              section.key === "pricing-catalog" ||
+              section.key === "bestseller" ||
+              section.key === "process"
+            ) {
               return (
                 <Component 
                   key={section.key} 

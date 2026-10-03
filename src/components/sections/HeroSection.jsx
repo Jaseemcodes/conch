@@ -20,8 +20,8 @@ import CalculatorForm from "./CalculatorForm";
 
 const heroSlides = [
   {
-    heading: "Customer’s First & Trusted Choice",
-    subheading: "For International Medicine Courier Services"
+    heading: "Uganda's Leading & Trusted Choice",
+    subheading: "Online LPG Cooking Gas & Industrial Gas Delivery"
   }
 ];
 
@@ -257,57 +257,55 @@ export default function HeroSection({ title, subtitle, content }) {
           {/* Left Hero: Picture Column with Text Overlay */}
           <div 
             id="hero-left-col" 
-            className="lg:col-span-7 flex flex-col justify-start relative rounded-2xl overflow-hidden shadow-2xl pt-6 px-6 pb-2.5 md:pt-8 md:px-8 md:pb-3.5 lg:pt-10 lg:px-10 lg:pb-4.5 border border-slate-700/50 animate-[fadeInLeft_0.8s_ease-out_forwards]"
+            className="lg:col-span-7 flex flex-col justify-between relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50 to-[#E2E8F0] animate-[fadeInLeft_0.8s_ease-out_forwards] min-h-0 lg:min-h-[540px] gap-4 sm:gap-6 lg:gap-0"
           >
             
-            {/* Background Image Layer for Left Column */}
-            <div className="absolute inset-0 z-0">
-              <img 
-                src="https://res.cloudinary.com/dib6l7ocv/image/upload/f_auto,q_auto,w_800/v1781865151/courier-medicine-static/delivery_guy_hero_new.jpg" 
-                alt="Medical Courier Agent" 
-                width={800}
-                height={533}
-                fetchPriority="high"
-                loading="eager"
-                className="w-full h-full object-cover object-top"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-slate-950/85 via-slate-900/60 to-slate-900/25"></div>
+            {/* Top Text Content Layer */}
+            <div className="relative z-10 p-5 sm:p-7 md:p-8 pb-1 sm:pb-2 flex flex-col items-start gap-2.5">
+              <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-black text-slate-900 tracking-tight leading-tight max-w-xl font-display">
+                Online LPG Cooking Gas & <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">Industrial Gas</span> Delivery
+              </h1>
+
+              {/* Features Bullet List */}
+              {bullets && bullets.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1 w-full max-w-xl">
+                  {bullets.slice(0, 4).map((bullet, idx) => (
+                    <div key={idx} className="flex items-center gap-2 bg-white/90 border border-slate-200/70 py-1.5 px-3 rounded-xl shadow-2xs">
+                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-gradient-to-r from-[#830000] to-[#BC0202] text-white shrink-0 shadow-xs">
+                        <Check size={9} className="stroke-[3.5]" />
+                      </span>
+                      <span className="text-[11px] sm:text-xs font-bold tracking-tight text-slate-800 leading-tight">
+                        {bullet}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Static Hero Headings Overlay */}
-            <div className="relative z-10 flex flex-col justify-end h-full pb-0 min-h-[240px] md:min-h-[290px]">
-              <div className="flex flex-col items-start gap-1">
-                <span className="text-[11px] sm:text-xs md:text-sm font-black text-[#00E5C9] tracking-widest uppercase drop-shadow-sm">
-                  {slides[0]?.heading}
-                </span>
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-black text-white tracking-tight leading-tight max-w-xl drop-shadow-md">
-                  {slides[0]?.subheading}
-                </h1>
-
-                {/* Features Bullet List */}
-                {bullets && bullets.length > 0 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mt-3 w-full max-w-xl">
-                    {bullets.map((bullet, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-white">
-                        <span className="flex items-center justify-center w-4.5 h-4.5 rounded-full bg-[#03ADA4] text-white shrink-0 mt-0.5 shadow-sm">
-                          <Check size={10} className="stroke-[3.5]" />
-                        </span>
-                        <span className="text-xs font-semibold tracking-wide leading-tight drop-shadow-sm">
-                          {bullet}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+            {/* Bottom: Full-Width Product Showcase (100% Uncropped & Seamless Fit) */}
+            <div className="relative z-10 w-full mt-2 sm:mt-auto px-3 sm:px-4 pb-3 sm:pb-4 pt-0 flex items-end justify-center">
+              <img 
+                src="/hero_gas_banner.jpg" 
+                alt="Conch Gas Products, Cylinders, Cookers & Industrial Tank" 
+                width={1200}
+                height={500}
+                fetchPriority="high"
+                loading="eager"
+                className="w-full h-auto max-h-[220px] sm:max-h-[260px] lg:max-h-[280px] object-contain object-bottom drop-shadow-sm transition-transform duration-300 hover:scale-[1.01]"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/conch_hero_banner.jpg";
+                }}
+              />
             </div>
 
           </div>
 
-          {/* Right Hero: Calculator Form */}
+          {/* Right Hero / Mobile Hero: Calculator Form */}
           <div 
             id="hero-right-col" 
-            className="hidden lg:block lg:col-span-5 animate-[fadeInRight_0.8s_ease-out_0.2s_forwards] opacity-0"
+            className="block lg:col-span-5 animate-[fadeInRight_0.8s_ease-out_0.2s_forwards] w-full mt-2 lg:mt-0"
           >
             <CalculatorForm />
           </div>

@@ -70,12 +70,13 @@ export default function AdminTestimonials() {
     if (tObj) {
       setForm({
         name: tObj.name || "",
+        title: tObj.title || "",
         review: tObj.review || "",
         rating: tObj.rating || 5,
         isApproved: tObj.isApproved !== undefined ? tObj.isApproved : true
       });
     } else {
-      setForm({ name: "", review: "", rating: 5, isApproved: true });
+      setForm({ name: "", title: "", review: "", rating: 5, isApproved: true });
     }
     setSaveError("");
     setIsModalOpen(true);
@@ -195,8 +196,13 @@ export default function AdminTestimonials() {
               <tbody className="divide-y divide-slate-100 text-xs font-semibold text-slate-700">
                 {paginatedTestimonials.map((t) => (
                   <tr key={t._id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap font-extrabold text-slate-900">
-                      {t.name}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="font-extrabold text-slate-900">{t.name}</div>
+                      {t.title && (
+                        <div className="text-[10px] font-bold text-[#BC0202] uppercase tracking-wider mt-0.5">
+                          {t.title}
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-0.5 text-amber-500">
@@ -316,7 +322,7 @@ export default function AdminTestimonials() {
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="w-full bg-slate-50 border border-slate-200 focus:border-primary focus:outline-none px-3 py-2.5 rounded-xl text-xs font-semibold"
-                      placeholder="e.g. Priyal Sharma"
+                      placeholder="e.g. SENYONDO ADAM"
                       required
                     />
                   </div>
@@ -335,6 +341,17 @@ export default function AdminTestimonials() {
                       <option value={1}>1 Star (Unacceptable)</option>
                     </select>
                   </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Review Headline / Title</label>
+                  <input
+                    type="text"
+                    value={form.title}
+                    onChange={(e) => setForm({ ...form, title: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 focus:border-primary focus:outline-none px-3 py-2.5 rounded-xl text-xs font-semibold"
+                    placeholder="e.g. EXCELLENT SERVICE or GENUINE QUALITY"
+                  />
                 </div>
 
                 <div className="space-y-1">

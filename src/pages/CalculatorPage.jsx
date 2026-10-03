@@ -46,11 +46,11 @@ export default function CalculatorPage() {
           {/* Right Column: Illustration Image */}
           <div className="lg:col-span-7 flex justify-center items-center">
             <img 
-              src="/delivery_guy_hero_light.png" 
-              alt="Courier Charges Delivery Illustration" 
-              className="w-full max-w-xl h-auto object-contain drop-shadow-md rounded-2xl"
+              src="/hero_gas_banner.jpg" 
+              alt="Conch Gas Cylinders & Equipment" 
+              className="w-full max-w-xl h-auto object-cover drop-shadow-md rounded-3xl border border-slate-200/80"
               onError={(e) => {
-                e.target.src = "/delivery_guy_hero_new.jpg";
+                e.target.src = "/conch_hero_banner.jpg";
               }}
             />
           </div>

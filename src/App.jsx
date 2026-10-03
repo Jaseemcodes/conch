@@ -6,8 +6,11 @@ import api from "./utils/api";
 import Topbar from "./components/layout/Topbar";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import MobileBottomNav from "./components/layout/MobileBottomNav";
 import ScrollToTopButton from "./components/layout/ScrollToTopButton";
+
+// Auth Context & Modal
+import { AuthProvider } from "./context/AuthContext";
+import AuthModal from "./components/auth/AuthModal";
 
 // Pages (Lazy Loaded)
 const Home = lazy(() => import("./pages/Home"));
@@ -25,6 +28,12 @@ const CalculatorPage = lazy(() => import("./pages/CalculatorPage"));
 const SlugResolver = lazy(() => import("./pages/SlugResolver"));
 const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const CustomerDashboard = lazy(() => import("./pages/CustomerDashboard"));
+const ProductsCatalogPage = lazy(() => import("./pages/ProductsCatalogPage"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
+const GasRefillsPage = lazy(() => import("./pages/GasRefillsPage"));
+const NewConnectionsPage = lazy(() => import("./pages/NewConnectionsPage"));
+const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 
 // Admin Pages (Lazy Loaded)
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
@@ -60,7 +69,7 @@ function ScrollToTop() {
   return null;
 }
 
-export default function App() {
+function AppContent() {
   const [showHeader, setShowHeader] = useState(true);
   const [settings, setSettings] = useState(null);
   const lastScrollY = useRef(0);
@@ -146,6 +155,16 @@ export default function App() {
               <Route path="/index.html" element={<Home />} />
               <Route path="/index.php" element={<Home />} />
               <Route path="/about.htm" element={<About />} />
+              <Route path="/about" element={<About />} />
+              
+              {/* Product & Services Routes */}
+              <Route path="/products" element={<ProductsCatalogPage />} />
+              <Route path="/products/:slug" element={<ProductPage />} />
+              <Route path="/products/:categorySlug/:slug" element={<ProductPage />} />
+              <Route path="/gas-refills" element={<GasRefillsPage />} />
+              <Route path="/new-connections" element={<NewConnectionsPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+
               <Route path="/countries.php" element={<PopularCountries />} />
               <Route path="/location.php" element={<PopularLocations />} />
               <Route path="/blog.htm" element={<Blog />} />
@@ -163,6 +182,11 @@ export default function App() {
               <Route path="/refund.htm" element={<RefundPolicy />} />
               <Route path="/privacy.htm" element={<PrivacyPolicy />} />
               
+              {/* Customer Account Routes */}
+              <Route path="/my-account" element={<CustomerDashboard />} />
+              <Route path="/customer/dashboard" element={<CustomerDashboard />} />
+              <Route path="/customer/login" element={<Navigate to="/" replace />} />
+
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
@@ -194,9 +218,18 @@ export default function App() {
 
         {/* Shared footer section */}
         {!isAdminRoute && <Footer settings={settings} />}
-        {!isAdminRoute && <MobileBottomNav settings={settings} />}
         {!isAdminRoute && <ScrollToTopButton />}
       </div>
+      {/* Global Customer Auth Modal */}
+      <AuthModal />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }

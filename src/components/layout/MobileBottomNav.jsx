@@ -1,7 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Banknote, Phone } from "lucide-react";
+import { Home, Banknote, Phone, User } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function MobileBottomNav({ settings }) {
+  const { isLoggedIn, isAdmin, openAuthModal } = useAuth();
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -65,6 +67,30 @@ export default function MobileBottomNav({ settings }) {
         <Phone size={18} className="text-slate-600 stroke-[2px]" />
         <span className="text-[10px] font-extrabold tracking-wide text-slate-700 mt-0.5">Call Us</span>
       </a>
+
+      {/* Account / Login */}
+      {isLoggedIn ? (
+        <Link 
+          to={isAdmin ? "/admin/dashboard" : "/my-account"}
+          className={`flex flex-col items-center gap-1 text-center px-3 py-1.5 rounded-xl transition-all duration-200 ${
+            isActive("/my-account") 
+              ? "bg-[#0052cc]/10 text-[#0052cc]" 
+              : "text-slate-600 hover:text-slate-900"
+          }`}
+        >
+          <User size={18} className={`${isActive("/my-account") ? "text-[#0052cc]" : "text-slate-600"} stroke-[2.5px]`} />
+          <span className={`text-[10px] font-extrabold tracking-wide mt-0.5 ${isActive("/my-account") ? "text-[#0052cc]" : "text-slate-700"}`}>Account</span>
+        </Link>
+      ) : (
+        <button 
+          type="button"
+          onClick={() => openAuthModal('login')}
+          className="flex flex-col items-center gap-1 text-center px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition-all duration-200 cursor-pointer"
+        >
+          <User size={18} className="text-slate-600 stroke-[2px]" />
+          <span className="text-[10px] font-extrabold tracking-wide text-slate-700 mt-0.5">Sign In</span>
+        </button>
+      )}
     </div>
   );
 }

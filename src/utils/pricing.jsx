@@ -1,4 +1,6 @@
 import api from "./api";
+import React from "react";
+import { Flame, Truck, ShieldCheck, Clock, MapPin, Zap } from "lucide-react";
 
 let PRICING_DATA = {};
 let PROVIDERS_DATA = [];
@@ -10,13 +12,12 @@ export const loadPricingData = async () => {
   if (pricingLoadPromise) return pricingLoadPromise;
 
   pricingLoadPromise = Promise.all([
-    api.get('/pricing'),
-    api.get('/providers')
+    api.get('/pricing').catch(() => ({ data: { success: false } })),
+    api.get('/providers').catch(() => ({ data: { success: false } }))
   ]).then(([pricingRes, providersRes]) => {
     if (pricingRes.data && pricingRes.data.success) {
       const data = pricingRes.data.data;
       data.forEach(item => {
-        // use lower case for normalized keys
         PRICING_DATA[item.country.toLowerCase()] = item.providers;
       });
     }
@@ -35,137 +36,154 @@ export const loadPricingData = async () => {
   return pricingLoadPromise;
 };
 
-export const getGlobalProviders = () => PROVIDERS_DATA;
+// Gas Price Calculation Engine (Conch Gas Standard Rates in UGX)
+export const calculateGasPrice = (gasType = 'lpg', weightInKg = 6, serviceType = 'REFILL', hasExchangeCylinder = 'YES') => {
+  let basePrice = 48000;
 
-export const getProviderImage = (providerName) => {
-  const p = PROVIDERS_DATA.find(p => p.name.toUpperCase() === providerName.toUpperCase());
-  return p ? p.image : null;
-};
+  const w = parseFloat(weightInKg) || 6;
+  const isNew = serviceType === 'NEW_CONNECTION' || hasExchangeCylinder === 'NO';
+  const gType = (gasType || '').toLowerCase();
 
-const normalizeCountryName = (name) => {
-  if (!name) return "";
-  const n = name.toLowerCase();
-  if (n.includes("usa") || n.includes("united states")) return "usa";
-  if (n.includes("uk") || n.includes("united kingdom")) return "united kingdom";
-  if (n.includes("uae") || n.includes("united arab emirates") || n.includes("dubai")) return "united arab emirates";
-  return n.trim();
-};
+  const isOxygen = gType.includes('oxygen');
+  const isArgon = gType.includes('argon');
+  const isAcetylene = gType.includes('acetylene');
+  const isNitrogenCO2 = gType.includes('nitrogen') || gType.includes('co2');
 
-export const calculatePrice = (countryName, providerName, weightInKg) => {
-  const normalizedName = normalizeCountryName(countryName);
-  const countryData = PRICING_DATA[normalizedName];
-  if (!countryData) {
-    // Fallback if country not in JSON
-    const fallbackBase = 3500;
-    const diff = 1500;
-    if (weightInKg <= 0.5) return fallbackBase;
-    if (weightInKg <= 1.0) return fallbackBase + diff;
-    return fallbackBase + diff + Math.ceil((weightInKg - 1.0) / 0.5) * diff;
-  }
-
-  const providerData = countryData.find(p => p.provider === providerName);
-  if (!providerData) return null;
-
-  const { halfKgPrice, oneKgPrice } = providerData;
-
-  if (weightInKg <= 0.5) {
-    return halfKgPrice;
-  } else if (weightInKg <= 1.0) {
-    return oneKgPrice;
+  if (isOxygen) {
+    basePrice = isNew ? 320000 : 85000;
+  } else if (isArgon) {
+    basePrice = isNew ? 450000 : 145000;
+  } else if (isAcetylene) {
+    basePrice = isNew ? 520000 : 195000;
+  } else if (isNitrogenCO2) {
+    basePrice = isNew ? 350000 : 95000;
   } else {
-    // For every 0.5kg beyond 1kg, add the difference
-    const diff = oneKgPrice - halfKgPrice;
-    const extraWeight = weightInKg - 1.0;
-    const steps = Math.ceil(extraWeight / 0.5);
-    return oneKgPrice + (steps * diff);
+    // Default LPG Cooking Gas (Domestic & Commercial)
+    if (w <= 6) {
+      basePrice = isNew ? 165000 : 48000;
+    } else if (w <= 13) {
+      basePrice = isNew ? 285000 : 98000;
+    } else if (w <= 40) {
+      basePrice = isNew ? 580000 : 260000;
+    } else {
+      // 45kg commercial
+      basePrice = isNew ? 680000 : 280000;
+    }
   }
+
+  return basePrice;
 };
 
-export const getProvidersForCountry = (countryName) => {
-  const normalizedName = normalizeCountryName(countryName);
-  return PRICING_DATA[normalizedName] || [];
+// Backward-compatible calculatePrice for quote flows
+export const calculatePrice = (gasOrCountryName, providerName, weightInKg, serviceType = 'REFILL', hasExchange = 'YES') => {
+  return calculateGasPrice(gasOrCountryName, weightInKg, serviceType, hasExchange);
 };
 
-export const getDefaultProvider = (countryName) => {
-  const providers = getProvidersForCountry(countryName);
-  if (providers.length === 0) return null;
+export const getProvidersForCountry = () => {
+  return [
+    { provider: "CONCH EXPRESS", timeline: "Under 2 Hours" },
+    { provider: "STANDARD TRUCK", timeline: "Within 24 Hours" },
+    { provider: "BULK SUPPLY", timeline: "Same Day Dispatch" },
+    { provider: "DEPOT PICKUP", timeline: "Instant (Kira Road Depot)" }
+  ];
+};
 
-  const dhl = providers.find(p => p.provider === 'DHL');
-  return dhl || providers[0];
+export const getDefaultProvider = () => {
+  return {
+    provider: "CONCH EXPRESS",
+    timeline: "2-4 Hours Doorstep Delivery"
+  };
 };
 
 export const PROVIDER_UI_CONFIG = {
-  "DHL": {
-    themeColor: "bg-primary",
-    themeText: "text-primary",
-    hoverBg: "hover:bg-primary",
-    badgeLabel: "Fastest",
+  "CONCH EXPRESS": {
+    themeColor: "bg-red-600",
+    themeText: "text-red-600",
+    hoverBg: "hover:bg-red-700",
+    badgeLabel: "Fastest / Doorstep",
     logoNode: (
-      <div className="h-6 w-full flex items-center justify-center bg-[#FFCC00] px-2.5 py-0.5 rounded shadow-xs select-none">
-        <svg className="h-4 w-auto" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g transform="skewX(-15)">
-            <text x="50" y="18" fill="#D40511" fontWeight="900" fontSize="18" fontFamily="Impact, Arial Black, sans-serif" letterSpacing="0.5" textAnchor="middle">DHL</text>
-          </g>
-        </svg>
+      <div className="h-7 w-full flex items-center justify-center bg-red-600 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <Flame className="w-3.5 h-3.5 mr-1 fill-white" /> Conch Express
+      </div>
+    )
+  },
+  "STANDARD DELIVERY": {
+    themeColor: "bg-slate-800",
+    themeText: "text-slate-800",
+    hoverBg: "hover:bg-slate-900",
+    badgeLabel: "Standard / Best Value",
+    logoNode: (
+      <div className="h-7 w-full flex items-center justify-center bg-slate-800 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <Truck className="w-3.5 h-3.5 mr-1 text-red-400" /> Standard Dispatch
+      </div>
+    )
+  },
+  "BULK TRUCK SUPPLY": {
+    themeColor: "bg-amber-600",
+    themeText: "text-amber-600",
+    hoverBg: "hover:bg-amber-700",
+    badgeLabel: "Commercial / 45kg+",
+    logoNode: (
+      <div className="h-7 w-full flex items-center justify-center bg-amber-600 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <Zap className="w-3.5 h-3.5 mr-1 text-white" /> Bulk Truck Supply
+      </div>
+    )
+  },
+  "STATION PICKUP": {
+    themeColor: "bg-emerald-600",
+    themeText: "text-emerald-600",
+    hoverBg: "hover:bg-emerald-700",
+    badgeLabel: "Self Pickup (Free)",
+    logoNode: (
+      <div className="h-7 w-full flex items-center justify-center bg-emerald-600 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <MapPin className="w-3.5 h-3.5 mr-1 text-white" /> Depot Pickup
+      </div>
+    )
+  },
+  // Fallbacks for carrier names
+  "DHL": {
+    themeColor: "bg-red-600",
+    themeText: "text-red-600",
+    hoverBg: "hover:bg-red-700",
+    badgeLabel: "Conch Express",
+    logoNode: (
+      <div className="h-7 w-full flex items-center justify-center bg-red-600 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <Flame className="w-3.5 h-3.5 mr-1 fill-white" /> Conch Express
       </div>
     )
   },
   "UPS": {
-    themeColor: "bg-secondary",
-    themeText: "text-secondary",
-    hoverBg: "hover:bg-[#0047b3]",
-    badgeLabel: "Best Value",
+    themeColor: "bg-slate-800",
+    themeText: "text-slate-800",
+    hoverBg: "hover:bg-slate-900",
+    badgeLabel: "Standard Delivery",
     logoNode: (
-      <div className="h-8 flex items-center select-none">
-        <svg className="h-8 w-auto" viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 2 C28 2, 38 4, 38 16 C38 28, 28 38, 20 44 C12 38, 2 28, 2 16 C2 4, 12 2, 20 2 Z" fill="#351C15" stroke="#FFC72C" strokeWidth="2.5" />
-          <path d="M4 14C10 11 30 11 36 14" stroke="#FFC72C" strokeWidth="2" />
-          <text x="20" y="32" fill="#FFC72C" fontWeight="bold" fontSize="15" fontFamily="sans-serif" textAnchor="middle" letterSpacing="-0.5">ups</text>
-        </svg>
+      <div className="h-7 w-full flex items-center justify-center bg-slate-800 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <Truck className="w-3.5 h-3.5 mr-1 text-red-400" /> Standard Dispatch
       </div>
     )
   },
   "FedEx": {
-    themeColor: "bg-[#4d148c]",
-    themeText: "text-[#4d148c]",
-    hoverBg: "hover:bg-[#3b0f6b]",
-    badgeLabel: "Reliable",
+    themeColor: "bg-amber-600",
+    themeText: "text-amber-600",
+    hoverBg: "hover:bg-amber-700",
+    badgeLabel: "Commercial Bulk",
     logoNode: (
-      <div className="h-8 flex items-center select-none">
-        <span className="text-2xl font-black tracking-tighter">
-          <span className="text-[#4d148c]">Fed</span><span className="text-[#ff6600]">Ex</span>
-        </span>
-      </div>
-    )
-  },
-  "ARAMEX": {
-    themeColor: "bg-[#e2001a]",
-    themeText: "text-[#e2001a]",
-    hoverBg: "hover:bg-[#b30014]",
-    badgeLabel: "Middle East Spec.",
-    logoNode: (
-      <div className="h-8 flex items-center select-none">
-        <span className="text-xl font-black tracking-tight text-[#e2001a] italic uppercase">Aramex</span>
-      </div>
-    )
-  },
-  "DPD": {
-    themeColor: "bg-[#dc0032]",
-    themeText: "text-[#dc0032]",
-    hoverBg: "hover:bg-[#b00028]",
-    badgeLabel: "Euro Express",
-    logoNode: (
-      <div className="h-8 flex items-center select-none">
-        <div className="bg-[#dc0032] text-white px-2 py-0.5 rounded font-black text-lg italic uppercase">DPD</div>
+      <div className="h-7 w-full flex items-center justify-center bg-amber-600 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <Zap className="w-3.5 h-3.5 mr-1 text-white" /> Bulk Truck Supply
       </div>
     )
   },
   "ECONOMY POST": {
-    themeColor: "bg-slate-600",
-    themeText: "text-slate-600",
-    hoverBg: "hover:bg-slate-700",
-    badgeLabel: "Budget",
-    logoNode: null
+    themeColor: "bg-emerald-600",
+    themeText: "text-emerald-600",
+    hoverBg: "hover:bg-emerald-700",
+    badgeLabel: "Depot Pickup",
+    logoNode: (
+      <div className="h-7 w-full flex items-center justify-center bg-emerald-600 px-3 py-1 rounded-lg text-white font-black text-xs tracking-wider shadow-xs uppercase select-none">
+        <MapPin className="w-3.5 h-3.5 mr-1 text-white" /> Depot Pickup
+      </div>
+    )
   }
 };
 
@@ -174,11 +192,16 @@ export const getProviderUI = (providerName) => {
     themeColor: "bg-slate-800",
     themeText: "text-slate-800",
     hoverBg: "hover:bg-slate-900",
-    badgeLabel: "Standard",
+    badgeLabel: "Conch Gas Delivery",
     logoNode: (
-      <div className="h-8 flex items-center select-none">
-        <span className="text-sm font-black tracking-widest text-slate-800 uppercase">{providerName}</span>
+      <div className="h-7 flex items-center justify-center bg-red-600 text-white px-2 py-0.5 rounded font-black text-xs uppercase">
+        <Flame className="w-3.5 h-3.5 mr-1" /> Conch Gas Express
       </div>
     )
   };
 };
+
+export const getProviderImage = (providerName) => {
+  return null;
+};
+

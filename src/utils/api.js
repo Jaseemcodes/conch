@@ -1,27 +1,20 @@
 import axios from 'axios';
 
 const getBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+
   const isLocal = typeof window !== 'undefined' && 
     (window.location.hostname === 'localhost' || 
      window.location.hostname === '127.0.0.1' || 
      window.location.hostname.startsWith('192.168.'));
 
   if (isLocal) {
-    return 'http://localhost:5000/api';
+    return `http://${window.location.hostname}:5000/api`;
   }
 
-  // If running on Cloud Run default frontend URL, replace 'frontend' with 'backend' and force the region to 'asia-south1' (since backend is hosted in Mumbai)
-  if (typeof window !== 'undefined' && window.location.hostname.includes('courier-medicine-frontend')) {
-    let backendHostname = window.location.hostname.replace('courier-medicine-frontend', 'courier-medicine-backend');
-    // Normalize region to asia-south1
-    backendHostname = backendHostname
-      .replace('.asia-south2.run.app', '.asia-south1.run.app')
-      .replace('.us-central1.run.app', '.asia-south1.run.app');
-    return `https://${backendHostname}/api`;
-  }
-
-  // Secure fallback for custom domains in production pointing to the deployed Cloud Run backend
-  return 'https://courier-medicine-backend-249329877539.asia-south1.run.app/api';
+  return '/api';
 };
 
 const api = axios.create({

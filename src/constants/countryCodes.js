@@ -1,5 +1,40 @@
 export const COUNTRY_CALLING_CODES = [
   {
+    "code": "+256",
+    "name": "Uganda",
+    "iso": "UG"
+  },
+  {
+    "code": "+91",
+    "name": "India",
+    "iso": "IN"
+  },
+  {
+    "code": "+254",
+    "name": "Kenya",
+    "iso": "KE"
+  },
+  {
+    "code": "+255",
+    "name": "Tanzania",
+    "iso": "TZ"
+  },
+  {
+    "code": "+250",
+    "name": "Rwanda",
+    "iso": "RW"
+  },
+  {
+    "code": "+1",
+    "name": "United States",
+    "iso": "US"
+  },
+  {
+    "code": "+44",
+    "name": "United Kingdom",
+    "iso": "GB"
+  },
+  {
     "code": "+93",
     "name": "Afghanistan",
     "iso": "AF"

@@ -8,14 +8,15 @@ export default function SpecialRates() {
 
   // Retrieve calculated quote from routing state, or use default fallback for preview
   const calculatedQuote = location.state?.calculatedQuote || {
-    country: "Australia",
-    countryCode: "AU",
-    location: "Delhi",
-    medicineType: "Homeopathic Medicines",
-    mobile: "8882691919",
+    country: "Uganda",
+    countryCode: "UG",
+    location: "Kampala (Kira Road Depot)",
+    gasType: "LPG Commercial & Industrial",
+    medicineType: "LPG Commercial Gas",
+    mobile: "0700000000",
     prescription: "YES",
-    weight: "Above 1 KG",
-    serviceType: "I WANT PICK UP"
+    weight: "45 KG (Bulk)",
+    serviceType: "DOORSTEP REFILL (EXCHANGE)"
   };
 
   // GSAP animation refs
@@ -65,27 +66,28 @@ export default function SpecialRates() {
         <div className="bg-slate-100/80 border border-slate-200/50 rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-6 md:gap-8">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-[#0052CC]">
+              <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-red-600 shadow-2xs">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h2.945M11.025 21H13a2 2 0 002-2v-1a2 2 0 002-2 2 2 0 012-2h2.945M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
               <div>
-                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Country</span>
-                <span className="text-xs font-black text-slate-800 uppercase tracking-tight">{calculatedQuote.country}</span>
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Delivery Region</span>
+                <span className="text-xs font-black text-slate-800 uppercase tracking-tight">{calculatedQuote.location || calculatedQuote.country || "Uganda"}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-[#0052CC]">
+              <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-red-600 shadow-2xs">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
               </div>
               <div>
-                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Parcel Weight</span>
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Cylinder / Gas Volume</span>
                 <span className="text-xs font-black text-slate-800 uppercase tracking-tight">
-                  {calculatedQuote.weight}
+                  {calculatedQuote.weight} KG (Commercial & Bulk)
                 </span>
               </div>
             </div>
@@ -95,7 +97,7 @@ export default function SpecialRates() {
             onClick={() => navigate("/calculator.htm", { state: { calculatedQuote } })}
             className="px-5 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-extrabold text-xs shadow-3xs hover:scale-[1.01] active:scale-[0.99] transition-all select-none cursor-pointer"
           >
-            Modify Search
+            Modify Selection
           </button>
         </div>
       </div>
@@ -106,17 +108,30 @@ export default function SpecialRates() {
           ref={cardRef}
           className="bg-white border border-slate-200/80 rounded-3xl p-8 md:p-12 shadow-lg text-center space-y-6 flex flex-col items-center"
         >
+          <div className="w-16 h-16 rounded-3xl bg-red-50 text-red-600 border border-red-100 flex items-center justify-center shadow-xs">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
           
-          <h2 className="text-lg md:text-xl font-black text-slate-800 tracking-tight max-w-2xl leading-relaxed">
-            For Medicine Weight Above 1 KG, Please Contact Us For Special Rates
-          </h2>
+          <div className="space-y-2 max-w-2xl">
+            <span className="text-xs font-black uppercase tracking-widest text-red-600 bg-red-50 px-3 py-1 rounded-full">
+              Commercial & Bulk Supply Desk
+            </span>
+            <h2 className="text-lg md:text-2xl font-black text-slate-800 tracking-tight leading-relaxed font-display">
+              For 45 KG Cylinders, Manifold Systems & Bulk Industrial Gas, Contact Conch Gas For Exclusive Corporate Rates
+            </h2>
+            <p className="text-xs text-slate-500 font-medium">
+              We provide tailored pricing, dedicated fleet dispatch, scheduled refilling, and safety compliance for hotels, restaurants, bakeries, factories, and schools across Uganda.
+            </p>
+          </div>
 
           <div className="flex flex-col items-center gap-3 w-full max-w-xs pt-4">
             <a 
-              href="tel:+918882691919"
-              className="w-full text-center py-3.5 rounded-xl bg-[#0052CC] hover:bg-[#0052CC]/90 text-white font-extrabold text-xs shadow-sm transition-all hover:scale-[1.01] duration-200 cursor-pointer"
+              href="tel:+256700000000"
+              className="w-full text-center py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs shadow-md shadow-red-600/20 transition-all hover:scale-[1.01] duration-200 cursor-pointer"
             >
-              Call +91-8882691919
+              📞 Call Conch Gas Kira Road
             </a>
             
             <div className="text-[10px] text-slate-400 font-black uppercase tracking-widest my-1">
@@ -124,12 +139,12 @@ export default function SpecialRates() {
             </div>
             
             <a 
-              href={`https://wa.me/918882691919?text=Hi! I want to courier medicine package weighing above 1 KG to ${calculatedQuote.country}. Please provide custom rates.`}
+              href={`https://wa.me/256700000000?text=Hello%20Conch%20Gas!%20I%20am%20inquiring%20about%20bulk%20commercial%20gas%20supply%20(${calculatedQuote.weight}%20KG)%20in%20${calculatedQuote.location || "Kampala"}.%20Please%20share%20contract%20pricing.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full text-center py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-sm transition-all hover:scale-[1.01] duration-200 cursor-pointer"
+              className="w-full text-center py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.01] duration-200 cursor-pointer"
             >
-              Whatsapp
+              💬 WhatsApp Commercial Desk
             </a>
           </div>
 
@@ -143,17 +158,17 @@ export default function SpecialRates() {
       >
         <div className="border-t border-slate-200/60 pt-6">
           <h3 className="text-base font-black text-slate-800 tracking-tight uppercase mb-4 font-display">
-            Important Points:-
+            Commercial & Bulk Gas Services Included:-
           </h3>
           <ol className="list-decimal list-inside space-y-3.5 text-xs text-slate-500 font-semibold leading-relaxed">
             <li>
-              The Rates shown above is based on customer data entered regarding weight and country. This estimate can differ on basis on Final weight and type of medicines.
+              <strong>Dedicated Account Manager:</strong> Commercial clients get priority scheduling, customized billing, and monthly consumption reports.
             </li>
             <li>
-              Customer get medicine on time is most important for Courier Medicines. So Upon arrival of medicine to our warehouse our Medicine Expert Team check on medicines and on basis of that, If different service need to be upgraded our team do so in interest of customer satisfaction for delivery of medicine smoothly.
+              <strong>On-Site Safety Inspection & Manifold Installation:</strong> Certified gas engineers inspect pipelines, high-pressure regulators, and safety valves at zero extra audit cost.
             </li>
             <li>
-              We offer pick up facility within 2 hours after booking. (within working hours). This may also vary sometime depending upon place of pick up.
+              <strong>Emergency 24/7 Bulk Delivery:</strong> Industrial bakeries, restaurant kitchens, and hospitals receive guaranteed backup supply within 90 minutes.
             </li>
           </ol>
         </div>

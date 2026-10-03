@@ -59,8 +59,8 @@ export default function AdminLogin() {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 text-primary mb-2 shadow-inner">
             <Shield size={28} />
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight uppercase">CM Administrator</h1>
-          <p className="text-xs text-slate-500 font-semibold tracking-wider uppercase">Sign in to manage your courier services</p>
+          <h1 className="text-2xl font-black text-white tracking-tight uppercase">Conch Gas Administrator</h1>
+          <p className="text-xs text-slate-400 font-semibold tracking-wider uppercase">Sign in to manage Conch Gas systems & orders</p>
         </div>
 
         {/* Error Notification banner */}
@@ -85,7 +85,7 @@ export default function AdminLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-slate-900/60 border border-slate-850 hover:border-slate-800 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary rounded-xl pl-11 pr-4 py-3.5 text-xs text-slate-200 font-semibold transition-all"
-                placeholder="admin@couriermedicines.com"
+                placeholder="admin@conchgas.com"
               />
             </div>
           </div>
