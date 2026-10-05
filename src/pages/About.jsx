@@ -622,27 +622,6 @@ export default function About() {
 
               </div>
             </div>
-
-            {/* Bottom Leadership Info Card */}
-            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-4">
-              <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
-                EXECUTIVE LEADERSHIP
-              </span>
-              <h3 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-display">
-                Partnering for Growth & Energy Independence
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                Under Raj Monga's leadership, Conch Gas has expanded from regional operations to becoming Uganda's trusted energy partner, ensuring clean, affordable, and safe LPG solutions for both homes and businesses.
-              </p>
-              <div className="pt-2 flex flex-wrap gap-2">
-                {["15+ Years Track Record", "Ethical Governance", "Customer First Approach", "Global Supply Chain"].map((t, i) => (
-                  <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">
-                    <CheckCircle2 size={13} className="text-[#BC0202]" />
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
           </motion.div>
         )}
 
