@@ -623,29 +623,24 @@ export default function About() {
               </div>
             </div>
 
-            {/* Bottom Sidebar Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-8 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-4">
-                <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
-                  EXECUTIVE LEADERSHIP
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-display">
-                  Partnering for Growth & Energy Independence
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                  Under Raj Monga's leadership, Conch Gas has expanded from regional operations to becoming Uganda's trusted energy partner, ensuring clean, affordable, and safe LPG solutions for both homes and businesses.
-                </p>
-                <div className="pt-2 flex flex-wrap gap-2">
-                  {["15+ Years Track Record", "Ethical Governance", "Customer First Approach", "Global Supply Chain"].map((t, i) => (
-                    <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">
-                      <CheckCircle2 size={13} className="text-[#BC0202]" />
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="lg:col-span-4">
-                <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab} tabList={tabList} />
+            {/* Bottom Leadership Info Card */}
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-4">
+              <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
+                EXECUTIVE LEADERSHIP
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-display">
+                Partnering for Growth & Energy Independence
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                Under Raj Monga's leadership, Conch Gas has expanded from regional operations to becoming Uganda's trusted energy partner, ensuring clean, affordable, and safe LPG solutions for both homes and businesses.
+              </p>
+              <div className="pt-2 flex flex-wrap gap-2">
+                {["15+ Years Track Record", "Ethical Governance", "Customer First Approach", "Global Supply Chain"].map((t, i) => (
+                  <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">
+                    <CheckCircle2 size={13} className="text-[#BC0202]" />
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -691,37 +686,31 @@ export default function About() {
               </div>
             </div>
 
-            {/* Checklist Grid & Sidebar Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-8 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-6">
-                <h3 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight uppercase font-display">
-                  Advantages of LPG Compared to Other Fuels
-                </h3>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    { title: "Clean Burning & Zero Soot", desc: "Burners stay clean and have a longer operating life, minimizing ongoing appliance maintenance costs." },
-                    { title: "Zero Spillage Hazard", desc: "Vaporises immediately at atmospheric temperature and pressure, leaving no liquid spills or greasy residues." },
-                    { title: "Instant High Heat Flame", desc: "Provides high efficiency direct firing with instant heat for faster culinary warm-up and precise cool-down." },
-                    { title: "Eco-Friendly Emissions", desc: "Minimal sulfur content and clean exhaust fumes protect both your kitchen air and the global environment." },
-                    { title: "Round-the-Clock Flat Rate", desc: "Free from peak-time electricity premium tariffs — consistent, affordable pricing 24 hours a day." },
-                    { title: "Appliance & Parts Protection", desc: "Avoids scaling, soot fouling, and decarbonising of pots, pans, commercial ovens, kilns, and machinery." }
-                  ].map((adv, idx) => (
-                    <div key={idx} className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-red-50/40 hover:border-red-200 transition-all duration-200">
-                      <div className="w-7 h-7 rounded-full bg-gradient-to-r from-[#830000] to-[#BC0202] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-                        <Check size={13} className="stroke-[3.5]" />
-                      </div>
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wide font-display">{adv.title}</h4>
-                        <p className="text-xs text-slate-600 font-medium mt-1 leading-relaxed">{adv.desc}</p>
-                      </div>
+            {/* Checklist Grid */}
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-6">
+              <h3 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight uppercase font-display">
+                Advantages of LPG Compared to Other Fuels
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  { title: "Clean Burning & Zero Soot", desc: "Burners stay clean and have a longer operating life, minimizing ongoing appliance maintenance costs." },
+                  { title: "Zero Spillage Hazard", desc: "Vaporises immediately at atmospheric temperature and pressure, leaving no liquid spills or greasy residues." },
+                  { title: "Instant High Heat Flame", desc: "Provides high efficiency direct firing with instant heat for faster culinary warm-up and precise cool-down." },
+                  { title: "Eco-Friendly Emissions", desc: "Minimal sulfur content and clean exhaust fumes protect both your kitchen air and the global environment." },
+                  { title: "Round-the-Clock Flat Rate", desc: "Free from peak-time electricity premium tariffs — consistent, affordable pricing 24 hours a day." },
+                  { title: "Appliance & Parts Protection", desc: "Avoids scaling, soot fouling, and decarbonising of pots, pans, commercial ovens, kilns, and machinery." }
+                ].map((adv, idx) => (
+                  <div key={idx} className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-red-50/40 hover:border-red-200 transition-all duration-200">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-r from-[#830000] to-[#BC0202] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                      <Check size={13} className="stroke-[3.5]" />
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="lg:col-span-4">
-                <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab} tabList={tabList} />
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wide font-display">{adv.title}</h4>
+                      <p className="text-xs text-slate-600 font-medium mt-1 leading-relaxed">{adv.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -772,49 +761,41 @@ export default function About() {
               </div>
             </div>
 
-            {/* Fire Fighting & Sidebar Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-8 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-200 space-y-4">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 text-[#BC0202] flex items-center justify-center border border-red-100 shadow-sm">
-                      <Flame size={24} />
-                    </div>
-                    <h3 className="text-base font-black text-slate-900 uppercase tracking-wider font-display">
-                      Major Fire Fighting Facilities
-                    </h3>
-                    <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
-                      <li className="flex items-start gap-2.5">
-                        <span className="w-2 h-2 rounded-full bg-[#BC0202] mt-1.5 shrink-0" />
-                        <span>High-pressure fire fighting hydrants and monitors.</span>
-                      </li>
-                      <li className="flex items-start gap-2.5">
-                        <span className="w-2 h-2 rounded-full bg-[#BC0202] mt-1.5 shrink-0" />
-                        <span>Automatic gas leakage detectors with alarm triggers.</span>
-                      </li>
-                      <li className="flex items-start gap-2.5">
-                        <span className="w-2 h-2 rounded-full bg-[#BC0202] mt-1.5 shrink-0" />
-                        <span>Dedicated emergency water storage tanks always filled.</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-200 space-y-4">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 text-[#BC0202] flex items-center justify-center border border-red-100 shadow-sm">
-                      <Activity size={24} />
-                    </div>
-                    <h3 className="text-base font-black text-slate-900 uppercase tracking-wider font-display">
-                      Monthly Safety Mock Drills
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-                      Every technician and driver undergoes structured emergency training. C-GAS carries out <strong>mandatory monthly mock drills</strong> to ensure every team member is fully prepared for any emergency situation.
-                    </p>
-                  </div>
+            {/* Fire Fighting & Safety Facilities */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-200 space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 text-[#BC0202] flex items-center justify-center border border-red-100 shadow-sm">
+                  <Flame size={24} />
                 </div>
+                <h3 className="text-base font-black text-slate-900 uppercase tracking-wider font-display">
+                  Major Fire Fighting Facilities
+                </h3>
+                <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#BC0202] mt-1.5 shrink-0" />
+                    <span>High-pressure fire fighting hydrants and monitors.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#BC0202] mt-1.5 shrink-0" />
+                    <span>Automatic gas leakage detectors with alarm triggers.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#BC0202] mt-1.5 shrink-0" />
+                    <span>Dedicated emergency water storage tanks always filled.</span>
+                  </li>
+                </ul>
               </div>
 
-              <div className="lg:col-span-4">
-                <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab} tabList={tabList} />
+              <div className="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-200 space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 text-[#BC0202] flex items-center justify-center border border-red-100 shadow-sm">
+                  <Activity size={24} />
+                </div>
+                <h3 className="text-base font-black text-slate-900 uppercase tracking-wider font-display">
+                  Monthly Safety Mock Drills
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                  Every technician and driver undergoes structured emergency training. C-GAS carries out <strong>mandatory monthly mock drills</strong> to ensure every team member is fully prepared for any emergency situation.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -961,60 +942,54 @@ export default function About() {
               </div>
             </div>
 
-            {/* 3. HOW IT WORKS & Sidebar Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-8 space-y-6">
-                <div className="space-y-1">
-                  <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
-                    FAST 4-STEP PROCESS
-                  </span>
-                  <h3 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight font-display uppercase">
-                    How It Works
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    { step: "STEP 01", title: "ORDER PLACEMENT", desc: "Select your cylinder size (6kg, 13kg, 40kg, 45kg) on our website or via WhatsApp." },
-                    { step: "STEP 02", title: "INSTANT SCHEDULING", desc: "Our logistics hub dispatches the nearest delivery rider to your doorstep." },
-                    { step: "STEP 03", title: "SAFE HANDOVER", desc: "We deliver sealed cylinders with intact tare weight seals and universal exchange." },
-                    { step: "STEP 04", title: "FREE INSTALLATION", desc: "Our driver assists with regulator connection and performs soapy water leak tests." }
-                  ].map((item, idx) => (
-                    <div key={idx} className="bg-white border border-slate-200/80 p-5 rounded-3xl shadow-sm space-y-2 relative overflow-hidden hover:border-red-200 hover:shadow-md transition-all duration-200">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-[#BC0202] bg-red-50 px-2.5 py-1 rounded-md inline-block border border-red-100">
-                        {item.step}
-                      </span>
-                      <h4 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider font-display">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                        {item.desc}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA Box */}
-                <div className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] text-white p-7 sm:p-8 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
-                  <div className="space-y-1 text-center sm:text-left">
-                    <h3 className="text-lg sm:text-xl font-black font-display uppercase text-white">
-                      Need a Cylinder Refill Today?
-                    </h3>
-                    <p className="text-xs text-white/90 font-medium">
-                      Order online or call our direct helpline for prompt delivery.
-                    </p>
-                  </div>
-                  <Link
-                    to="/booking.php"
-                    className="px-6 py-3 rounded-xl bg-white text-[#830000] text-xs font-black uppercase tracking-wider hover:bg-slate-100 shadow-md hover:scale-105 active:scale-95 transition-all whitespace-nowrap cursor-pointer"
-                  >
-                    Order Gas Now
-                  </Link>
-                </div>
+            {/* 3. HOW IT WORKS */}
+            <div className="space-y-6">
+              <div className="space-y-1">
+                <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
+                  FAST 4-STEP PROCESS
+                </span>
+                <h3 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight font-display uppercase">
+                  How It Works
+                </h3>
               </div>
 
-              <div className="lg:col-span-4">
-                <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab} tabList={tabList} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { step: "STEP 01", title: "ORDER PLACEMENT", desc: "Select your cylinder size (6kg, 13kg, 40kg, 45kg) on our website or via WhatsApp." },
+                  { step: "STEP 02", title: "INSTANT SCHEDULING", desc: "Our logistics hub dispatches the nearest delivery rider to your doorstep." },
+                  { step: "STEP 03", title: "SAFE HANDOVER", desc: "We deliver sealed cylinders with intact tare weight seals and universal exchange." },
+                  { step: "STEP 04", title: "FREE INSTALLATION", desc: "Our driver assists with regulator connection and performs soapy water leak tests." }
+                ].map((item, idx) => (
+                  <div key={idx} className="bg-white border border-slate-200/80 p-5 rounded-3xl shadow-sm space-y-2 relative overflow-hidden hover:border-red-200 hover:shadow-md transition-all duration-200">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#BC0202] bg-red-50 px-2.5 py-1 rounded-md inline-block border border-red-100">
+                      {item.step}
+                    </span>
+                    <h4 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider font-display">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA Box */}
+              <div className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] text-white p-7 sm:p-8 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div className="space-y-1 text-center sm:text-left">
+                  <h3 className="text-lg sm:text-xl font-black font-display uppercase text-white">
+                    Need a Cylinder Refill Today?
+                  </h3>
+                  <p className="text-xs text-white/90 font-medium">
+                    Order online or call our direct helpline for prompt delivery.
+                  </p>
+                </div>
+                <Link
+                  to="/booking.php"
+                  className="px-6 py-3 rounded-xl bg-white text-[#830000] text-xs font-black uppercase tracking-wider hover:bg-slate-100 shadow-md hover:scale-105 active:scale-95 transition-all whitespace-nowrap cursor-pointer"
+                >
+                  Order Gas Now
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -1090,22 +1065,17 @@ export default function About() {
               ))}
             </div>
 
-            {/* Bottom CSR Sidebar Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-8 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-4">
-                <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
-                  COMMUNITY IMPACT
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-display">
-                  Empowering Ugandan Communities & Wildlife
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                  At Conch Gas, corporate citizenship is deeply embedded into our core business culture. We actively partner with community stations, education centres, and wildlife preservation foundations across Uganda to build a healthier, safer tomorrow.
-                </p>
-              </div>
-              <div className="lg:col-span-4">
-                <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab} tabList={tabList} />
-              </div>
+            {/* Bottom CSR Info Card */}
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-4">
+              <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
+                COMMUNITY IMPACT
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-display">
+                Empowering Ugandan Communities & Wildlife
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                At Conch Gas, corporate citizenship is deeply embedded into our core business culture. We actively partner with community stations, education centres, and wildlife preservation foundations across Uganda to build a healthier, safer tomorrow.
+              </p>
             </div>
           </motion.div>
         )}
@@ -1130,82 +1100,76 @@ export default function About() {
               </p>
             </div>
 
-            {/* Accordion List & Sidebar Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-8 space-y-4">
-                {safetyFaqs.map((faq, idx) => {
-                  const isOpen = openFaqIndex === idx;
-                  return (
-                    <div
-                      key={idx}
-                      className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-sm hover:border-red-200 transition-all duration-200"
+            {/* Accordion List */}
+            <div className="space-y-4">
+              {safetyFaqs.map((faq, idx) => {
+                const isOpen = openFaqIndex === idx;
+                return (
+                  <div
+                    key={idx}
+                    className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-sm hover:border-red-200 transition-all duration-200"
+                  >
+                    <button
+                      onClick={() => setOpenFaqIndex(isOpen ? -1 : idx)}
+                      className={`w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer transition-colors ${
+                        isOpen ? "bg-red-50/50" : "hover:bg-slate-50/80"
+                      }`}
                     >
-                      <button
-                        onClick={() => setOpenFaqIndex(isOpen ? -1 : idx)}
-                        className={`w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer transition-colors ${
-                          isOpen ? "bg-red-50/50" : "hover:bg-slate-50/80"
+                      <div className="flex items-center gap-3.5">
+                        <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-red-100 to-red-50 text-[#BC0202] flex items-center justify-center shrink-0 text-xs font-black font-display border border-red-200">
+                          {idx + 1}
+                        </span>
+                        <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wide font-display">
+                          {faq.q}
+                        </h3>
+                      </div>
+                      <ChevronDown
+                        size={18}
+                        className={`text-slate-400 transition-transform duration-200 shrink-0 ${
+                          isOpen ? "rotate-180 text-[#BC0202]" : ""
                         }`}
-                      >
-                        <div className="flex items-center gap-3.5">
-                          <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-red-100 to-red-50 text-[#BC0202] flex items-center justify-center shrink-0 text-xs font-black font-display border border-red-200">
-                            {idx + 1}
-                          </span>
-                          <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wide font-display">
-                            {faq.q}
-                          </h3>
-                        </div>
-                        <ChevronDown
-                          size={18}
-                          className={`text-slate-400 transition-transform duration-200 shrink-0 ${
-                            isOpen ? "rotate-180 text-[#BC0202]" : ""
-                          }`}
-                        />
-                      </button>
+                      />
+                    </button>
 
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden border-t border-slate-100"
-                          >
-                            <div className="p-5 sm:p-6 pt-4 bg-slate-50/50 space-y-3">
-                              {faq.description && (
-                                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-                                  {faq.description}
-                                </p>
-                              )}
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden border-t border-slate-100"
+                        >
+                          <div className="p-5 sm:p-6 pt-4 bg-slate-50/50 space-y-3">
+                            {faq.description && (
+                              <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                                {faq.description}
+                              </p>
+                            )}
 
-                              {faq.paragraphs && faq.paragraphs.map((p, pIdx) => (
-                                <p key={pIdx} className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-                                  {p}
-                                </p>
-                              ))}
+                            {faq.paragraphs && faq.paragraphs.map((p, pIdx) => (
+                              <p key={pIdx} className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                                {p}
+                              </p>
+                            ))}
 
-                              {faq.points && faq.points.map((point, pIdx) => (
-                                <div key={pIdx} className="flex items-start gap-3">
-                                  <div className="w-5 h-5 rounded-full bg-red-100 text-[#BC0202] flex items-center justify-center shrink-0 mt-0.5">
-                                    <Check size={11} className="stroke-[3]" />
-                                  </div>
-                                  <span className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-                                    {point}
-                                  </span>
+                            {faq.points && faq.points.map((point, pIdx) => (
+                              <div key={pIdx} className="flex items-start gap-3">
+                                <div className="w-5 h-5 rounded-full bg-red-100 text-[#BC0202] flex items-center justify-center shrink-0 mt-0.5">
+                                  <Check size={11} className="stroke-[3]" />
                                 </div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="lg:col-span-4">
-                <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab} tabList={tabList} />
-              </div>
+                                <span className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                                  {point}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         )}
