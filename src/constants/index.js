@@ -30,7 +30,20 @@ export const NAVIGATION = {
   },
   links: [
     { label: "Home", path: "/" },
-    { label: "About", path: "/about.htm" },
+    { 
+      label: "About", 
+      path: "/about.htm",
+      isAboutMenu: true,
+      dropdown: [
+        { label: "Company Overview", path: "/about.htm?tab=overview", id: "overview" },
+        { label: "Director's Desk", path: "/about.htm?tab=director", id: "director" },
+        { label: "Product Benefits", path: "/about.htm?tab=benefits", id: "benefits" },
+        { label: "Safety & Health", path: "/about.htm?tab=safety", id: "safety" },
+        { label: "Home Delivery", path: "/about.htm?tab=delivery", id: "delivery" },
+        { label: "CSR & Community", path: "/about.htm?tab=csr", id: "csr" },
+        { label: "Safety Guide & FAQs", path: "/about.htm?tab=guide", id: "guide" }
+      ]
+    },
     { 
       label: "Products", 
       path: "/products",
@@ -81,7 +94,6 @@ export const NAVIGATION = {
     { label: "Gas Refills", path: "/gas-refills" },
     { label: "New Connections", path: "/new-connections" },
     { label: "Services", path: "/services" },
-    { label: "News", path: "/blog.htm" },
     { label: "Contact Us", path: "/contact.htm" }
   ]
 };
@@ -384,48 +396,40 @@ export const FOOTER = {
 };
 
 export const FAQ_PAGE = {
-  title: "Frequently Asked Questions",
-  subtitle: "Everything you need to know about exporting and courier services of medicines from India.",
+  title: "Safety Guide & Frequently Asked Questions",
+  subtitle: "Important points to remember about rubber tubing, pressure regulator, cylinder exchange, and LPG handling.",
   questions: [
     {
-      q: "Can we really send liquid medicines through courier?",
-      a: "Yes, absolute! We are certified to handle liquid medicines properly. We employ specialized insulation and secondary leakproof bubble padding layers to make sure fluids arrive 100% dry and intact without spilling."
+      q: "What are the points to remember about Rubber Tubing?",
+      a: "• It must be of approved quality.\n• It should be as short as possible.\n• It should be easily accessible for inspection.\n• Keep it away from heat and fire.\n• Push it so as to cover the full length of the nozzle.\n• Make sure it does not get heated by the burner, or is looped/twisted.\n• Clean it with wet cloth only. Don’t use soap to ease the tube over the nozzle.\n• Check it regularly for cracks, holes, softness, and porosity especially at the ends.\n• Replace tubing every 2 years if not earlier.\n• Do not cover rubber tubing by any other object or sleeve."
     },
     {
-      q: "What documents are compulsory for custom clearance?",
-      a: "The most important documents are a valid Rx prescription copy from a registered Doctor stating the exact drug names and chemical configurations, and a computerized, clean retail tax purchase invoice from the chemist matching the quantity exactly."
+      q: "The Pressure Regulator is Very Important Too",
+      a: "It is connected to the outlet of the cylinder valve. Its function is to regulate the pressure of the gas coming out of the cylinder and supply it at a constant pressure to the hot plate."
     },
     {
-      q: "How many months of medicines can I send in one shipment?",
-      a: "Under international customs guidelines, personal medical export is restricted to a maximum of 3 months (90 days) of supply per patient per shipment. We guide you carefully through sizing and limits."
+      q: "To Light The Burners",
+      a: "Turn the switch knob of the regulator anti-clockwise till it is in ON position. Hold a lighted matchstick near the burner head of the stove and turn the knob of the stove to ON position."
     },
     {
-      q: "What are the typical pricing ranges for international delivery?",
-      a: "Courier charges depend purely on destination country, payload weight, volumetric dimensions, and whether insulation/cooling boxes are needed. Use our instant quote form on the homepage for customized heavily discounted rates."
+      q: "If You Smell Gas?",
+      a: "• Do not operate electrical switches.\n• Ensure that stove knobs are in OFF position.\n• Do not light a matchstick even to detect the leakage of LPG.\n• Switch OFF the pressure regulator by turning the knob clockwise to the OFF position.\n• Open all doors and windows.\n• If the smell persists, call your C-Gas distributor.\n• An experienced person can detach the regulator. Fix the safety cap on the valve."
     },
     {
-      q: "Is insurance included for expensive lifesaving oncology drugs?",
-      a: "Yes! We provide complete parcel damage and loss insurance covers for sensitive, critical, and high-value drugs (e.g. oncology, chronic cardiac items) so your valuable health parcels are fully protected."
+      q: "Connecting the Filled Cylinder",
+      a: "• To remove the safety cap, press it down, PULL the cord and keeping it pulled, LIFT the cap off the valve of the cylinder.\n• Check whether sealing ring is in place inside the cylinder valve by feeling the same with the help of your little finger. Do not use the cylinder if the ring is missing, put back the safety cap and contact your distributor for replacement of cylinder.\n• To mount the regulator on the filled cylinder: Ensure switch knob of regulator is in OFF position. Grip regulator and pull up plastic bush. Place regulator vertically on valve and press down till its edge touches hexagon of valve with gentle swivel. Release black plastic bush and press down (distinct click sound). Regulator is now locked."
     },
     {
-      q: "How do I track my international medicine shipment?",
-      a: "We provide a live tracking AWB number the moment your package is dispatched. You can track your parcel's journey globally on our website until it safely reaches the destination address."
+      q: "Disconnecting The Empty Cylinder",
+      a: "• Put out all flames and fires including incense sticks, candle, lamp in kitchen and adjoining rooms.\n• Close all taps on cooking stove.\n• Turn switch knob of regulator from ON to OFF position.\n• Grip regulator and pull bush (black plastic locking ring) up and lift regulator with gentle swivel to detach.\n• Place delrin (plastic) safety cap on valve and press firmly until distinct click is heard."
     },
     {
-      q: "Do you offer door pickup services for medicines in India?",
-      a: "Yes, we provide free door pickup from most major cities and towns in India. Just book your shipment and our executive will safely collect the parcel and documents from your home."
+      q: "Safety Goes a Long Way (Good Habits for Your Safety)",
+      a: "• Do not wear nylon garments or similar fabric when cooking.\n• Never leave cooking appliance unattended when in use.\n• Never try to Repair, Adjust or inspect any part of C-Gas Installation or allow fake mechanics to do so. Allow authorized engineers to inspect installation once in two years.\n• Do not use long curtains on windows near cooker.\n• Insist on redelivery check of refill cylinder at delivery.\n• Do not install cooking appliance on floor or on bare wooden table.\n• Never use C-Gas in a poorly ventilated room or cellar/basement.\n• No other heating device placed within one meter.\n• Never leave regulator in ON position overnight."
     },
     {
-      q: "Can I send Ayurvedic and Homeopathic medicines?",
-      a: "Absolutely. We routinely ship Allopathic, Ayurvedic, Homeopathic, and Unani medicines. Just ensure you have the original doctor's prescription and pharmacy bill."
-    },
-    {
-      q: "Are there any restrictions on what medicines I can send?",
-      a: "Narcotics, sleeping pills, and restricted psychotropic substances cannot be shipped. All medicines must be legal for personal import in the destination country and accompanied by a valid Rx."
-    },
-    {
-      q: "What happens if my parcel is held by customs?",
-      a: "Our logistics team ensures full documentation compliance before dispatch. In rare cases of customs queries, our experts actively coordinate with local authorities to expedite clearance."
+      q: "General Safety Health And Environment",
+      a: "In C-GAS SAFETY, HEALTH & ENVIRONMENT is most important, and rightly so, in view of the ecological imbalance that the world is facing at large. C-Gas as a responsible Corporate Citizen is striving to strike a right balance between operating its business and maintaining a sense of harmony with its surroundings.\n\nIt is the PEOPLE who make their working environment safe by adopting safe work practices and it is these work practices that form a part of any Environment, Health & Safety (SH&E) Policy. The Objective of SH&E Policy is not only to bring about awareness, but to also promote a pollution free environment; and create a healthy surrounding and safe working conditions by constantly guiding all our actions within a consciously recognized and adopted set of standards.\n\nThe SAFETY, HEALTH & ENVIRONMENT Policy is a testimony to C-GAS’s Commitment towards protection of environment as we have a great responsibility to not only protect the health safety of our colleagues but also hand over a safe world to the future generation to come. We follow the SH&E Policy, not only in word but also in spirit, and actively contribute towards achieving its objectives."
     }
   ]
 };
@@ -520,10 +524,22 @@ export const BLOG_PAGE = {
 
 export const CONTACT_PAGE = {
   title: "Get In Touch",
-  subtitle: "Have questions about regulations, delivery times, or custom charges? We are ready to help.",
-  officeTitle: "Our Delhi Main Branch",
-  hoursTitle: "Work Timing",
-  socialsTitle: "Connect With Us"
+  subtitle: "Contact Conch Gas for its services via the phone number and email provided below, or you can reach our physical location using the address provided below.",
+  officeTitle: "Physical Location",
+  address: "Plot 155, Kira Road near Kira Road Police Station P.O.Box 26105 Kampala- Uganda",
+  phoneTitle: "Direct Phone Lines",
+  phones: [
+    "+256 200 900 010",
+    "+256 776 500 786",
+    "+256 703 978 198"
+  ],
+  emailTitle: "Email Inquiries",
+  emails: [
+    "sales@conchgas.com",
+    "info@conchgas.com"
+  ],
+  scheduleTitle: "Schedule",
+  schedule: "Monday – Sunday: 8:00 am – 18:00 pm"
 };
 
 // List of all 45 countries/routes

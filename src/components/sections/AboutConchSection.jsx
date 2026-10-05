@@ -63,43 +63,18 @@ export default function AboutConchSection({ title, subtitle, content }) {
   ];
 
   const CylindersShowcaseCard = () => (
-    <div className="relative bg-gradient-to-b from-slate-50 via-white to-red-50/40 border border-slate-200/90 rounded-3xl p-5 sm:p-8 shadow-xl overflow-hidden flex flex-col items-center group">
+    <div className="relative bg-gradient-to-b from-slate-50 via-white to-red-50/40 border border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-xl overflow-hidden flex flex-col items-center group">
       
-      {/* Top Card Badge */}
-      <div className="w-full flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-        <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#BC0202] animate-ping" />
-          <span className="text-[11px] font-black tracking-wider text-slate-800 uppercase font-display">
-            Conch Gas Complete Range
-          </span>
-        </div>
-        <span className="text-[10px] font-bold text-[#BC0202] bg-red-50 border border-red-200/60 px-2 py-0.5 rounded-full">
-          100% Certified Safe
-        </span>
-      </div>
-
-      {/* Floating Stat Pills */}
-      <div className="w-full flex justify-between gap-2 mb-2 z-10">
-        <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-xl px-2.5 py-1 shadow-xs text-[10px] font-bold text-slate-700">
-          <Sparkles className="w-3.5 h-3.5 text-[#BC0202]" />
-          <span>15 Yrs Experience</span>
-        </div>
-        <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-xl px-2.5 py-1 shadow-xs text-[10px] font-bold text-slate-700">
-          <Clock className="w-3.5 h-3.5 text-[#BC0202]" />
-          <span>24/7 Delivery</span>
-        </div>
-      </div>
-
-      {/* High-res Cylinders Lineup Image */}
+      {/* High-res Cylinders Lineup Image with breathing ambient glow */}
       <div className="relative my-2 py-2 flex items-center justify-center w-full min-h-[260px] sm:min-h-[320px]">
-        <div className="absolute inset-0 bg-radial from-red-500/10 via-transparent to-transparent blur-2xl rounded-full -z-10" />
+        <div className="absolute inset-0 bg-radial from-red-500/15 via-red-500/5 to-transparent blur-3xl rounded-full -z-10 animate-pulse-glow" />
         <img 
           src="/conch_cylinders_transparent.png" 
           alt="Conch Gas 40Kg, 6Kg, 13Kg, 45Kg Cylinders Range"
           width={480}
           height={470}
           loading="lazy"
-          className="w-full max-w-[340px] sm:max-w-[380px] h-auto object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-500 ease-out"
+          className="w-full max-w-[340px] sm:max-w-[380px] h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500 ease-out"
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = "/conch_cylinders_range.png";
@@ -109,16 +84,16 @@ export default function AboutConchSection({ title, subtitle, content }) {
 
       {/* Cylinder Capacities Tags */}
       <div className="w-full pt-4 border-t border-slate-100 flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap">
-        <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[10px] font-black tracking-wide">
+        <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[10px] font-black tracking-wide hover:scale-105 transition-transform shadow-xs">
           6 KG Compact
         </span>
-        <span className="px-3 py-1 bg-[#BC0202] text-white rounded-lg text-[10px] font-black tracking-wide shadow-xs">
+        <span className="px-3 py-1 bg-[#BC0202] text-white rounded-lg text-[10px] font-black tracking-wide shadow-xs hover:scale-105 transition-transform">
           13 KG Standard
         </span>
-        <span className="px-3 py-1 bg-slate-100 text-slate-800 rounded-lg text-[10px] font-bold tracking-wide border border-slate-200">
+        <span className="px-3 py-1 bg-slate-100 text-slate-800 rounded-lg text-[10px] font-bold tracking-wide border border-slate-200 hover:scale-105 transition-transform">
           40 KG Commercial
         </span>
-        <span className="px-3 py-1 bg-slate-100 text-slate-800 rounded-lg text-[10px] font-bold tracking-wide border border-slate-200">
+        <span className="px-3 py-1 bg-slate-100 text-slate-800 rounded-lg text-[10px] font-bold tracking-wide border border-slate-200 hover:scale-105 transition-transform">
           45 KG Bulk
         </span>
       </div>
@@ -134,76 +109,79 @@ export default function AboutConchSection({ title, subtitle, content }) {
   );
 
   return (
-    <section id="about-conch-section" className="relative py-16 md:py-24 bg-gradient-to-b from-white via-slate-50/70 to-white overflow-hidden font-sans border-b border-slate-200/60">
+    <section id="about-conch-section" className="relative py-8 md:py-14 bg-gradient-to-b from-white via-slate-50/70 to-white overflow-hidden font-sans border-b border-slate-200/60">
       
       {/* Background Decorative Ambient Glows */}
-      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 -right-48 w-96 h-96 bg-[#830000]/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-glow" />
+      <div className="absolute bottom-10 -right-48 w-96 h-96 bg-[#830000]/5 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-glow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           
           {/* ═══════════════════════════════════════
               LEFT COLUMN: CONTENT & FEATURES
           ═══════════════════════════════════════ */}
           <motion.div 
-            className="lg:col-span-7 space-y-6"
+            className="lg:col-span-7 space-y-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-60px" }}
           >
             {/* Top Eyebrow Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-[#BC0202]/20 shadow-2xs">
-              <Flame className="w-4 h-4 text-[#BC0202] fill-[#BC0202]" />
-              <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202]">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-[#BC0202]/20 shadow-2xs">
+              <Flame className="w-3.5 h-3.5 text-[#BC0202] fill-[#BC0202]" />
+              <span className="text-[10.5px] font-black uppercase tracking-widest text-[#BC0202]">
                 CONCH GAS • 15 YEARS OF EXCELLENCE
               </span>
             </motion.div>
 
             {/* Main Headline & Subheading */}
-            <motion.div variants={itemVariants} className="space-y-3">
-              <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-slate-900 tracking-tight leading-[1.12] font-display">
+            <motion.div variants={itemVariants} className="space-y-2.5">
+              <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.14] font-display">
                 AFFORDABLE GAS <br className="hidden sm:block" />
                 <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">
                   NOW IN UGANDA
                 </span>
               </h2>
-              <p className="text-slate-600 text-sm sm:text-[15px] md:text-base font-medium leading-relaxed max-w-2xl">
+              <p className="text-slate-600 text-xs sm:text-sm md:text-[15px] font-medium leading-relaxed max-w-2xl">
                 Conch Gas Ltd is a part of <span className="text-slate-900 font-bold">Conch Group Limited</span> and it is based on long-term experience and historical achievements in the fields of construction and contracting for a period of <span className="text-[#BC0202] font-bold">15 years</span>.
               </p>
             </motion.div>
 
             {/* Mobile View Only: Cylinders Showcase Card rendered right after heading/subheading */}
-            <motion.div variants={itemVariants} className="block lg:hidden my-6">
+            <motion.div variants={itemVariants} className="block lg:hidden my-4">
               <CylindersShowcaseCard />
             </motion.div>
 
             {/* 3 Modern Feature Cards */}
-            <motion.div variants={itemVariants} className="space-y-3.5 pt-2">
+            <motion.div variants={itemVariants} className="space-y-2.5 pt-1">
               {features.map((item) => {
                 const Icon = item.icon;
                 return (
                   <div 
                     key={item.id}
-                    className="group relative bg-white border border-slate-200/80 hover:border-[#BC0202]/40 rounded-2xl p-4 sm:p-5 transition-all duration-300 shadow-xs hover:shadow-lg hover:-translate-y-0.5 flex items-start gap-4"
+                    className="group relative bg-white border border-slate-200/90 hover:border-[#BC0202]/40 rounded-2xl p-3 sm:p-4 transition-all duration-300 shadow-xs hover:shadow-lg hover:-translate-y-0.5 flex items-start gap-3.5 overflow-hidden"
                   >
+                    {/* Subtle Top-Border Hover Highlight */}
+                    <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[#BC0202] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                     {/* Icon Box */}
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-red-50 to-red-100/70 border border-red-200/60 flex items-center justify-center text-[#BC0202] group-hover:scale-110 group-hover:bg-gradient-to-r group-hover:from-[#830000] group-hover:to-[#BC0202] group-hover:text-white transition-all duration-300 shadow-2xs">
-                      <Icon className="w-5 h-5 stroke-[2.2]" />
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-red-50 to-red-100/70 border border-red-200/60 flex items-center justify-center text-[#BC0202] group-hover:scale-110 group-hover:bg-gradient-to-r group-hover:from-[#830000] group-hover:to-[#BC0202] group-hover:text-white transition-all duration-300 shadow-2xs">
+                      <Icon className="w-4 h-4 stroke-[2.2]" />
                     </div>
 
                     {/* Text Details */}
                     <div className="flex-grow">
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <h3 className="text-base font-extrabold text-slate-900 group-hover:text-[#BC0202] transition-colors font-display tracking-tight">
+                      <div className="flex items-center justify-between gap-2 mb-0.5">
+                        <h3 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-[#BC0202] transition-colors font-display tracking-tight">
                           {item.title}
                         </h3>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">
+                        <span className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">
                           {item.badge}
                         </span>
                       </div>
-                      <p className="text-xs sm:text-[13px] text-slate-500 font-medium leading-relaxed">
+                      <p className="text-xs sm:text-[12.5px] text-slate-500 font-medium leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -216,7 +194,7 @@ export default function AboutConchSection({ title, subtitle, content }) {
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3.5 pt-3">
               <Link 
                 to="/calculator.htm"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] hover:brightness-110 text-white font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="btn-sheen inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] hover:brightness-110 text-white font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
                 <span>Order Gas Online Now</span>
                 <ArrowRight className="w-4 h-4" />
@@ -224,7 +202,7 @@ export default function AboutConchSection({ title, subtitle, content }) {
               
               <a 
                 href="tel:+256776500786"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs uppercase tracking-wider border border-slate-200 hover:border-slate-300 shadow-xs transition-all duration-200"
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs uppercase tracking-wider border border-slate-200 hover:border-slate-300 shadow-xs hover:scale-[1.01] active:scale-[0.99] transition-all duration-200"
               >
                 <PhoneCall className="w-4 h-4 text-[#BC0202]" />
                 <span>Call: +256 776 500 786</span>

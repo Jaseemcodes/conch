@@ -20,7 +20,7 @@ export const BEST_SELLER_PRODUCTS = [
     priceNum: 48000,
     weight: "6 KG",
     category: "LPG Cooking Gas",
-    image: "/bestseller_6kg.png",
+    image: "/6kg.jpg",
     link: "/products/6kg-gas",
     tag: "Compact Domestic"
   },
@@ -31,7 +31,7 @@ export const BEST_SELLER_PRODUCTS = [
     priceNum: 98000,
     weight: "13 KG",
     category: "LPG Cooking Gas",
-    image: "/bestseller_13kg.png",
+    image: "/13kg.jpg",
     link: "/products/13kg-gas",
     tag: "Family Standard"
   },
@@ -42,7 +42,7 @@ export const BEST_SELLER_PRODUCTS = [
     priceNum: 280000,
     weight: "45 KG",
     category: "Commercial LPG",
-    image: "/bestseller_45kg.png",
+    image: "/45kg.jpg",
     link: "/products/45kg-gas",
     tag: "Commercial Heavy"
   },
@@ -165,7 +165,7 @@ export default function ConchBestSellerSection({ title, subtitle, content }) {
   return (
     <section 
       id="bestseller-section" 
-      className="py-16 md:py-24 bg-gradient-to-b from-white via-slate-50/60 to-white relative overflow-hidden font-sans border-b border-slate-200/70"
+      className="py-8 md:py-14 bg-gradient-to-b from-white via-slate-50/60 to-white relative overflow-hidden font-sans border-b border-slate-200/70"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 -right-40 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none -z-10" />
@@ -176,14 +176,7 @@ export default function ConchBestSellerSection({ title, subtitle, content }) {
         {/* ═══════════════════════════════════════
             SECTION HEADER
         ═══════════════════════════════════════ */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-[#BC0202]/20 shadow-2xs">
-            <Flame className="w-3.5 h-3.5 text-[#BC0202] fill-[#BC0202]" />
-            <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202]">
-              CONCH GAS
-            </span>
-          </div>
-
+        <div className="text-center max-w-3xl mx-auto space-y-2 sm:space-y-3 mb-7 md:mb-10">
           <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-slate-900 tracking-tight leading-tight font-display">
             OUR{" "}
             <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">
@@ -214,22 +207,25 @@ export default function ConchBestSellerSection({ title, subtitle, content }) {
                 y: -6, 
                 boxShadow: "0 20px 30px -10px rgba(188, 2, 2, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
               }}
-              className="group relative bg-white border border-slate-200/90 hover:border-[#BC0202]/60 rounded-3xl p-5 flex flex-col justify-between transition-all duration-300 shadow-xs"
+              className="group relative bg-white border border-slate-200/90 hover:border-[#BC0202]/50 rounded-3xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-300 shadow-xs overflow-hidden"
             >
+              {/* Subtle Top-Border Hover Highlight */}
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#BC0202] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+
               <div>
                 {/* Top Category / Tag Badge */}
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
+                  <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
                     {item.tag}
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-0.5 rounded-full">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     In Stock
                   </span>
                 </div>
 
                 {/* Product Image Showcase Container */}
-                <div className="w-full h-44 sm:h-48 flex items-center justify-center p-3 relative overflow-hidden rounded-2xl bg-slate-50/60 group-hover:bg-red-50/20 transition-colors duration-300 mb-4">
+                <div className="w-full h-44 sm:h-48 flex items-center justify-center p-3 relative overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50/80 via-slate-50/40 to-white group-hover:bg-red-50/20 transition-colors duration-300 mb-4 border border-slate-100">
                   <img 
                     src={item.image} 
                     alt={item.name} 
@@ -257,7 +253,7 @@ export default function ConchBestSellerSection({ title, subtitle, content }) {
               <div className="space-y-2 pt-2 border-t border-slate-100">
                 <button
                   onClick={() => handleOrder(item)}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] hover:brightness-110 text-white font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="btn-sheen w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] hover:brightness-110 text-white font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <ShoppingCart size={14} />
                   <span>ORDER NOW</span>
@@ -267,9 +263,11 @@ export default function ConchBestSellerSection({ title, subtitle, content }) {
                   href={`https://wa.me/256776500786?text=${encodeURIComponent(`Hello Conch Gas! I want to order ${item.name} at ${item.price}. Please arrange delivery to Kampala.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-[#25D366] text-slate-600 hover:text-white border border-slate-200/80 hover:border-[#25D366] font-bold text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-[#25D366] text-slate-700 hover:text-white border border-slate-200/80 hover:border-[#25D366] font-bold text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <MessageCircle size={13} className="fill-current" />
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.012 2c-5.506 0-9.988 4.482-9.988 9.988 0 1.758.459 3.473 1.332 4.988L2 22l5.188-1.36c1.47.8 3.125 1.22 4.82 1.22 5.507 0 9.989-4.482 9.989-9.989C22 6.482 17.519 2 12.012 2zm0 1.636c4.6 0 8.353 3.753 8.353 8.353 0 4.6-3.753 8.353-8.353 8.353-1.503 0-2.981-.403-4.28-1.168l-.307-.183-3.085.808.823-3.007-.202-.32a8.312 8.312 0 0 1-1.272-4.483c0-4.6 3.753-8.353 8.353-8.353zm-2.02 2.76c-.22 0-.41.082-.572.245-.253.252-.647.76-.647 1.644s.642 1.738.736 1.862c.095.124 1.238 1.892 3.013 2.66.422.183.752.292 1.01.374.424.135.81.116 1.114.07.34-.05.992-.405 1.132-.796.14-.39.14-.725.097-.796-.042-.07-.156-.112-.328-.198-.172-.086-1.02-.503-1.178-.56-.157-.058-.27-.086-.385.086-.114.172-.44.56-.54.673-.1.112-.2.127-.37.04-.173-.085-.73-.27-1.392-.86-.514-.457-.86-.983-.962-1.155-.102-.172-.01-.265.076-.35.077-.076.172-.2.258-.3.086-.1.114-.17.172-.284.057-.114.028-.214-.014-.3-.042-.085-.385-.928-.528-1.272-.138-.335-.28-.29-.385-.295-.102-.005-.22-.005-.34-.005z"/>
+                  </svg>
                   <span>Quick WhatsApp Order</span>
                 </a>
               </div>
@@ -280,7 +278,7 @@ export default function ConchBestSellerSection({ title, subtitle, content }) {
         {/* ═══════════════════════════════════════
             BOTTOM ASSURANCE BAR
         ═══════════════════════════════════════ */}
-        <div className="mt-12 pt-8 border-t border-slate-200/70 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-bold text-slate-600">
+        <div className="mt-6 pt-5 border-t border-slate-200/70 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-bold text-slate-600">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#BC0202]" />
             <span>100% Certified Safe & Factory Sealed</span>

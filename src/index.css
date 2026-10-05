@@ -218,13 +218,81 @@ code, pre, .font-mono {
   padding-right: 0 !important;
 }
 
-/* CSS keyframe animations to replace motion.js in LCP hero section */
+/* CSS keyframe animations for modern high-performance micro-interactions */
 @keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-50px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translate3d(-30px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(50px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translate3d(30px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes sheenMove {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.05);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Shimmer Sheen effect for premium buttons */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  transform: translateX(-120%) skewX(-20deg);
+  transition: none;
+  pointer-events: none;
+}
+
+.btn-sheen:hover::after {
+  animation: sheenMove 1s ease-in-out forwards;
+}
+

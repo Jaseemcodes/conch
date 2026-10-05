@@ -41,20 +41,24 @@ export default function TestimonialsSection({ title, subtitle }) {
   return (
     <section 
       id="testimonials-section" 
-      className="py-16 md:py-24 relative overflow-hidden bg-[#F4F6F8] border-t border-slate-200/70"
+      className="py-8 md:py-14 relative overflow-hidden bg-gradient-to-b from-[#F4F6F8] via-white to-[#F4F6F8] border-t border-slate-200/70 font-sans"
     >
+      {/* Background Ambient Glows */}
+      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-96 bg-red-500/[0.03] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 right-1/3 -translate-y-1/2 w-96 h-96 bg-amber-500/[0.03] rounded-full blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#BC0202]/10 border border-[#BC0202]/20 text-[#BC0202] text-xs font-black uppercase tracking-widest mb-3">
+        <div className="text-center mb-6 md:mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#BC0202]/10 border border-[#BC0202]/20 text-[#BC0202] text-xs font-black uppercase tracking-widest mb-2 shadow-2xs">
             <MessageSquareQuote size={14} />
             <span>{displayLabel}</span>
           </div>
-          <h2 id="testimonials-heading" className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          <h2 id="testimonials-heading" className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight font-display">
             {displayTitle}
           </h2>
-          <div className="w-20 h-1.5 bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] mx-auto rounded-full mt-4" />
+          <div className="w-16 h-1 bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] mx-auto rounded-full mt-3" />
         </div>
 
         {/* 3-Card Carousel Display */}
@@ -64,7 +68,7 @@ export default function TestimonialsSection({ title, subtitle }) {
               const item = testimonialsList[idx];
               if (!item) return null;
 
-              // Middle card is the dark featured card matching screenshot
+              // Middle card is the dark featured card
               const isDark = activePos === 1;
 
               // Responsive visibility: On mobile 1 card, on md+ all 3
@@ -79,48 +83,51 @@ export default function TestimonialsSection({ title, subtitle }) {
                   key={`${item._id || idx}-${activePos}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className={`rounded-2xl p-7 sm:p-9 text-center flex flex-col justify-between min-h-[380px] sm:min-h-[420px] transition-all duration-300 ${
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  className={`rounded-3xl p-5 sm:p-7 text-center flex flex-col justify-between min-h-[300px] sm:min-h-[340px] transition-all duration-300 relative overflow-hidden ${
                     isDark
-                      ? "bg-[#181818] text-white shadow-2xl ring-1 ring-white/10 md:scale-105 z-10"
-                      : "bg-white text-slate-800 shadow-lg shadow-slate-200/50 border border-slate-100"
+                      ? "bg-gradient-to-b from-[#18181B] via-[#121214] to-[#0A0A0B] text-white shadow-2xl ring-1 ring-white/10 md:scale-105 z-10 border border-red-500/20"
+                      : "bg-white/95 backdrop-blur-sm text-slate-800 shadow-md hover:shadow-xl border border-slate-200/90 hover:border-[#BC0202]/30"
                   } ${displayClasses}`}
                 >
                   {/* Top: Stars & Title */}
                   <div className="flex flex-col items-center">
                     {/* 5 Stars */}
-                    <div className="flex justify-center items-center gap-1.5 mb-5 text-[#F59E0B]">
+                    <div className="flex justify-center items-center gap-1.5 mb-3 sm:mb-4 text-[#F59E0B]">
                       {Array.from({ length: 5 }).map((_, starIdx) => (
                         <Star 
                           key={starIdx} 
-                          size={22} 
-                          className={starIdx < (item.rating || 5) ? "fill-[#F59E0B] stroke-[#F59E0B]" : "fill-slate-300 stroke-slate-300"} 
+                          size={18} 
+                          className={starIdx < (item.rating || 5) ? "fill-[#F59E0B] stroke-[#F59E0B] drop-shadow-xs" : "fill-slate-300 stroke-slate-300"} 
                         />
                       ))}
                     </div>
 
                     {/* Review Title */}
-                    <h3 className={`text-base sm:text-lg font-black uppercase tracking-wide mb-4 ${
+                    <h3 className={`text-base sm:text-lg font-black uppercase tracking-wide mb-2 sm:mb-2.5 font-display ${
                       isDark ? "text-white" : "text-slate-900"
                     }`}>
                       {item.title || "GENUINE QUALITY"}
                     </h3>
 
                     {/* Review Body */}
-                    <p className={`text-sm sm:text-[14.5px] leading-relaxed font-normal px-1 sm:px-2 ${
+                    <p className={`text-xs sm:text-[14px] leading-relaxed font-normal px-1 sm:px-2 ${
                       isDark ? "text-slate-300" : "text-slate-600"
                     }`}>
-                      {item.review}
+                      “{item.review}”
                     </p>
                   </div>
 
-                  {/* Bottom: Author Name */}
-                  <div className="pt-6 mt-4 border-t border-transparent">
-                    <h4 className={`text-sm sm:text-base font-extrabold uppercase tracking-wider ${
+                  {/* Bottom: Author Name & Verified Badge */}
+                  <div className="pt-4 mt-3 border-t border-slate-100/10">
+                    <h4 className={`text-sm sm:text-base font-black uppercase tracking-wider ${
                       isDark ? "text-white" : "text-slate-900"
                     }`}>
                       {item.name}
                     </h4>
+                    <span className="text-[10px] font-bold text-emerald-500 tracking-wider uppercase block mt-0.5">
+                      Verified Customer • Kampala
+                    </span>
                   </div>
                 </motion.div>
               );
@@ -131,29 +138,29 @@ export default function TestimonialsSection({ title, subtitle }) {
           <button
             id="slider-prev-btn"
             onClick={prevTestimonial}
-            className="absolute -left-2 sm:-left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white text-slate-800 hover:text-[#BC0202] border border-slate-200 shadow-xl hover:shadow-2xl flex items-center justify-center p-0 cursor-pointer hover:scale-110 active:scale-95 transition-all z-20 group"
+            className="absolute -left-2 sm:-left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white text-slate-800 hover:text-[#BC0202] border border-slate-200 shadow-xl hover:shadow-2xl flex items-center justify-center p-0 cursor-pointer hover:scale-110 active:scale-95 transition-all z-20 group"
             aria-label="Previous testimonial"
           >
-            <ChevronLeft size={22} className="group-hover:-translate-x-0.5 transition-transform" />
+            <ChevronLeft size={20} className="group-hover:-translate-x-0.5 transition-transform" />
           </button>
           <button
             id="slider-next-btn"
             onClick={nextTestimonial}
-            className="absolute -right-2 sm:-right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white text-slate-800 hover:text-[#BC0202] border border-slate-200 shadow-xl hover:shadow-2xl flex items-center justify-center p-0 cursor-pointer hover:scale-110 active:scale-95 transition-all z-20 group"
+            className="absolute -right-2 sm:-right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white text-slate-800 hover:text-[#BC0202] border border-slate-200 shadow-xl hover:shadow-2xl flex items-center justify-center p-0 cursor-pointer hover:scale-110 active:scale-95 transition-all z-20 group"
             aria-label="Next testimonial"
           >
-            <ChevronRight size={22} className="group-hover:translate-x-0.5 transition-transform" />
+            <ChevronRight size={20} className="group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
 
         {/* Carousel Pagination Indicator */}
-        <div className="flex items-center justify-center gap-2 mt-8">
+        <div className="flex items-center justify-center gap-2 mt-5">
           {testimonialsList.map((_, dotIdx) => (
             <button
               key={dotIdx}
               onClick={() => setTestimonialIdx(dotIdx)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                dotIdx === testimonialIdx ? "w-8 bg-[#BC0202]" : "w-2.5 bg-slate-300 hover:bg-slate-400"
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                dotIdx === testimonialIdx ? "w-8 bg-gradient-to-r from-[#830000] to-[#BC0202] shadow-xs" : "w-2.5 bg-slate-300 hover:bg-slate-400"
               }`}
               aria-label={`Go to slide ${dotIdx + 1}`}
             />

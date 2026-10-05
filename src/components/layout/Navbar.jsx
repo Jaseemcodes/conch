@@ -1,11 +1,36 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown, ArrowUpRight, Globe, MapPin } from "lucide-react";
+import { 
+  Menu, 
+  X, 
+  ChevronDown, 
+  ArrowUpRight, 
+  Globe, 
+  MapPin,
+  ArrowRight,
+  Building2,
+  Users,
+  Zap,
+  ShieldCheck,
+  Truck,
+  HeartHandshake,
+  HelpCircle
+} from "lucide-react";
 import { NAVIGATION } from "../../constants";
 import Logo from "./Logo";
 import { motion, AnimatePresence } from "motion/react";
 import { ALL_COUNTRIES } from "../../constants";
 import api from "../../utils/api";
+
+const ABOUT_ICON_MAP = {
+  overview: Building2,
+  director: Users,
+  benefits: Zap,
+  safety: ShieldCheck,
+  delivery: Truck,
+  csr: HeartHandshake,
+  guide: HelpCircle,
+};
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -172,8 +197,45 @@ export default function Navbar() {
                     </div>
                   )}
 
+                  {/* ── Desktop Dropdown: Custom Premium About Dropdown (matches screenshot) ── */}
+                  {link.isAboutMenu && (
+                    <div className="absolute top-full left-0 mt-2.5 w-72 bg-white shadow-2xl rounded-2xl border border-slate-200/90 border-t-[3px] border-t-[#BC0202] opacity-0 invisible translate-y-2 scale-98 origin-top group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out z-50 p-3.5">
+                      {/* Dropdown Header */}
+                      <div className="flex items-center gap-2 pb-2.5 mb-2 border-b border-slate-100 px-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#BC0202]" />
+                        <span className="text-xs font-black tracking-wider uppercase text-slate-900 font-display">
+                          CONCH GAS LTD
+                        </span>
+                      </div>
+
+                      {/* Dropdown Items */}
+                      <div className="space-y-1">
+                        {link.dropdown?.map((dropItem, dIdx) => {
+                          const IconComp = ABOUT_ICON_MAP[dropItem.id] || Building2;
+                          return (
+                            <Link
+                              key={dIdx}
+                              to={dropItem.path}
+                              onClick={closeAll}
+                              className="group/item flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:text-[#BC0202] hover:bg-red-50/70 hover:border-l-4 hover:border-l-[#BC0202] transition-all duration-150 border-l-4 border-l-transparent"
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <span className="text-[#BC0202] text-[11px] font-black opacity-75 group-hover/item:opacity-100">
+                                  ›
+                                </span>
+                                <IconComp size={15} className="text-slate-500 group-hover/item:text-[#BC0202] transition-colors" />
+                                <span className="tracking-tight">{dropItem.label}</span>
+                              </div>
+                              <ArrowRight size={12} className="opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 text-[#BC0202] transition-all" />
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
                   {/* ── Desktop Dropdown: Standard Dropdowns ── */}
-                  {!link.isMegaMenu && link.dropdown && (
+                  {!link.isMegaMenu && !link.isAboutMenu && link.dropdown && (
                     <div className="absolute top-full left-0 mt-2 w-52 bg-white shadow-xl rounded-xl border border-slate-100 opacity-0 invisible translate-y-2 scale-95 origin-top group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 transition-all duration-300 ease-out z-50 flex flex-col py-2">
                       {link.dropdown.map((dropItem, dIdx) => (
                         <Link key={dIdx} to={dropItem.path}
@@ -314,8 +376,51 @@ export default function Navbar() {
                       </AnimatePresence>
                     )}
 
+                    {/* ── Mobile About Menu ── */}
+                    {link.isAboutMenu && (
+                      <AnimatePresence initial={false}>
+                        {isDropOpen && (
+                          <motion.div
+                            key={`mobile-about-${idx}`}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ type: "tween", duration: 0.25, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-1.5 ml-2 mr-1 mb-2 p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-1.5">
+                              <div className="flex items-center gap-2 pb-2 mb-1 border-b border-slate-200/80 px-1">
+                                <span className="w-2 h-2 rounded-full bg-[#BC0202]" />
+                                <span className="text-[11px] font-black tracking-wider uppercase text-slate-800">
+                                  CONCH GAS LTD
+                                </span>
+                              </div>
+                              {link.dropdown?.map((item, dIdx) => {
+                                const IconComp = ABOUT_ICON_MAP[item.id] || Building2;
+                                return (
+                                  <Link
+                                    key={dIdx}
+                                    to={item.path}
+                                    onClick={closeAll}
+                                    className="flex items-center justify-between px-3 py-2.5 bg-white hover:bg-red-50 rounded-xl border border-slate-200/70 transition-colors shadow-2xs"
+                                  >
+                                    <div className="flex items-center gap-2.5 text-xs font-bold text-slate-800">
+                                      <span className="text-[#BC0202] text-[10px] font-black">›</span>
+                                      <IconComp size={14} className="text-[#BC0202]" />
+                                      <span>{item.label}</span>
+                                    </div>
+                                    <ArrowRight size={12} className="text-slate-400" />
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    )}
+
                     {/* ── Mobile Standard Dropdown Menu ── */}
-                    {!link.isMegaMenu && link.dropdown && (
+                    {!link.isMegaMenu && !link.isAboutMenu && link.dropdown && (
                       <AnimatePresence initial={false}>
                         {isDropOpen && (
                           <motion.div

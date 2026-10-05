@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "motion/react";
 import { CONTACT_PAGE, TOP_BAR, FOOTER } from "../constants";
-import { MapPin, Mail, Phone, Send, ThumbsUp, ArrowLeft } from "lucide-react";
+import { MapPin, Mail, Phone, Send, ThumbsUp, ArrowLeft, Clock } from "lucide-react";
 import DOMPurify from "dompurify";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
@@ -24,25 +24,37 @@ const DEFAULT_SECTIONS = [
   {
     key: "contact-intro",
     title: "Get in Touch With Us",
-    subtitle: "Have questions about shipping prescription drugs internationally? Get in touch with our team.",
+    subtitle: "Contact Conch Gas for its services via the phone number and email provided below, or you can reach our physical location using the address provided below.",
     isActive: true,
     content: {
-      officeTitle: "Delhi Office Headquarter",
-      address: "Shop No. 7, 1st Floor, Nizamuddin West Market, Block C, New Delhi, Delhi-110013",
+      officeTitle: "Physical Location",
+      address: "Plot 155, Kira Road near Kira Road Police Station P.O.Box 26105 Kampala- Uganda",
       emailTitle: "Direct Email Inquiry",
-      email: "couriermedicines@gmail.com",
-      hoursTitle: "Office Timing Hours",
-      hours: "Mon - Sat 09:00 AM - 07:00 PM",
-      phone: "+91-8882691919"
+      email: "sales@conchgas.com",
+      emails: ["sales@conchgas.com", "info@conchgas.com"],
+      phoneTitle: "Direct Phone Lines",
+      phone: "+256 200 900 010",
+      phones: ["+256 200 900 010", "+256 776 500 786", "+256 703 978 198"],
+      hoursTitle: "Schedule",
+      hours: "Mon - Sun: 8:00 am - 18:00 pm",
+      schedule: [
+        { day: "Monday", hours: "8:00 am - 18:00 pm" },
+        { day: "Tuesday", hours: "8:00 am - 18:00 pm" },
+        { day: "Wednesday", hours: "8:00 am - 18:00 pm" },
+        { day: "Thursday", hours: "8:00 am - 18:00 pm" },
+        { day: "Friday", hours: "8:00 am - 18:00 pm" },
+        { day: "Saturday", hours: "8:00 am - 18:00 pm" },
+        { day: "Sunday", hours: "8:00 am - 18:00 pm" }
+      ]
     }
   },
   {
     key: "contact-map",
-    title: "Visit Our Central Logistics Hub",
-    subtitle: "Conveniently located in the heart of New Delhi. Drop by for in-person support, custom clearances, and international cargo drop-offs.",
+    title: "Visit Our Physical Location",
+    subtitle: "Conveniently located at Plot 155, Kira Road near Kira Road Police Station, Kampala - Uganda.",
     isActive: true,
     content: {
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.3440514113277!2d77.2427166743274!3d28.58945367568826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce363f1a38537%3A0x1323196e318840f6!2sCourier%20Medicines%20International%20Services!5e0!3m2!1sen!2sin!4v1781698839861!5m2!1sen!2sin"
+      mapEmbedUrl: "https://maps.google.com/maps?q=Plot%20155%2C%20Kira%20Road%20near%20Kira%20Road%20Police%20Station%20Kampala%2C%20Uganda&t=&z=15&ie=UTF8&iwloc=&output=embed"
     }
   }
 ];
@@ -53,7 +65,7 @@ export default function Contact() {
   const [isLoading, setIsLoading] = useState(true);
   const [sections, setSections] = useState([]);
   const [apiLoaded, setApiLoaded] = useState(false);
-  const [countryCode, setCountryCode] = useState("+91");
+  const [countryCode, setCountryCode] = useState("+256");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -79,16 +91,16 @@ export default function Contact() {
         seoSec.metaViewTitle,
         seoSec.metaDescription,
         seoSec.metaKeywords,
-        "Contact Us - Courier Medicine International",
-        "Get in touch with Courier Medicine team for international medicine courier, custom clearance, rates, and tracking inquiries.",
-        "contact courier medicine, medicine courier phone number, courier medicine office Delhi"
+        "Contact Us - Conch Gas Uganda",
+        "Contact Conch Gas for LPG cylinder delivery, industrial gases, bulk gas solutions, and customer support in Kampala, Uganda.",
+        "conch gas contact, lpg gas uganda, gas cylinder delivery kampala, kira road gas depot"
       );
     }
   }, [sections]);
 
   const getSection = (key) => {
     const sec = sections.find(s => s.key === key);
-    return sec || { isActive: false };
+    return sec || DEFAULT_SECTIONS.find(s => s.key === key) || { isActive: false };
   };
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -249,14 +261,17 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-center mb-10 max-w-3xl mx-auto"
               >
-                <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-4">
-                  {getSection("contact-intro")?.title}
+                <span className="inline-block text-xs font-black uppercase tracking-widest text-primary bg-red-50 px-3.5 py-1.5 rounded-full mb-3 border border-red-100">
+                  Contact Us
+                </span>
+                <h2 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-3 font-display">
+                  {getSection("contact-intro")?.title || "Get in Touch With Us"}
                 </h2>
                 <div 
-                  className="max-w-xl mx-auto text-sm text-slate-500 font-sans leading-relaxed font-medium"
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getSection("contact-intro")?.subtitle) }}
+                  className="max-w-2xl mx-auto text-sm md:text-base text-slate-600 font-sans leading-relaxed font-medium"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getSection("contact-intro")?.subtitle || "Contact Conch Gas for its services via the phone number and email provided below, or you can reach our physical location using the address provided below.") }}
                 />
               </motion.div>
             )}
@@ -267,67 +282,103 @@ export default function Contact() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.1 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mb-16 mt-20 md:mt-28"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mb-16 mt-8 md:mt-12"
             >
               
               {/* Left Panel: Info Cards */}
               {getSection("contact-intro")?.isActive && (
                 <div className="lg:col-span-4 space-y-4">
-                  <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-2">
-                    Branch & Contact Details
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1 px-1">
+                    Conch Gas Details
                   </h3>
 
-                  {/* Address */}
-                  <motion.div variants={leftCardVariants} whileHover={{ y: -7, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/60 p-5 rounded-3xl space-y-2 shadow-sm hover:shadow-lg hover:border-slate-300 transition-shadow">
-                    <span className="inline-flex p-2.5 bg-secondary/10 text-secondary rounded-xl">
-                      <MapPin size={20} />
-                    </span>
-                    <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
-                      {getSection("contact-intro")?.content?.officeTitle || "Delhi Office Headquarter"}
-                    </h4>
+                  {/* Physical Location */}
+                  <motion.div variants={leftCardVariants} whileHover={{ y: -6, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/70 p-5 rounded-3xl space-y-2.5 shadow-sm hover:shadow-lg hover:border-slate-300 transition-all">
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex p-2.5 bg-red-50 text-primary rounded-xl flex-shrink-0">
+                        <MapPin size={20} />
+                      </span>
+                      <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider font-display">
+                        {getSection("contact-intro")?.content?.officeTitle || "Physical Location"}
+                      </h4>
+                    </div>
                     <div 
-                      className="text-sm text-slate-500 leading-relaxed font-medium"
-                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getSection("contact-intro")?.content?.address) }}
+                      className="text-sm text-slate-600 leading-relaxed font-medium pt-1"
+                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getSection("contact-intro")?.content?.address || "Plot 155, Kira Road near Kira Road Police Station P.O.Box 26105 Kampala- Uganda") }}
                     />
                   </motion.div>
 
-                  {/* Email Contact */}
-                  <motion.div variants={leftCardVariants} whileHover={{ y: -7, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/60 p-5 rounded-3xl space-y-2 shadow-sm hover:shadow-lg hover:border-slate-300 transition-shadow">
-                    <span className="inline-flex p-2.5 bg-primary/10 text-primary rounded-xl">
-                      <Mail size={20} />
-                    </span>
-                    <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
-                      {getSection("contact-intro")?.content?.emailTitle || "Direct Email Inquiry"}
-                    </h4>
-                    <a
-                      href={`mailto:${getSection("contact-intro")?.content?.email}`}
-                      className="text-sm font-bold text-slate-600 hover:text-primary block transition-colors mt-1"
-                    >
-                      {getSection("contact-intro")?.content?.email}
-                    </a>
+                  {/* Direct Phone Lines */}
+                  <motion.div variants={leftCardVariants} whileHover={{ y: -6, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/70 p-5 rounded-3xl space-y-2.5 shadow-sm hover:shadow-lg hover:border-slate-300 transition-all">
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex p-2.5 bg-red-50 text-primary rounded-xl flex-shrink-0">
+                        <Phone size={20} />
+                      </span>
+                      <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider font-display">
+                        {getSection("contact-intro")?.content?.phoneTitle || "Direct Phone Lines"}
+                      </h4>
+                    </div>
+                    <div className="space-y-1.5 pt-1">
+                      {["+256 200 900 010", "+256 776 500 786", "+256 703 978 198"].map((phoneNum, idx) => (
+                        <a
+                          key={idx}
+                          href={`tel:${phoneNum.replace(/\s+/g, '')}`}
+                          className="flex items-center gap-2.5 text-sm font-bold text-slate-700 hover:text-primary transition-colors group"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0 group-hover:scale-125 transition-transform" />
+                          <span>{phoneNum}</span>
+                        </a>
+                      ))}
+                    </div>
                   </motion.div>
 
-                  {/* Support Call */}
-                  <motion.div variants={leftCardVariants} whileHover={{ y: -7, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/60 p-5 rounded-3xl space-y-2 shadow-sm hover:shadow-lg hover:border-slate-300 transition-shadow">
-                    <span className="inline-flex p-2.5 bg-purple-100 text-purple-600 rounded-xl">
-                      <Phone size={20} />
-                    </span>
-                    <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
-                      {getSection("contact-intro")?.content?.hoursTitle || "Office Timing Hours"}
-                    </h4>
-                    <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                      {getSection("contact-intro")?.content?.hours}
-                    </p>
-                    <span className="text-sm font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-lg inline-block">
-                      Call: {getSection("contact-intro")?.content?.phone}
-                    </span>
+                  {/* Email Inquiries */}
+                  <motion.div variants={leftCardVariants} whileHover={{ y: -6, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/70 p-5 rounded-3xl space-y-2.5 shadow-sm hover:shadow-lg hover:border-slate-300 transition-all">
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex p-2.5 bg-red-50 text-primary rounded-xl flex-shrink-0">
+                        <Mail size={20} />
+                      </span>
+                      <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider font-display">
+                        {getSection("contact-intro")?.content?.emailTitle || "Direct Email Inquiry"}
+                      </h4>
+                    </div>
+                    <div className="space-y-1.5 pt-1">
+                      {["sales@conchgas.com", "info@conchgas.com"].map((emailAddr, idx) => (
+                        <a
+                          key={idx}
+                          href={`mailto:${emailAddr}`}
+                          className="flex items-center gap-2.5 text-sm font-bold text-slate-700 hover:text-primary transition-colors group"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0 group-hover:scale-125 transition-transform" />
+                          <span>{emailAddr}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Schedule */}
+                  <motion.div variants={leftCardVariants} whileHover={{ y: -6, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/70 p-5 rounded-3xl space-y-2.5 shadow-sm hover:shadow-lg hover:border-slate-300 transition-all">
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex p-2.5 bg-red-50 text-primary rounded-xl flex-shrink-0">
+                        <Clock size={20} />
+                      </span>
+                      <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider font-display">
+                        {getSection("contact-intro")?.content?.hoursTitle || "Schedule"}
+                      </h4>
+                    </div>
+                    <div className="pt-1 flex items-center justify-between text-sm flex-wrap gap-2">
+                      <span className="text-slate-800 font-bold">Monday – Sunday</span>
+                      <span className="text-slate-700 font-bold bg-slate-100 px-3 py-1 rounded-lg text-xs">
+                        8:00 am – 18:00 pm
+                      </span>
+                    </div>
                   </motion.div>
                 </div>
               )}
 
               {/* Right Panel: Interactive Contact Form with Success trigger */}
               <motion.div variants={rightFormVariants} className={getSection("contact-intro")?.isActive ? "lg:col-span-8" : "lg:col-span-12 max-w-4xl mx-auto w-full"}>
-                <div className="bg-white border border-slate-200/60 rounded-3xl p-6 md:p-10 shadow-lg shadow-slate-200/40">
+                <div className="bg-white border border-slate-200/70 rounded-3xl p-6 md:p-10 shadow-lg shadow-slate-200/40">
                   {isSubmitted ? (
                     /* Success banner on submittal */
                     <motion.div 
@@ -339,27 +390,27 @@ export default function Contact() {
                       <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto shadow-sm">
                         <ThumbsUp size={36} />
                       </div>
-                      <h3 className="text-2xl font-black text-slate-800 tracking-tight leading-none">
+                      <h3 className="text-2xl font-black text-slate-800 tracking-tight leading-none font-display">
                         Inquiry Received Successfully!
                       </h3>
                       <p className="max-w-md mx-auto text-sm text-slate-500 font-sans leading-relaxed font-medium">
-                        Thank you, <span className="font-extrabold text-slate-800">{submissionData?.name}</span>. Our international logistics clearance experts have registered your interest successfully with email ID <span className="font-extrabold text-slate-800">{submissionData?.email}</span>. We will follow up inside 2 hours flat.
+                        Thank you, <span className="font-extrabold text-slate-800">{submissionData?.name}</span>. Our Conch Gas customer support team has received your query registered with email <span className="font-extrabold text-slate-800">{submissionData?.email}</span>. We will follow up with you promptly.
                       </p>
                       
                       <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
                         <a
-                          href="https://wa.me/918882691919"
+                          href="https://wa.me/256703978198"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-6 py-3 rounded-xl bg-primary text-white text-sm font-bold text-center block w-full sm:w-auto hover:bg-[#003d99] transition-colors"
+                          className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-sm font-bold text-center block w-full sm:w-auto transition-colors shadow-sm"
                         >
-                          💬 Discuss on WhatsApp
+                          💬 Chat on WhatsApp (+256 703 978 198)
                         </a>
                         <button
                           id="reset-contact-btn"
                           type="button"
                           onClick={() => setIsSubmitted(false)}
-                          className="px-6 py-3 rounded-xl border border-slate-200 text-sm font-bold w-full sm:w-auto hover:bg-slate-50 transition-colors"
+                          className="px-6 py-3.5 rounded-xl border border-slate-200 text-sm font-bold w-full sm:w-auto hover:bg-slate-50 transition-colors"
                         >
                           Submit Another Query
                         </button>
@@ -369,18 +420,18 @@ export default function Contact() {
                     /* Simple raw form with fields details */
                     <form id="contact-form" onSubmit={handleSubmit(onSubmitContact)} className="space-y-6">
                       <div className="border-b border-slate-100 pb-4">
-                        <h3 className="text-sm font-black text-slate-900 tracking-wider uppercase font-display">
+                        <h3 className="text-base font-black text-slate-900 tracking-wider uppercase font-display">
                           HAVE ANY QUESTIONS
                         </h3>
-                        <p className="text-xs text-slate-500 font-semibold mt-1">
-                          Write your query team will contact immediately
+                        <p className="text-xs text-slate-500 font-medium mt-1">
+                          Write your query, our Conch Gas team will contact you immediately
                         </p>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <Input
                           id="contact-name"
                           label="Your Complete Name"
-                          placeholder="e.g. Rahul Sharma"
+                          placeholder="e.g. John Doe / Business Name"
                           required
                           error={errors.name?.message}
                           {...register("name", { required: "Name is required" })}
@@ -388,7 +439,7 @@ export default function Contact() {
                         <Input
                           id="contact-email"
                           label="Your Email ID"
-                          placeholder="e.g. rahul@gmail.com"
+                          placeholder="e.g. info@conchgas.com"
                           type="email"
                           required
                           error={errors.email?.message}
@@ -406,7 +457,7 @@ export default function Contact() {
                         <label htmlFor="contact-phone" className="text-[10.5px] font-bold uppercase tracking-wider text-slate-700">
                           Contact Mobile No. <span className="text-red-500">*</span>
                         </label>
-                        <div className={`flex h-11 relative shadow-sm rounded-xl border ${errors.phone ? "border-red-400 focus-within:ring-2 focus-within:ring-red-200 focus-within:border-red-500 bg-red-50/50" : "border-slate-200 focus-within:ring-2 focus-within:ring-secondary/20 focus-within:border-secondary bg-white"} transition-all overflow-hidden`}>
+                        <div className={`flex h-11 relative shadow-sm rounded-xl border ${errors.phone ? "border-red-400 focus-within:ring-2 focus-within:ring-red-200 focus-within:border-red-500 bg-red-50/50" : "border-slate-200 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary bg-white"} transition-all overflow-hidden`}>
                           <select 
                             value={countryCode}
                             onChange={(e) => setCountryCode(e.target.value)}
@@ -419,12 +470,12 @@ export default function Contact() {
                           <input
                             id="contact-phone"
                             type="tel"
-                            placeholder="e.g. 9999999999"
+                            placeholder="e.g. 776500786"
                             {...register("phone", { 
                               required: "Mobile digits are required",
                               pattern: {
-                                value: /^\+?[0-9]{8,15}$/,
-                                message: "Invalid numbers format"
+                                value: /^\+?[0-9]{7,15}$/,
+                                message: "Invalid phone numbers format"
                               }
                             })}
                             className="w-full px-4 bg-transparent text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-none"
@@ -435,22 +486,22 @@ export default function Contact() {
 
                       <Input
                         id="contact-message"
-                        label="Inquiry / Message details"
-                        placeholder="Provide details about the medicines, volume, and any custom clearances help you need..."
+                        label="Inquiry / Message Details"
+                        placeholder="Provide details about your LPG cylinder refill, new connection, bulk gas order, or accessories..."
                         componentType="textarea"
                         required
                         error={errors.message?.message}
                         {...register("message", { required: "Message details is required" })}
                       />
 
-                      <Button
+                      <button
                         id="send-contact-btn"
                         type="submit"
-                        variant="primary"
-                        className="w-full mt-2 py-4 text-sm font-black tracking-wide"
+                        className="w-full mt-3 py-4 text-sm font-black tracking-wider uppercase text-white bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] hover:brightness-110 rounded-xl shadow-lg shadow-red-600/25 active:scale-[0.99] hover:scale-[1.01] transition-all cursor-pointer flex items-center justify-center gap-2.5 font-display select-none"
                       >
-                        Submit Support Request
-                      </Button>
+                        <Send size={17} className="stroke-[2.5]" />
+                        <span>Submit Support Request</span>
+                      </button>
                     </form>
                   )}
                 </div>
@@ -466,30 +517,30 @@ export default function Contact() {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ type: "spring", stiffness: 60, damping: 20 }}
                 id="office-map-container" 
-                className="bg-white border border-slate-200/60 rounded-3xl p-4 md:p-8 relative overflow-hidden max-w-6xl mx-auto shadow-sm mb-16"
+                className="bg-white border border-slate-200/70 rounded-3xl p-4 md:p-8 relative overflow-hidden max-w-6xl mx-auto shadow-sm mb-16"
               >
                 <div className="text-center mb-8 mt-2 space-y-2">
-                  <span className="inline-flex items-center justify-center p-3.5 bg-secondary/10 text-secondary rounded-2xl mb-2 shadow-sm">
+                  <span className="inline-flex items-center justify-center p-3.5 bg-red-50 text-primary rounded-2xl mb-2 shadow-sm">
                     <MapPin size={26} />
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
-                    {getSection("contact-map")?.title}
+                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight font-display">
+                    {getSection("contact-map")?.title || "Visit Our Physical Location"}
                   </h3>
                   <p className="text-sm text-slate-500 font-medium max-w-lg mx-auto leading-relaxed">
-                    {getSection("contact-map")?.subtitle}
+                    {getSection("contact-map")?.subtitle || "Plot 155, Kira Road near Kira Road Police Station P.O.Box 26105 Kampala- Uganda"}
                   </p>
                 </div>
 
                 <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-inner">
                   <iframe
-                    src={getSection("contact-map")?.content?.mapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.3440514113277!2d77.2427166743274!3d28.58945367568826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce363f1a38537%3A0x1323196e318840f6!2sCourier%20Medicines%20International%20Services!5e0!3m2!1sen!2sin!4v1781698839861!5m2!1sen!2sin"}
+                    src={getSection("contact-map")?.content?.mapEmbedUrl || "https://maps.google.com/maps?q=Plot%20155%2C%20Kira%20Road%20near%20Kira%20Road%20Police%20Station%20Kampala%2C%20Uganda&t=&z=15&ie=UTF8&iwloc=&output=embed"}
                     width="100%"
                     height="450"
                     style={{ border: 0 }}
                     allowFullScreen=""
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Courier Medicines Location Map"
+                    title="Conch Gas Uganda Location Map"
                   ></iframe>
                 </div>
               </motion.div>

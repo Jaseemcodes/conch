@@ -234,44 +234,42 @@ export default function HeroSection({ title, subtitle, content }) {
 
   return (
     <>
-      <section id="hero-section" className="relative w-full pt-2 md:pt-3 pb-3 md:pb-8 font-sans">
+      <section id="hero-section" className="relative w-full pt-2 md:pt-3 pb-3 md:pb-6 font-sans overflow-hidden">
         
-        {/* Background Layer */}
-        <div className="absolute inset-0 z-0 overflow-hidden bg-white">
-          <img 
-            src="https://res.cloudinary.com/dib6l7ocv/image/upload/f_auto,q_auto/v1781865141/courier-medicine-static/bright-bg.jpg" 
-            alt="Medical Abstract Background" 
-            width={1920}
-            height={1080}
-            loading="lazy"
-            className="w-full h-full object-cover object-center opacity-80"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/80 to-white"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5"></div>
+        {/* Background Ambient Layers (High-Performance Modern Mesh) */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-red-500/[0.04] rounded-full blur-3xl animate-pulse-glow" />
+          <div className="absolute top-1/2 -right-40 w-[600px] h-[600px] bg-[#830000]/[0.05] rounded-full blur-3xl animate-pulse-glow" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/50" />
         </div>
 
         {/* Hero Content Layer */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div id="hero-grid" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-0">
+          <div id="hero-grid" className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch pt-0">
           
           {/* Left Hero: Picture Column with Text Overlay */}
           <div 
             id="hero-left-col" 
-            className="lg:col-span-7 flex flex-col justify-between relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50 to-[#E2E8F0] animate-[fadeInLeft_0.8s_ease-out_forwards] min-h-0 lg:min-h-[540px] gap-4 sm:gap-6 lg:gap-0"
+            className="lg:col-span-7 flex flex-col justify-between relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50 to-[#E9EEF5] animate-[fadeInLeft_0.8s_cubic-bezier(0.16,1,0.3,1)_forwards] min-h-0 lg:min-h-[500px] gap-3 sm:gap-4 lg:gap-0 group"
           >
+            {/* Top Accent Gradient Border Line */}
+            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000]" />
             
             {/* Top Text Content Layer */}
             <div className="relative z-10 p-5 sm:p-7 md:p-8 pb-1 sm:pb-2 flex flex-col items-start gap-2.5">
-              <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-black text-slate-900 tracking-tight leading-tight max-w-xl font-display">
+              <h1 className="text-2xl sm:text-3xl lg:text-[35px] font-black text-slate-900 tracking-tight leading-[1.18] max-w-xl font-display">
                 Online LPG Cooking Gas & <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">Industrial Gas</span> Delivery
               </h1>
 
               {/* Features Bullet List */}
               {bullets && bullets.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1 w-full max-w-xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-1 w-full max-w-xl">
                   {bullets.slice(0, 4).map((bullet, idx) => (
-                    <div key={idx} className="flex items-center gap-2 bg-white/90 border border-slate-200/70 py-1.5 px-3 rounded-xl shadow-2xs">
-                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-gradient-to-r from-[#830000] to-[#BC0202] text-white shrink-0 shadow-xs">
+                    <div 
+                      key={idx} 
+                      className="flex items-center gap-2.5 bg-white/95 backdrop-blur-sm border border-slate-200/80 hover:border-[#BC0202]/40 py-2 px-3.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group/item"
+                    >
+                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-gradient-to-r from-[#830000] to-[#BC0202] text-white shrink-0 shadow-xs group-hover/item:scale-110 transition-transform">
                         <Check size={9} className="stroke-[3.5]" />
                       </span>
                       <span className="text-[11px] sm:text-xs font-bold tracking-tight text-slate-800 leading-tight">
@@ -284,7 +282,7 @@ export default function HeroSection({ title, subtitle, content }) {
             </div>
 
             {/* Bottom: Full-Width Product Showcase (100% Uncropped & Seamless Fit) */}
-            <div className="relative z-10 w-full mt-2 sm:mt-auto px-3 sm:px-4 pb-3 sm:pb-4 pt-0 flex items-end justify-center">
+            <div className="relative z-10 w-full mt-2 sm:mt-auto px-3 sm:px-5 pb-3 sm:pb-5 pt-0 flex items-end justify-center">
               <img 
                 src="/hero_gas_banner.jpg" 
                 alt="Conch Gas Products, Cylinders, Cookers & Industrial Tank" 
@@ -292,7 +290,7 @@ export default function HeroSection({ title, subtitle, content }) {
                 height={500}
                 fetchPriority="high"
                 loading="eager"
-                className="w-full h-auto max-h-[220px] sm:max-h-[260px] lg:max-h-[280px] object-contain object-bottom drop-shadow-sm transition-transform duration-300 hover:scale-[1.01]"
+                className="w-full h-auto max-h-[220px] sm:max-h-[260px] lg:max-h-[285px] object-contain object-bottom drop-shadow-md transition-transform duration-500 ease-out group-hover:scale-[1.015]"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = "/conch_hero_banner.jpg";
@@ -305,7 +303,7 @@ export default function HeroSection({ title, subtitle, content }) {
           {/* Right Hero / Mobile Hero: Calculator Form */}
           <div 
             id="hero-right-col" 
-            className="block lg:col-span-5 animate-[fadeInRight_0.8s_ease-out_0.2s_forwards] w-full mt-2 lg:mt-0"
+            className="block lg:col-span-5 animate-[fadeInRight_0.8s_cubic-bezier(0.16,1,0.3,1)_0.15s_forwards] w-full mt-2 lg:mt-0"
           >
             <CalculatorForm />
           </div>

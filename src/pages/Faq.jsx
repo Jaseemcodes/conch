@@ -8,7 +8,7 @@ import api from "../utils/api";
 import { applyPageSEO } from "../utils/seo";
 
 export default function Faq() {
-  const [openIdx, setOpenIdx] = useState(0);
+  const [openIdx, setOpenIdx] = useState(-1);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [faqs, setFaqs] = useState([]);
@@ -46,18 +46,18 @@ export default function Faq() {
             hData.metaViewTitle,
             hData.metaDescription,
             hData.metaKeywords,
-            "Frequently Asked Questions (FAQ) - Courier Medicine",
-            "Answers to all your questions about sending prescription drugs internationally from India, customs, documentation, and rates.",
-            "medicine courier faq, international medicine delivery questions, medicine export customs"
+            "Frequently Asked Questions (FAQ) - Conch Gas Uganda",
+            "Answers to all your safety questions about Conch Gas LPG cylinders, rubber tubing, pressure regulator, and cylinder exchange.",
+            "conch gas faq, uganda cooking gas safety, lpg cylinder faq, gas regulator safety"
           );
         } else {
           applyPageSEO(
             "",
             "",
             "",
-            "Frequently Asked Questions (FAQ) - Courier Medicine",
-            "Answers to all your questions about sending prescription drugs internationally from India, customs, documentation, and rates.",
-            "medicine courier faq, international medicine delivery questions, medicine export customs"
+            "Frequently Asked Questions (FAQ) - Conch Gas Uganda",
+            "Answers to all your safety questions about Conch Gas LPG cylinders, rubber tubing, pressure regulator, and cylinder exchange.",
+            "conch gas faq, uganda cooking gas safety, lpg cylinder faq, gas regulator safety"
           );
         }
       } catch (err) {
