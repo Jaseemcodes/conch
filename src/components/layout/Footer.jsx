@@ -31,7 +31,7 @@ export default function Footer({ settings }) {
     <footer id="footer-container" className="bg-slate-900 text-slate-300 font-sans">
       
       {/* Upper footer with 4 columns */}
-      <div id="footer-upper" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      <div id="footer-upper" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6 md:pt-12 md:pb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
         
         {/* Column 1: About Company */}
         <div id="footer-col-about" className="space-y-4">
@@ -171,7 +171,7 @@ export default function Footer({ settings }) {
       </div>
 
       {/* Bottom copyright bar */}
-      <div id="footer-bottom-copyright" className="border-t border-slate-800/80 py-6 text-center md:text-left text-xs text-slate-500 font-sans max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div id="footer-bottom-copyright" className="border-t border-slate-800/80 py-4 text-center md:text-left text-xs text-slate-500 font-sans max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <span>{copyrightVal}</span>
         </div>
