@@ -31,7 +31,7 @@ export default function Footer({ settings }) {
     <footer id="footer-container" className="bg-slate-900 text-slate-300 font-sans">
       
       {/* Upper footer with 4 columns */}
-      <div id="footer-upper" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6 md:pt-12 md:pb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+      <div id="footer-upper" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 md:pt-6 md:pb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
         
         {/* Column 1: About Company */}
         <div id="footer-col-about" className="space-y-4">
