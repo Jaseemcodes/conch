@@ -247,30 +247,32 @@ export default function HeroSection({ title, subtitle, content }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div id="hero-grid" className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch pt-0">
           
-          {/* Left Hero: Picture Column with Text Overlay (Matches Screenshot) */}
+          {/* Left Hero: Picture Column with Text Overlay (100% Uncropped Full Width) */}
           <div 
             id="hero-left-col" 
-            className="lg:col-span-7 relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-slate-900 animate-[fadeInLeft_0.8s_cubic-bezier(0.16,1,0.3,1)_forwards] min-h-[480px] lg:min-h-[540px] flex flex-col justify-between group"
+            className="lg:col-span-7 relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-[#E5E9F0] animate-[fadeInLeft_0.8s_cubic-bezier(0.16,1,0.3,1)_forwards] min-h-[480px] lg:min-h-[540px] flex flex-col justify-between group"
           >
-            {/* Background Hero Image */}
-            <img 
-              src="/hero.jpg" 
-              alt="Conch Gas LPG Delivery in Uganda" 
-              fetchPriority="high"
-              loading="eager"
-              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "/hero_gas_banner.jpg";
-              }}
-            />
+            {/* Background Hero Image - 100% Uncropped (object-contain with studio background) */}
+            <div className="absolute inset-0 bg-[#E5E9F0] flex items-center justify-center overflow-hidden">
+              <img 
+                src="/hero.jpg" 
+                alt="Conch Gas LPG Delivery in Uganda" 
+                fetchPriority="high"
+                loading="eager"
+                className="w-full h-full object-contain object-center group-hover:scale-[1.015] transition-transform duration-700 ease-out"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/hero_gas_banner.jpg";
+                }}
+              />
+            </div>
 
-            {/* Dark Gradient Overlay for optimal readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent pointer-events-none" />
+            {/* Dark Gradient Overlay for optimal text contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 via-45% to-transparent pointer-events-none" />
 
             {/* Top Badge: Conch Gas Watermark */}
-            <div className="relative z-10 p-5 sm:p-6 flex items-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-white/60 shadow-md">
+            <div className="relative z-10 p-4 sm:p-5 flex items-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-white/60 shadow-md">
                 <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#830000] to-[#BC0202] text-white flex items-center justify-center shadow-xs">
                   <span className="text-[10px] font-black">C</span>
                 </div>
@@ -281,7 +283,7 @@ export default function HeroSection({ title, subtitle, content }) {
             </div>
 
             {/* Bottom Content Layer: Title, Tag & 2-Column Bullet List */}
-            <div className="relative z-10 p-5 sm:p-7 md:p-8 space-y-3">
+            <div className="relative z-10 p-4 sm:p-6 md:p-7 space-y-2.5">
               
               {/* Tagline */}
               <div className="flex items-center gap-1.5">
@@ -291,12 +293,12 @@ export default function HeroSection({ title, subtitle, content }) {
               </div>
 
               {/* Main Heading */}
-              <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-black text-white tracking-tight leading-tight uppercase font-display">
+              <h1 className="text-xl sm:text-2xl lg:text-[29px] font-black text-white tracking-tight leading-tight uppercase font-display">
                 For Safe & Express LPG Cooking Gas Delivery
               </h1>
 
               {/* 2-Column Checklist */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 pt-1 w-full max-w-xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 w-full max-w-xl">
                 {[
                   "Factory-Sealed Cylinders & Full Weight",
                   "Free Doorstep Gas Pickup & Delivery",
@@ -309,7 +311,7 @@ export default function HeroSection({ title, subtitle, content }) {
                     <span className="flex items-center justify-center w-4 h-4 rounded-full bg-cyan-400 text-slate-950 shrink-0 shadow-xs">
                       <Check size={10} className="stroke-[3.5]" />
                     </span>
-                    <span className="text-xs font-bold text-white/95 leading-tight">
+                    <span className="text-[11px] sm:text-xs font-bold text-white/95 leading-tight">
                       {bullet}
                     </span>
                   </div>
