@@ -247,55 +247,75 @@ export default function HeroSection({ title, subtitle, content }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div id="hero-grid" className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch pt-0">
           
-          {/* Left Hero: Picture Column with Text Overlay */}
+          {/* Left Hero: Picture Column with Text Overlay (Matches Screenshot) */}
           <div 
             id="hero-left-col" 
-            className="lg:col-span-7 flex flex-col justify-between relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50 to-[#E9EEF5] animate-[fadeInLeft_0.8s_cubic-bezier(0.16,1,0.3,1)_forwards] min-h-0 lg:min-h-[500px] gap-3 sm:gap-4 lg:gap-0 group"
+            className="lg:col-span-7 relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-slate-900 animate-[fadeInLeft_0.8s_cubic-bezier(0.16,1,0.3,1)_forwards] min-h-[480px] lg:min-h-[540px] flex flex-col justify-between group"
           >
-            {/* Top Accent Gradient Border Line */}
-            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000]" />
-            
-            {/* Top Text Content Layer */}
-            <div className="relative z-10 p-5 sm:p-7 md:p-8 pb-1 sm:pb-2 flex flex-col items-start gap-2.5">
-              <h1 className="text-2xl sm:text-3xl lg:text-[35px] font-black text-slate-900 tracking-tight leading-[1.18] max-w-xl font-display">
-                Online LPG Cooking Gas & <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">Industrial Gas</span> Delivery
-              </h1>
+            {/* Background Hero Image */}
+            <img 
+              src="/hero.jpg" 
+              alt="Conch Gas LPG Delivery in Uganda" 
+              fetchPriority="high"
+              loading="eager"
+              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "/hero_gas_banner.jpg";
+              }}
+            />
 
-              {/* Features Bullet List */}
-              {bullets && bullets.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-1 w-full max-w-xl">
-                  {bullets.slice(0, 4).map((bullet, idx) => (
-                    <div 
-                      key={idx} 
-                      className="flex items-center gap-2.5 bg-white/95 backdrop-blur-sm border border-slate-200/80 hover:border-[#BC0202]/40 py-2 px-3.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group/item"
-                    >
-                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-gradient-to-r from-[#830000] to-[#BC0202] text-white shrink-0 shadow-xs group-hover/item:scale-110 transition-transform">
-                        <Check size={9} className="stroke-[3.5]" />
-                      </span>
-                      <span className="text-[11px] sm:text-xs font-bold tracking-tight text-slate-800 leading-tight">
-                        {bullet}
-                      </span>
-                    </div>
-                  ))}
+            {/* Dark Gradient Overlay for optimal readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent pointer-events-none" />
+
+            {/* Top Badge: Conch Gas Watermark */}
+            <div className="relative z-10 p-5 sm:p-6 flex items-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-white/60 shadow-md">
+                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#830000] to-[#BC0202] text-white flex items-center justify-center shadow-xs">
+                  <span className="text-[10px] font-black">C</span>
                 </div>
-              )}
+                <span className="text-xs font-black tracking-wider text-slate-900 uppercase font-display">
+                  CONCH <span className="text-[#BC0202]">GAS</span>
+                </span>
+              </div>
             </div>
 
-            {/* Bottom: Full-Width Product Showcase (100% Uncropped & Seamless Fit) */}
-            <div className="relative z-10 w-full mt-2 sm:mt-auto px-3 sm:px-5 pb-3 sm:pb-5 pt-0 flex items-end justify-center">
-              <img 
-                src="/hero_gas_banner.jpg" 
-                alt="Conch Gas Products, Cylinders, Cookers & Industrial Tank" 
-                width={1200}
-                height={500}
-                fetchPriority="high"
-                loading="eager"
-                className="w-full h-auto max-h-[220px] sm:max-h-[260px] lg:max-h-[285px] object-contain object-bottom drop-shadow-md transition-transform duration-500 ease-out group-hover:scale-[1.015]"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "/conch_hero_banner.jpg";
-                }}
-              />
+            {/* Bottom Content Layer: Title, Tag & 2-Column Bullet List */}
+            <div className="relative z-10 p-5 sm:p-7 md:p-8 space-y-3">
+              
+              {/* Tagline */}
+              <div className="flex items-center gap-1.5">
+                <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-cyan-400">
+                  CUSTOMER'S FIRST & <span className="bg-blue-600 text-white px-2 py-0.5 rounded-md text-[10px] sm:text-[11px]">TRUSTED</span> CHOICE
+                </span>
+              </div>
+
+              {/* Main Heading */}
+              <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-black text-white tracking-tight leading-tight uppercase font-display">
+                For Safe & Express LPG Cooking Gas Delivery
+              </h1>
+
+              {/* 2-Column Checklist */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 pt-1 w-full max-w-xl">
+                {[
+                  "Factory-Sealed Cylinders & Full Weight",
+                  "Free Doorstep Gas Pickup & Delivery",
+                  "Cheapest Refill & Cylinder Rates",
+                  "Universal Empty Cylinder Exchange",
+                  "Free Safety & Leak Testing Support",
+                  "24x7 Customer Support & Hotline"
+                ].map((bullet, idx) => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <span className="flex items-center justify-center w-4 h-4 rounded-full bg-cyan-400 text-slate-950 shrink-0 shadow-xs">
+                      <Check size={10} className="stroke-[3.5]" />
+                    </span>
+                    <span className="text-xs font-bold text-white/95 leading-tight">
+                      {bullet}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
             </div>
 
           </div>
