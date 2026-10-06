@@ -3,8 +3,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import api from "./utils/api";
 
 // Layout components
-import Topbar from "./components/layout/Topbar";
-import Navbar from "./components/layout/Navbar";
+import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import ScrollToTopButton from "./components/layout/ScrollToTopButton";
 
@@ -128,22 +127,10 @@ function AppContent() {
     <>
       <ScrollToTop />
       <div id="app-root-wrapper" className="min-h-screen flex flex-col justify-between bg-white text-slate-800">
-        {!isAdminRoute && (
-          <div 
-            id="app-header-block" 
-            className={`sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm transition-transform duration-300 ease-in-out ${
-              showHeader ? "translate-y-0" : "-translate-y-full"
-            }`}
-          >
-            {/* Information bar */}
-            <Topbar settings={settings} />
-            {/* Desktop/Mobile Navigation */}
-            <Navbar />
-          </div>
-        )}
+        {!isAdminRoute && <Header settings={settings} />}
 
         {/* Main interactive router canvas */}
-        <main id="app-main-content" className={`grow ${!isAdminRoute ? 'pb-24 md:pb-0' : ''}`}>
+        <main id="app-main-content" className={`grow ${!isAdminRoute ? 'pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-24 md:pb-0' : ''}`}>
           <Suspense fallback={
             <div className="min-h-[50vh] flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
