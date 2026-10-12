@@ -9,6 +9,8 @@ import {
   Globe, 
   Instagram, 
   Youtube, 
+  Facebook,
+  Twitter,
   Info,
   CheckCircle,
   Save,
@@ -263,6 +265,23 @@ export default function AdminSettings() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                  <Facebook size={12} className="text-slate-400" />
+                  Facebook URL
+                </label>
+                <input
+                  type="url"
+                  value={settingsForm.socialLinks.facebook}
+                  onChange={(e) => setSettingsForm({
+                    ...settingsForm,
+                    socialLinks: { ...settingsForm.socialLinks, facebook: e.target.value }
+                  })}
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-primary focus:outline-none px-3 py-2 rounded-xl text-xs font-semibold"
+                  placeholder="https://facebook.com/conchgas"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                   <Instagram size={12} className="text-slate-400" />
                   Instagram URL
                 </label>
@@ -274,9 +293,27 @@ export default function AdminSettings() {
                     socialLinks: { ...settingsForm.socialLinks, instagram: e.target.value }
                   })}
                   className="w-full bg-slate-50 border border-slate-200 focus:border-primary focus:outline-none px-3 py-2 rounded-xl text-xs font-semibold"
-                  placeholder="https://instagram.com/brand"
+                  placeholder="https://instagram.com/conchgas"
                 />
               </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                  <Twitter size={12} className="text-slate-400" />
+                  Twitter / X URL
+                </label>
+                <input
+                  type="url"
+                  value={settingsForm.socialLinks.twitter}
+                  onChange={(e) => setSettingsForm({
+                    ...settingsForm,
+                    socialLinks: { ...settingsForm.socialLinks, twitter: e.target.value }
+                  })}
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-primary focus:outline-none px-3 py-2 rounded-xl text-xs font-semibold"
+                  placeholder="https://x.com/conchgas"
+                />
+              </div>
+
               <div className="space-y-1">
                 <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                   <Youtube size={12} className="text-slate-400" />
@@ -290,7 +327,7 @@ export default function AdminSettings() {
                     socialLinks: { ...settingsForm.socialLinks, youtube: e.target.value }
                   })}
                   className="w-full bg-slate-50 border border-slate-200 focus:border-primary focus:outline-none px-3 py-2 rounded-xl text-xs font-semibold"
-                  placeholder="https://youtube.com/c/brand"
+                  placeholder="https://youtube.com/@conchgas"
                 />
               </div>
             </div>

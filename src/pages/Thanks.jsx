@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
-import { useAuth } from "../context/AuthContext";
 
 export default function Thanks() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
 
   // Retrieve success details from routing state, or use high-fidelity preview defaults
   const successData = location.state?.successData || {
@@ -17,10 +15,10 @@ export default function Thanks() {
     cylinderSize: "13 KG"
   };
 
-  const selectedProvider = location.state?.selectedProvider || {
-    name: "CONCH EXPRESS",
-    timeline: "Within 2 Hours"
-  };
+  const calculatedQuote = location.state?.calculatedQuote;
+
+  const bookedProduct = successData.productTitle || successData.gasType || calculatedQuote?.productTitle || calculatedQuote?.gasLabel || "Conch Gas Product";
+  const bookedQty = successData.quantity || calculatedQuote?.quantity || 1;
 
   const totalAmount = location.state?.totalAmount || 115000;
 
@@ -116,50 +114,34 @@ export default function Thanks() {
             Gas Order Confirmed
           </span>
           <h1 className="text-xl font-black text-slate-900 tracking-tight font-display">
-            Your Cylinder is Being Dispatched!
+            Your Order Has Been Booked!
           </h1>
         </div>
 
         {/* Reference details Box */}
         <div 
           ref={detailsBoxRef}
-          className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-center space-y-3 font-sans text-xs font-semibold text-slate-700"
+          className="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 text-center space-y-4 font-sans text-xs font-semibold text-slate-700"
         >
           <div>
             <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">
               Booking Reference Number
             </p>
-            <p className="text-red-600 font-black text-xl tracking-tight mt-0.5 whitespace-nowrap">
+            <p className="text-red-600 font-black text-2xl tracking-tight mt-1 whitespace-nowrap">
               {successData.bookingRef}
             </p>
-            <p className="text-slate-600 font-medium text-[11px] mt-1">
-              Dispatch Depot: <span className="font-bold text-slate-800">Conch Gas Kira Road</span>
-            </p>
           </div>
 
-          <div className="border-t border-slate-200/60 pt-2 flex justify-between items-center text-xs">
-            <span className="text-slate-500">Amount Payable:</span>
-            <span className="font-black text-slate-900">UGX {Number(totalAmount).toLocaleString()}</span>
+          <div className="border-t border-slate-200/60 pt-3 flex justify-between items-start text-xs text-left gap-2">
+            <span className="text-slate-500 font-bold shrink-0">Product Booked:</span>
+            <span className="font-black text-slate-900 text-xs text-right break-words">
+              {bookedProduct} {bookedQty > 1 ? `(Qty: ${bookedQty})` : ""}
+            </span>
           </div>
 
-          <div className="flex items-center justify-center gap-2 my-1 text-[10px] text-slate-400 font-black uppercase tracking-widest">
-            <div className="h-px bg-slate-200 w-12" />
-            <span>Need Quick Status?</span>
-            <div className="h-px bg-slate-200 w-12" />
-          </div>
-
-          <div>
-            <a 
-              href={`https://wa.me/256700000000?text=Hello%20Conch%20Gas!%20My%20Booking%20ID%20is%20${successData.bookingRef}.%20Please%20confirm%20my%20cylinder%20delivery%20status.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-emerald-600 hover:text-emerald-700 font-black text-xs block py-1"
-            >
-              💬 WhatsApp Us: Conch Gas Support
-            </a>
-            <p className="text-[10px] text-slate-400 font-semibold">
-              Mention your Booking ID: {successData.bookingRef}
-            </p>
+          <div className="border-t border-slate-200/60 pt-3 flex justify-between items-center text-xs">
+            <span className="text-slate-500 font-bold">Amount Payable:</span>
+            <span className="font-black text-slate-900 text-sm">UGX {Number(totalAmount).toLocaleString()}</span>
           </div>
         </div>
 
@@ -171,28 +153,10 @@ export default function Thanks() {
         </p>
 
         {/* Buttons Actions */}
-        <div ref={buttonsRef} className="flex flex-col gap-2 pt-1">
-          {isLoggedIn ? (
-            <button
-              onClick={() => navigate("/my-account")}
-              className="w-full text-center py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs select-none shadow-sm transition-all hover:scale-[1.01] duration-200 cursor-pointer"
-            >
-              📦 View Order in My Account
-            </button>
-          ) : (
-            <a
-              href={`https://wa.me/256700000000?text=Hello%20Conch%20Gas!%20I%20have%20booked%20order%20${successData.bookingRef}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full text-center py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs select-none shadow-sm transition-all hover:scale-[1.01] duration-200 cursor-pointer"
-            >
-              💬 Instant WhatsApp Tracking
-            </a>
-          )}
-
+        <div ref={buttonsRef} className="pt-2">
           <button
             onClick={() => navigate("/")}
-            className="w-full text-center py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs select-none shadow-3xs transition-all hover:scale-[1.01] duration-200 cursor-pointer"
+            className="w-full text-center py-3 rounded-xl bg-[#BC0202] hover:bg-[#9e0202] text-white font-extrabold text-xs select-none shadow-md transition-all hover:scale-[1.01] duration-200 cursor-pointer"
           >
             🏠 Return to Homepage
           </button>

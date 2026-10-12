@@ -162,7 +162,7 @@ export default function AdminDashboard() {
                       </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <span className="text-xs font-extrabold text-slate-850">₹{item.estimatedPrice?.toLocaleString("en-IN") || 0}</span>
+                      <span className="text-xs font-extrabold text-slate-850">UGX {Number(item.estimatedPrice || 0).toLocaleString()}</span>
                       <span className={`block text-[9px] font-extrabold uppercase mt-0.5 ${
                         item.status === 'confirmed' ? 'text-emerald-500' : 'text-amber-500'
                       }`}>

@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 export default function Booking() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, isLoggedIn, openAuthModal } = useAuth();
+  const { user } = useAuth();
 
   // Retrieve calculated quote and selected provider details from routing state
   const calculatedQuote = location.state?.calculatedQuote || {
@@ -22,7 +22,7 @@ export default function Booking() {
     weight: 6,
     provider: "CONCH EXPRESS",
     price: 48000,
-    timeline: "Within 2 Hours",
+    timeline: "Express Delivery",
     bookingRef: "CG-849102",
     serviceType: "DOORSTEP REFILL (EXCHANGE)",
     orderMode: "Gas Refill"
@@ -32,12 +32,17 @@ export default function Booking() {
     name: "CONCH EXPRESS",
     keyName: "CONCH EXPRESS",
     price: calculatedQuote.price || 48000,
-    timeline: "Within 2 Hours"
+    timeline: "Express Delivery"
   };
 
+  const resolvedProductTitle = calculatedQuote.productTitle || calculatedQuote.gasLabel || calculatedQuote.medicineType || calculatedQuote.gasType || "6KG LPG Cooking Gas Cylinder";
+  const resolvedQuantity = Number(calculatedQuote.quantity) || 1;
+
   const displayWeight = calculatedQuote.weight 
-    ? (String(calculatedQuote.weight).toUpperCase().includes("KG") ? calculatedQuote.weight : `${calculatedQuote.weight} KG`)
-    : "Standard Size";
+    ? (String(calculatedQuote.weight).toUpperCase().includes("KG") || String(calculatedQuote.weight).toLowerCase().includes("g") || String(calculatedQuote.weight).toLowerCase().includes("l")
+        ? String(calculatedQuote.weight)
+        : (typeof calculatedQuote.weight === "number" ? `${calculatedQuote.weight} KG` : String(calculatedQuote.weight)))
+    : "Standard Unit";
 
   // Form handling
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm({
@@ -49,18 +54,14 @@ export default function Booking() {
       streetAddress2: "",
       city: calculatedQuote.location || user?.city || "Kampala",
       state: "Central Region",
-      postcode: "00256",
+      postcode: "",
       phone: calculatedQuote.mobile || user?.phone || "",
-      email: user?.email || "",
+      email: calculatedQuote.email || user?.email || "",
       orderNotes: ""
     }
   });
 
-  // States for submission status
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-
-  // Sync user profile when logged in
+  // Sync user profile values when loaded
   useEffect(() => {
     if (user) {
       if (user.name) {
@@ -72,8 +73,14 @@ export default function Booking() {
       if (user.phone) setValue("phone", user.phone);
       if (user.address) setValue("streetAddress1", user.address);
       if (user.city) setValue("city", user.city);
+    } else if (calculatedQuote?.email) {
+      setValue("email", calculatedQuote.email);
     }
-  }, [user, setValue]);
+  }, [user, calculatedQuote?.email, setValue]);
+
+  // States for submission status
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Pricing calculations
   const baseCharges = selectedProvider.price || calculatedQuote.price || 110000;
@@ -96,6 +103,19 @@ export default function Booking() {
         data.country.trim()
       ].filter(Boolean).join(", ");
 
+      const serviceTypeLower = (calculatedQuote.serviceType || "").toLowerCase();
+      const orderModeLower = (calculatedQuote.orderMode || "").toLowerCase();
+      let resolvedOrderType = "refill";
+      if (serviceTypeLower.includes("new") || orderModeLower.includes("new")) {
+        resolvedOrderType = "new_cylinder";
+      } else if (serviceTypeLower.includes("bulk") || orderModeLower.includes("bulk")) {
+        resolvedOrderType = "bulk_order";
+      } else if (serviceTypeLower.includes("refill") || orderModeLower.includes("refill")) {
+        resolvedOrderType = "refill";
+      } else {
+        resolvedOrderType = "product_purchase";
+      }
+
       const payload = {
         customerName: fullCustomerName,
         firstName: data.firstName.trim(),
@@ -112,23 +132,25 @@ export default function Booking() {
         originAddress: "Conch Gas Depot, Kira Road, Kampala, Uganda",
         originCity: "Kampala (Kira Road)",
         destinationCountry: data.country.trim() || "Uganda",
-        destinationCountryCode: data.country === "Uganda" ? "UG" : "UG",
+        destinationCountryCode: "UG",
         destinationCity: data.city.trim() || "Kampala",
         destinationAddress: formattedAddress,
-        gasType: calculatedQuote.gasType || calculatedQuote.medicineType || "LPG Domestic Gas",
-        cylinderSize: `${calculatedQuote.weight || 13} KG`,
-        orderType: (calculatedQuote.serviceType || "").toLowerCase().includes("new") ? "new_cylinder" : "refill",
+        productTitle: resolvedProductTitle,
+        categoryName: calculatedQuote.categoryName || "",
+        quantity: resolvedQuantity,
+        productId: calculatedQuote.productId || undefined,
+        gasType: resolvedProductTitle,
+        cylinderSize: displayWeight,
+        orderType: resolvedOrderType,
         cylinderExchange: calculatedQuote.prescription === "YES" || calculatedQuote.cylinderExchange !== false,
         emptyCylinderBrand: "Conch Gas",
         deliveryArea: data.city.trim() || "Kampala Central",
-        deliverySlot: "Today - Within 2 Hours (Express)",
+        deliverySlot: "Today (Express Delivery)",
         paymentMethod: "cash_on_delivery",
-        weight: typeof calculatedQuote.weight === "number" ? calculatedQuote.weight : parseFloat(calculatedQuote.weight) || 13,
+        weight: typeof calculatedQuote.weight === "number" ? calculatedQuote.weight : (parseFloat(calculatedQuote.weight) || 0),
         basePrice: baseCharges,
         finalPrice: totalAmount,
-        courierPartner: "CONCH EXPRESS",
-        estimatedDeliveryTime: "Within 2 Hours",
-        notes: data.orderNotes?.trim() || ""
+        notes: data.orderNotes?.trim() || `Order: ${resolvedProductTitle} (Qty: ${resolvedQuantity})`
       };
 
       const response = await api.post("/orders/public", payload);
@@ -141,7 +163,7 @@ export default function Booking() {
               name: "CONCH EXPRESS",
               keyName: "CONCH EXPRESS",
               price: baseCharges,
-              timeline: "Within 2 Hours"
+              timeline: "Express Delivery"
             },
             totalAmount,
             calculatedQuote
@@ -174,33 +196,15 @@ export default function Booking() {
             </p>
           </div>
 
-          {!isLoggedIn ? (
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-2xs">
-              <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xs font-black">
-                ✨
-              </div>
-              <div className="text-xs">
-                <span className="font-bold text-amber-900 block">Returning Customer?</span>
-                <button
-                  type="button"
-                  onClick={() => openAuthModal("login", "/booking.php")}
-                  className="text-red-600 hover:text-red-700 font-extrabold underline cursor-pointer text-[11px]"
-                >
-                  Click here to login for auto-fill
-                </button>
-              </div>
+          <div className="bg-emerald-50/90 border border-emerald-200/90 rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-2xs">
+            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-black shrink-0">
+              ⚡
             </div>
-          ) : (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-2xs">
-              <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-black">
-                ✓
-              </div>
-              <div className="text-xs">
-                <span className="font-bold text-emerald-900 block">Logged in as {user?.name || "Customer"}</span>
-                <span className="text-emerald-700 text-[11px]">Your details have been prefilled.</span>
-              </div>
+            <div className="text-xs">
+              <span className="font-bold text-emerald-950 block">Instant Guest Checkout</span>
+              <span className="text-emerald-700 text-[11px] font-medium">No account required. Pay on delivery (Cash or Mobile Money).</span>
             </div>
-          )}
+          </div>
         </div>
       </div>
 
@@ -256,29 +260,13 @@ export default function Booking() {
                 <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Country / Region <span className="text-red-600 font-bold">*</span>
                 </label>
-                <div className="relative">
-                  <select
-                    {...register("country", { required: "Country is required" })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 bg-white text-sm text-slate-800 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 appearance-none cursor-pointer pr-10 transition-all"
-                  >
-                    <option value="Uganda">Uganda</option>
-                    <option value="India">India</option>
-                    <option value="Kenya">Kenya</option>
-                    <option value="Tanzania">Tanzania</option>
-                    <option value="Rwanda">Rwanda</option>
-                    <option value="South Sudan">South Sudan</option>
-                    <option value="Democratic Republic of Congo">Democratic Republic of Congo</option>
-                    <option value="United Arab Emirates">United Arab Emirates</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="United States">United States</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                  </div>
-                </div>
-                {errors.country && <span className="text-[11px] text-red-600 font-semibold mt-1 block">{errors.country.message}</span>}
+                <input
+                  type="text"
+                  readOnly
+                  value="Uganda"
+                  {...register("country")}
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-800 cursor-default select-none focus:outline-none"
+                />
               </div>
 
               {/* Row 3: Street address (2 inputs) */}
@@ -337,7 +325,6 @@ export default function Booking() {
                     <option value="Eastern Region">Eastern Region</option>
                     <option value="Western Region">Western Region</option>
                     <option value="Northern Region">Northern Region</option>
-                    <option value="Delhi">Delhi</option>
                     <option value="Other State / County">Other State / County</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
@@ -356,7 +343,7 @@ export default function Booking() {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. 110094 or 00256"
+                  placeholder="e.g. 00256"
                   {...register("postcode", { required: "Postcode / ZIP is required" })}
                   className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 bg-white text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all"
                 />
@@ -432,34 +419,36 @@ export default function Booking() {
 
             {/* Pricing Summary List */}
             <div className="divide-y divide-slate-100 text-xs font-semibold font-sans mt-2">
-              <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 uppercase tracking-wide text-[10px]">Product</span>
-                <span className="text-slate-800 font-extrabold text-right max-w-[60%] truncate">
-                  {calculatedQuote.gasLabel || calculatedQuote.medicineType || calculatedQuote.gasType || "LPG Cooking Gas"}
+              <div className="flex justify-between py-2.5 items-start gap-2">
+                <span className="text-slate-500 uppercase tracking-wide text-[10px] shrink-0 mt-0.5">Product</span>
+                <span className="text-slate-900 font-black text-right text-xs break-words max-w-[70%]">
+                  {resolvedProductTitle}
                 </span>
               </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 uppercase tracking-wide text-[10px]">Cylinder Size</span>
-                <span className="text-[#BC0202] font-black">
-                  {displayWeight}
-                </span>
-              </div>
+              {resolvedQuantity > 0 && (
+                <div className="flex justify-between py-2.5">
+                  <span className="text-slate-500 uppercase tracking-wide text-[10px]">Quantity</span>
+                  <span className="text-slate-800 font-extrabold">
+                    {resolvedQuantity} {resolvedQuantity > 1 ? "Units" : "Unit"}
+                  </span>
+                </div>
+              )}
+              {displayWeight && displayWeight !== "Standard Unit" && (
+                <div className="flex justify-between py-2.5">
+                  <span className="text-slate-500 uppercase tracking-wide text-[10px]">Package / Size</span>
+                  <span className="text-[#BC0202] font-black">
+                    {displayWeight}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between py-2.5">
                 <span className="text-slate-500 uppercase tracking-wide text-[10px]">Order Type</span>
                 <span className="text-slate-800 font-extrabold">
-                  {calculatedQuote.orderMode || calculatedQuote.serviceType || "Gas Refill (Exchange)"}
+                  {calculatedQuote.orderMode || calculatedQuote.serviceType || "Direct Order"}
                 </span>
               </div>
               <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 uppercase tracking-wide text-[10px]">Depot / Dispatch</span>
-                <span className="text-slate-800 font-extrabold">Kira Road Depot</span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 uppercase tracking-wide text-[10px]">Est. Delivery</span>
-                <span className="text-[#BC0202] font-extrabold">Within 2 Hours</span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 uppercase tracking-wide text-[10px]">Cylinder Price</span>
+                <span className="text-slate-500 uppercase tracking-wide text-[10px]">Product Price</span>
                 <span className="text-slate-800 font-extrabold">UGX {Number(baseCharges).toLocaleString()}</span>
               </div>
               <div className="flex justify-between py-2.5">

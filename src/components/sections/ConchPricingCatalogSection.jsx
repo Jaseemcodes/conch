@@ -1,220 +1,117 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { 
   Flame, 
   Package, 
-  Wrench, 
-  Droplets,
   ArrowRight, 
-  MessageCircle, 
-  Truck,
-  PhoneCall
+  Truck, 
+  PhoneCall,
+  Loader2
 } from "lucide-react";
+import api from "../../utils/api";
 
-export const REFILL_ITEMS = [
-  {
-    id: "refill-6kg",
-    name: "6 KG Cylinder Refill",
-    category: "Domestic",
-    capacity: "6 KG",
-    image: "/6kg.jpg",
-    priceUGX: 48000,
-    priceFormatted: "UGX 48,000",
-    popular: false
-  },
-  {
-    id: "refill-13kg",
-    name: "13 KG Cylinder Refill",
-    category: "Family Domestic",
-    capacity: "13 KG",
-    image: "/13kg.jpg",
-    priceUGX: 98000,
-    priceFormatted: "UGX 98,000",
-    popular: true
-  },
-  {
-    id: "refill-40kg",
-    name: "40 KG Commercial Refill",
-    category: "Commercial",
-    capacity: "40 KG",
-    image: "/40kg.jpg",
-    priceUGX: 240000,
-    priceFormatted: "UGX 240,000",
-    popular: false
-  },
-  {
-    id: "refill-45kg",
-    name: "45 KG Industrial Refill",
-    category: "Heavy Industrial",
-    capacity: "45 KG",
-    image: "/45kg.jpg",
-    priceUGX: 280000,
-    priceFormatted: "UGX 280,000",
-    popular: false
-  }
-];
+// Helper to determine category badge
+const getCategoryBadge = (cat) => {
+  const s = (cat.slug || cat.name || "").toLowerCase();
+  if (s.includes("refill") || s.includes("cylinder")) return "Doorstep Exchange";
+  if (s.includes("connection")) return "Complete Set + Gas";
+  if (s.includes("accessor")) return "Safety Certified";
+  if (s.includes("lubricant") || s.includes("grease")) return "EP2 High Grade";
+  if (s.includes("refrigerant")) return "Aircon & Cooling";
+  if (s.includes("industrial")) return "Industrial Grade";
+  if (s.includes("medical") || s.includes("oxygen")) return "Hospital & Home Care";
+  return "Certified Supply";
+};
 
-export const NEW_CONNECTION_ITEMS = [
-  {
-    id: "new-6kg",
-    name: "6 KG New Connection",
-    category: "Domestic Starter",
-    capacity: "6 KG",
-    image: "/6kg.jpg",
-    priceUGX: 160000,
-    priceFormatted: "UGX 160,000",
-    popular: false
-  },
-  {
-    id: "new-13kg",
-    name: "13 KG New Connection",
-    category: "Home Master",
-    capacity: "13 KG",
-    image: "/13kg.jpg",
-    priceUGX: 260000,
-    priceFormatted: "UGX 260,000",
-    popular: true
-  },
-  {
-    id: "new-40kg",
-    name: "40 KG Commercial Kit",
-    category: "Commercial Setup",
-    capacity: "40 KG",
-    image: "/40kg.jpg",
-    priceUGX: 600000,
-    priceFormatted: "UGX 600,000",
-    popular: false
-  },
-  {
-    id: "new-45kg",
-    name: "45 KG Industrial Kit",
-    category: "Heavy Commercial",
-    capacity: "45 KG",
-    image: "/45kg.jpg",
-    priceUGX: 620000,
-    priceFormatted: "UGX 620,000",
-    popular: false
+// Helper to determine category subtitle
+const getCategorySubtitle = (cat) => {
+  if (cat.description && cat.description.trim().length > 0) {
+    return cat.description;
   }
-];
-
-export const ACCESSORY_ITEMS = [
-  {
-    id: "acc-low-pressure",
-    name: "LPG Low Pressure Regulator",
-    category: "Domestic Regulator",
-    capacity: "Standard Fit",
-    image: "/LPG Low pressure regulator side.webp",
-    fallback: "/Manifold with pressure gauge.webp",
-    priceUGX: 50000,
-    priceFormatted: "UGX 50,000",
-    popular: true
-  },
-  {
-    id: "acc-high-pressure",
-    name: "LPG High Pressure GXL Regulator",
-    category: "High Pressure",
-    capacity: "GXL Heavy Duty",
-    image: "/LPG High pressure GXL Regulator.webp",
-    fallback: "/Manifold for gas cylinders.webp",
-    priceUGX: 70000,
-    priceFormatted: "UGX 70,000",
-    popular: false
-  },
-  {
-    id: "acc-argon",
-    name: "Argon Regulator",
-    category: "Industrial Welding",
-    capacity: "Dual Gauge",
-    image: "/Argon Regulator.webp",
-    fallback: "/Manifold with pressure gauge.webp",
-    priceUGX: 550000,
-    priceFormatted: "UGX 550,000",
-    popular: false
-  },
-  {
-    id: "acc-acetylene",
-    name: "Acetylene Regulator",
-    category: "Industrial Cutting",
-    capacity: "Heavy Gauge",
-    image: "/Acetylene Regulator.webp",
-    fallback: "/Manifold for gas cylinders.webp",
-    priceUGX: 550000,
-    priceFormatted: "UGX 550,000",
-    popular: false
+  const s = (cat.slug || cat.name || "").toLowerCase();
+  if (s.includes("refill") || s.includes("cylinder")) {
+    return "Universal cylinder refills at subsidized official rates with free safety check";
   }
-];
-
-export const GREASE_ITEMS = [
-  {
-    id: "grease-50g",
-    name: "Multipurpose Grease Sachet (50g)",
-    category: "Quick Maintenance",
-    capacity: "50 g",
-    image: "/Multipurpose Grease Sachet (50g).webp",
-    fallback: "/conch_cylinders_transparent.png",
-    priceUGX: 3000,
-    priceFormatted: "UGX 3,000",
-    popular: false
-  },
-  {
-    id: "grease-500g",
-    name: "EP2 LITHIUM GREASE (500g)",
-    category: "Automotive Pack",
-    capacity: "500 g",
-    image: "/EP2 LITHIUM GREASE (500 g).webp",
-    fallback: "/conch_cylinders_transparent.png",
-    priceUGX: 12000,
-    priceFormatted: "UGX 12,000",
-    popular: true
-  },
-  {
-    id: "grease-15kg",
-    name: "EP2 LITHIUM GREASE (15kg)",
-    category: "Workshop / Fleet",
-    capacity: "15 KG",
-    image: "/EP2 LITHIUM GREASE (15 kg).webp",
-    fallback: "/conch_cylinders_transparent.png",
-    priceUGX: 340000,
-    priceFormatted: "UGX 340,000",
-    popular: false
-  },
-  {
-    id: "grease-180kg",
-    name: "EP2 LITHIUM GREASE (180kg)",
-    category: "Factory / Plant",
-    capacity: "180 KG",
-    image: "/EP2 LITHIUM GREASE (180 kg).webp",
-    fallback: "/conch_cylinders_transparent.png",
-    priceUGX: 3400000,
-    priceFormatted: "UGX 3,400,000",
-    popular: false
+  if (s.includes("connection")) {
+    return "Brand new cylinder + initial full gas fill + certified safety fittings & warranty";
   }
-];
+  if (s.includes("accessor")) {
+    return "High & low-pressure regulators, manifold systems, and safety fittings";
+  }
+  if (s.includes("lubricant") || s.includes("grease")) {
+    return "Automotive, machinery, fleet maintenance and industrial grease supplies";
+  }
+  if (s.includes("refrigerant")) {
+    return "High-purity refrigerant gases for automotive AC, cold rooms, and commercial refrigeration";
+  }
+  if (s.includes("industrial")) {
+    return "High-purity industrial oxygen, argon, acetylene and specialty gas cylinders";
+  }
+  return "Official factory-direct certified supply with guaranteed delivery across Kampala & Uganda";
+};
 
 export default function ConchPricingCatalogSection({ title, subtitle }) {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch live categories and products from backend
+  useEffect(() => {
+    let isMounted = true;
+    Promise.all([
+      api.get("/categories"),
+      api.get("/products")
+    ]).then(([catRes, prodRes]) => {
+      if (!isMounted) return;
+      if (catRes.data?.success && catRes.data.data) {
+        setCategories(catRes.data.data.filter(c => c.isActive !== false));
+      }
+      if (prodRes.data?.success && prodRes.data.data) {
+        setProducts(prodRes.data.data.filter(p => p.isActive !== false));
+      }
+    }).catch(err => {
+      console.debug("Pricing catalog fetch error:", err);
+    }).finally(() => {
+      if (isMounted) setIsLoading(false);
+    });
+
+    return () => { isMounted = false; };
+  }, []);
 
   const handleOrder = (item, orderType = "Gas Refill") => {
-    const rawWeight = typeof item.capacity === "string" 
-      ? (parseFloat(item.capacity.replace(/[^0-9.]/g, "")) || 13)
-      : 13;
+    const itemName = item.title || item.name;
+    const itemPrice = item.price || 48000;
+    const rawWeight = typeof item.weight === "string" 
+      ? (parseFloat(item.weight.replace(/[^0-9.]/g, "")) || 13)
+      : (item.weight || 13);
+
+    const isEquipment = orderType.toLowerCase().includes("accessor") || 
+      orderType.toLowerCase().includes("connection") || 
+      orderType.toLowerCase().includes("lubricant") ||
+      itemName.toLowerCase().includes("regulator") ||
+      itemName.toLowerCase().includes("stove");
 
     const quoteObj = {
       country: "Uganda",
       countryCode: "UG",
       location: "Kampala (Kira Road Depot)",
-      gasType: item.name,
-      medicineType: item.name,
-      gasLabel: item.name,
+      productId: item._id || item.slug,
+      productTitle: itemName,
+      gasType: itemName,
+      medicineType: itemName,
+      gasLabel: itemName,
+      categoryName: categoryTitle,
       mobile: "",
       prescription: "YES",
       weight: rawWeight,
+      quantity: 1,
       provider: "CONCH EXPRESS",
-      price: item.priceUGX || 48000,
-      timeline: "Within 2 Hours",
+      price: itemPrice,
+      timeline: "Express Delivery",
       bookingRef: `CG-${Math.floor(100000 + Math.random() * 900000)}`,
-      serviceType: orderType.toUpperCase(),
-      orderMode: orderType
+      serviceType: isEquipment ? "EQUIPMENT & ACCESSORY ORDER" : "DOORSTEP REFILL (EXCHANGE)",
+      orderMode: isEquipment ? "Equipment Order" : "Gas Refill"
     };
 
     navigate("/booking.php", {
@@ -223,53 +120,67 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
         selectedProvider: {
           name: "CONCH EXPRESS",
           keyName: "CONCH EXPRESS",
-          price: item.priceUGX || 48000,
-          timeline: "Within 2 Hours"
+          price: itemPrice,
+          timeline: "Express Delivery"
         }
       }
     });
   };
 
-  const renderCard = (item, orderType = "Gas Refill") => {
-    const whatsappMsg = encodeURIComponent(`Hello Conch Gas! I want to order ${item.name} at ${item.priceFormatted}. Please arrange delivery in Kampala.`);
+  const renderCard = (item, categoryTitle = "Gas Refill") => {
+    const itemName = item.title || item.name;
+    const itemPrice = item.price || 0;
+    const itemPriceFormatted = itemPrice ? `UGX ${Number(itemPrice).toLocaleString()}` : "Price On Request";
+    const itemImg = (item.images && item.images.length > 0 && item.images[0]) 
+      ? item.images[0] 
+      : (item.imageUrl || item.image || "/conch_cylinders_transparent.png");
+
+    const productPath = `/products/${item.slug || item._id}`;
+    const whatsappMsg = encodeURIComponent(`Hello Conch Gas! I want to order ${itemName} at ${itemPriceFormatted}. Please arrange delivery in Kampala.`);
     const whatsappUrl = `https://wa.me/256776500786?text=${whatsappMsg}`;
 
     return (
       <div
-        key={item.id}
+        key={item._id || item.slug}
         className="relative bg-white border border-slate-200/90 hover:border-[#BC0202]/50 rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xs hover:shadow-xl hover:shadow-red-950/5 hover:-translate-y-1.5 group will-change-transform"
       >
         {/* Subtle Top-Border Hover Highlight */}
         <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#BC0202] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
 
-        {/* Full-Bleed Product Image Header */}
-        <div className="relative w-full h-36 sm:h-52 md:h-60 bg-gradient-to-b from-slate-100/70 via-slate-50 to-white flex items-center justify-center overflow-hidden border-b border-slate-100/80 group/img">
+        {/* Product Image Header (Clickable link to Product Page) */}
+        <Link 
+          to={productPath}
+          className="relative w-full h-36 sm:h-52 md:h-60 bg-gradient-to-b from-slate-100/70 via-slate-50 to-white flex items-center justify-center overflow-hidden border-b border-slate-100/80 group/img block cursor-pointer"
+        >
           <img
-            src={item.image}
-            alt={item.name}
+            src={itemImg}
+            alt={itemName}
             loading="lazy"
             decoding="async"
             className="w-full h-full object-contain p-2 sm:p-2.5 group-hover:scale-106 transition-transform duration-500 ease-out"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = item.fallback || "/conch_cylinders_transparent.png";
+              e.target.src = "/conch_cylinders_transparent.png";
             }}
           />
-        </div>
+        </Link>
 
         {/* Card Body with Padding */}
         <div className="p-2.5 sm:p-4 lg:p-5 flex-1 flex flex-col justify-between">
           <div>
             {/* Product Name Header with WhatsApp icon on the right */}
             <div className="flex items-center justify-between gap-1.5 mb-1 sm:mb-2">
-              <h3 className="text-xs sm:text-[15px] md:text-[17px] font-black text-slate-900 tracking-tight leading-snug font-display group-hover:text-[#BC0202] transition-colors line-clamp-1 sm:line-clamp-2 flex-1">
-                {item.name}
-              </h3>
+              <Link
+                to={productPath}
+                className="text-xs sm:text-[15px] md:text-[17px] font-black text-slate-900 tracking-tight leading-snug font-display group-hover:text-[#BC0202] transition-colors line-clamp-1 sm:line-clamp-2 flex-1 hover:underline cursor-pointer"
+              >
+                {itemName}
+              </Link>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Order ${item.name} on WhatsApp`}
+                aria-label={`Order ${itemName} on WhatsApp`}
                 className="shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-xs hover:shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
                 title="Order on WhatsApp"
               >
@@ -285,7 +196,7 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
                 Official Price
               </span>
               <div className="text-xs sm:text-base md:text-lg font-black text-slate-900 tracking-tight font-display leading-tight">
-                {item.priceFormatted}
+                {itemPriceFormatted}
               </div>
             </div>
           </div>
@@ -293,7 +204,7 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
           {/* Action (Order Now) */}
           <div className="pt-1.5 sm:pt-2 border-t border-slate-100">
             <button
-              onClick={() => handleOrder(item, orderType)}
+              onClick={() => handleOrder(item, categoryTitle)}
               className="btn-sheen w-full py-2 sm:py-2.5 px-2 sm:px-4 rounded-lg sm:rounded-xl bg-[#000000] hover:bg-gradient-to-r hover:from-[#830000] hover:to-[#BC0202] text-white font-extrabold text-[10px] sm:text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 shadow-xs group-hover:bg-gradient-to-r group-hover:from-[#830000] group-hover:via-[#BC0202] group-hover:to-[#FF0000] cursor-pointer"
             >
               <span>ORDER NOW</span>
@@ -304,6 +215,44 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
       </div>
     );
   };
+
+  // Build 100% dynamic categories list based on live database
+  const buildDynamicSections = () => {
+    if (categories.length === 0) return [];
+
+    const sections = [];
+    const sortedCats = [...categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+
+    sortedCats.forEach((cat) => {
+      // Find matching products from DB
+      const catProds = products.filter(p => 
+        (p.categorySlug === cat.slug || String(p.category) === String(cat._id) || (p.categoryName && p.categoryName.toLowerCase() === cat.name.toLowerCase())) &&
+        p.isActive !== false
+      );
+
+      // Only show category if it has products
+      if (catProds.length > 0) {
+        sections.push({
+          id: cat._id || cat.slug,
+          slug: cat.slug,
+          title: cat.name,
+          badge: getCategoryBadge(cat),
+          subtitle: getCategorySubtitle(cat),
+          viewAllPath: `/products?category=${cat.slug}`,
+          totalCount: catProds.length,
+          items: catProds.slice(0, 4) // Show top 4 products
+        });
+      }
+    });
+
+    return sections;
+  };
+
+  const dynamicSections = buildDynamicSections();
+
+  if (!isLoading && dynamicSections.length === 0) {
+    return null;
+  }
 
   return (
     <section id="conch-pricing-catalog" className="py-8 md:py-14 bg-slate-50/60 font-sans border-b border-slate-200/60 relative overflow-hidden">
@@ -333,141 +282,63 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
           </p>
         </div>
 
+        {/* ═══════════════════════════════════════
+            LOADING SKELETON
+        ═══════════════════════════════════════ */}
+        {isLoading && (
+          <div className="py-12 flex flex-col items-center justify-center gap-3">
+            <Loader2 className="w-8 h-8 text-[#BC0202] animate-spin" />
+            <span className="text-xs font-semibold text-slate-500">Loading catalog...</span>
+          </div>
+        )}
 
         {/* ═══════════════════════════════════════
-            1. GAS REFILLS ROW (4 CARDS)
+            EMPTY STATE
         ═══════════════════════════════════════ */}
-        <div className="space-y-3 sm:space-y-4 mb-7 sm:mb-9">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-slate-200/80 pb-2.5 sm:pb-3">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-2">
-                <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#BC0202]" />
-                <h3 className="text-base sm:text-xl font-black text-slate-900 tracking-tight font-display uppercase">
-                  LPG Cylinder Refills
-                </h3>
-                <span className="text-[9px] sm:text-[10px] font-black bg-red-50 text-[#BC0202] border border-red-100 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Doorstep Exchange
-                </span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
-                Universal cylinder refills at subsidized official rates with free safety check
-              </p>
-            </div>
-            <Link
-              to="/products/gas-refills.htm"
-              className="inline-flex items-center gap-1.5 text-xs font-black text-[#BC0202] hover:text-[#830000] uppercase tracking-wider transition-colors shrink-0"
-            >
-              <span>View All Refills</span>
-              <ArrowRight size={13} />
-            </Link>
+        {!isLoading && dynamicSections.length === 0 && (
+          <div className="text-center py-12 bg-white rounded-2xl border border-slate-200">
+            <Package className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+            <h3 className="text-base font-bold text-slate-700">No products listed yet</h3>
+            <p className="text-xs text-slate-500 mt-1">Products added from the Admin Dashboard will appear here automatically.</p>
           </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6">
-            {REFILL_ITEMS.map((item) => renderCard(item, "Gas Refill"))}
-          </div>
-        </div>
-
+        )}
 
         {/* ═══════════════════════════════════════
-            2. NEW CONNECTIONS ROW (4 CARDS)
+            DYNAMIC CATEGORY ROWS (UP TO 4 PRODUCTS EACH)
         ═══════════════════════════════════════ */}
-        <div className="space-y-3 sm:space-y-4 mb-7 sm:mb-9">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-slate-200/80 pb-2.5 sm:pb-3">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-2">
-                <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#BC0202]" />
-                <h3 className="text-base sm:text-xl font-black text-slate-900 tracking-tight font-display uppercase">
-                  New Gas Connections
-                </h3>
-                <span className="text-[9px] sm:text-[10px] font-black bg-slate-900 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Complete Set + Gas
-                </span>
+        {!isLoading && dynamicSections.map((section) => (
+          <div key={section.id || section.slug} className="space-y-3 sm:space-y-4 mb-7 sm:mb-9">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-slate-200/80 pb-2.5 sm:pb-3">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#BC0202]" />
+                  <h3 className="text-base sm:text-xl font-black text-slate-900 tracking-tight font-display uppercase">
+                    {section.title}
+                  </h3>
+                  {section.badge && (
+                    <span className="text-[9px] sm:text-[10px] font-black bg-red-50 text-[#BC0202] border border-red-100 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      {section.badge}
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
+                  {section.subtitle}
+                </p>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
-                Brand new cylinder + initial full gas fill + certified safety fittings & warranty
-              </p>
+              <Link
+                to={section.viewAllPath}
+                className="inline-flex items-center gap-1.5 text-xs font-black text-[#BC0202] hover:text-[#830000] uppercase tracking-wider transition-colors shrink-0"
+              >
+                <span>View All {section.title}</span>
+                <ArrowRight size={13} />
+              </Link>
             </div>
-            <Link
-              to="/products/new-connections.htm"
-              className="inline-flex items-center gap-1.5 text-xs font-black text-[#BC0202] hover:text-[#830000] uppercase tracking-wider transition-colors shrink-0"
-            >
-              <span>View New Sets</span>
-              <ArrowRight size={13} />
-            </Link>
-          </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6">
-            {NEW_CONNECTION_ITEMS.map((item) => renderCard(item, "New Connection"))}
-          </div>
-        </div>
-
-
-        {/* ═══════════════════════════════════════
-            3. GAS ACCESSORIES ROW (4 CARDS)
-        ═══════════════════════════════════════ */}
-        <div className="space-y-3 sm:space-y-4 mb-7 sm:mb-9">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-slate-200/80 pb-2.5 sm:pb-3">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-2">
-                <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#BC0202]" />
-                <h3 className="text-base sm:text-xl font-black text-slate-900 tracking-tight font-display uppercase">
-                  Gas Accessories & Regulators
-                </h3>
-                <span className="text-[9px] sm:text-[10px] font-black bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Safety Certified
-                </span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
-                High & low-pressure regulators, manifold systems, and safety fittings
-              </p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6">
+              {section.items.map((item) => renderCard(item, section.title))}
             </div>
-            <Link
-              to="/products/gas-accessories.htm"
-              className="inline-flex items-center gap-1.5 text-xs font-black text-[#BC0202] hover:text-[#830000] uppercase tracking-wider transition-colors shrink-0"
-            >
-              <span>View Accessories</span>
-              <ArrowRight size={13} />
-            </Link>
           </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6">
-            {ACCESSORY_ITEMS.map((item) => renderCard(item, "Gas Accessory"))}
-          </div>
-        </div>
-
-
-        {/* ═══════════════════════════════════════
-            4. GREASE & LUBRICANTS ROW (4 CARDS)
-        ═══════════════════════════════════════ */}
-        <div className="space-y-3 sm:space-y-4 mb-7">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-slate-200/80 pb-2.5 sm:pb-3">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-2">
-                <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#BC0202]" />
-                <h3 className="text-base sm:text-xl font-black text-slate-900 tracking-tight font-display uppercase">
-                  Industrial Grease & Lubricants
-                </h3>
-                <span className="text-[9px] sm:text-[10px] font-black bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  EP2 High Grade
-                </span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium">
-                Automotive, machinery, fleet maintenance and industrial grease supplies
-              </p>
-            </div>
-            <Link
-              to="/products/lubricants.htm"
-              className="inline-flex items-center gap-1.5 text-xs font-black text-[#BC0202] hover:text-[#830000] uppercase tracking-wider transition-colors shrink-0"
-            >
-              <span>View Lubricants</span>
-              <ArrowRight size={13} />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6">
-            {GREASE_ITEMS.map((item) => renderCard(item, "Lubricants"))}
-          </div>
-        </div>
+        ))}
 
 
         {/* ═══════════════════════════════════════
@@ -496,10 +367,10 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
               <span>+256 776 500 786</span>
             </a>
             <Link
-              to="/calculator.htm"
+              to="/booking.php"
               className="btn-sheen inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#BC0202] hover:bg-[#FF0000] text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-200 shadow-md hover:scale-[1.02] active:scale-[0.98]"
             >
-              <span>Instant Calculator</span>
+              <span>Book Doorstep Refill</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

@@ -94,7 +94,7 @@ export default function AdminQuotes() {
       receiverName: "",
       receiverPhone: "",
       receiverEmail: "",
-      medicineUsedFor: "Diabetes",
+      medicineUsedFor: "Domestic Cooking",
       receiverDeliveryAddress: "",
       // Legacy / backend required
       customerName: "",
@@ -107,8 +107,8 @@ export default function AdminQuotes() {
       destinationCountryCode: quote.country || "",
       destinationAddress: "",
       destinationCity: "",
-      medicineType: quote.medicineType || "",
-      weight: quote.weight || 0.5,
+      medicineType: quote.medicineType || "LPG Cooking Gas",
+      weight: quote.weight || 13,
       basePrice: quote.estimatedPrice || 0,
       finalPrice: quote.estimatedPrice || 0,
       paymentStatus: "pending",
@@ -135,7 +135,7 @@ export default function AdminQuotes() {
       
       payload.customerPhone = formattedSenderPhone;
       payload.destinationAddress = `Name: ${orderForm.receiverName}\nPhone: ${formattedReceiverPhone}\nEmail: ${orderForm.receiverEmail || "N/A"}\nAddress: ${orderForm.receiverDeliveryAddress}`;
-      payload.notes = `Medicine used for: ${orderForm.medicineUsedFor}${payload.notes ? '\n' + payload.notes : ''}`;
+      payload.notes = `Purpose: ${orderForm.medicineUsedFor}${payload.notes ? '\n' + payload.notes : ''}`;
 
       const res = await api.post("/orders", payload);
       if (res.data && res.data.success) {
@@ -235,7 +235,7 @@ export default function AdminQuotes() {
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200/80 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
                   <th className="px-6 py-4">Mobile</th>
-                  <th className="px-6 py-4 whitespace-nowrap">Medicine / Weight</th>
+                  <th className="px-6 py-4 whitespace-nowrap">Cylinder / Weight</th>
                   <th className="px-6 py-4 whitespace-nowrap">Est. Charge</th>
                   <th className="px-6 py-4 whitespace-nowrap">Status</th>
                   <th className="px-6 py-4 whitespace-nowrap">Date Received</th>
@@ -260,7 +260,7 @@ export default function AdminQuotes() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap font-extrabold text-slate-900">
-                      ₹{quote.estimatedPrice?.toLocaleString("en-IN") || 0}
+                      UGX {Number(quote.estimatedPrice || 0).toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-0.5 rounded-full text-[9px] font-black uppercase border ${
@@ -405,8 +405,8 @@ export default function AdminQuotes() {
                             onChange={(e) => setSenderCountryCode(e.target.value)}
                             className="w-[85px] px-2 py-2.5 bg-slate-100/50 border-r border-slate-200 text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer"
                           >
-                            {COUNTRY_CALLING_CODES.map(c => (
-                              <option key={c.iso} value={c.code}>{c.iso} {c.code}</option>
+                            {COUNTRY_CALLING_CODES.map((c, idx) => (
+                              <option key={`${c.iso}-${idx}`} value={c.code}>{c.iso} {c.code}</option>
                             ))}
                           </select>
                           <input
@@ -478,8 +478,8 @@ export default function AdminQuotes() {
                             onChange={(e) => setReceiverCountryCode(e.target.value)}
                             className="w-[85px] px-2 py-2.5 bg-slate-100/50 border-r border-slate-200 text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer"
                           >
-                            {COUNTRY_CALLING_CODES.map(c => (
-                              <option key={c.iso} value={c.code}>{c.iso} {c.code}</option>
+                            {COUNTRY_CALLING_CODES.map((c, idx) => (
+                              <option key={`${c.iso}-${idx}`} value={c.code}>{c.iso} {c.code}</option>
                             ))}
                           </select>
                           <input
@@ -505,30 +505,28 @@ export default function AdminQuotes() {
                    </div>
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                      <div className="space-y-1">
-                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Medicine Used For *</label>
+                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Order Purpose / Usage *</label>
                        <select
                          value={orderForm.medicineUsedFor}
                          onChange={(e) => setOrderForm({ ...orderForm, medicineUsedFor: e.target.value })}
                          className="w-full bg-slate-50 border border-slate-200/80 focus:border-primary focus:outline-none px-3 py-2.5 rounded-xl text-xs font-bold text-slate-700"
                          required
                        >
-                         <option>Diabetes</option>
-                         <option>Blood pressure</option>
-                         <option>Cold cough</option>
-                         <option>Fever</option>
-                         <option>Sinusitis</option>
-                         <option>Allergies</option>
-                         <option>Heart related issues</option>
-                         <option>Cancer</option>
-                         <option>Thyroid</option>
-                         <option>Other issues</option>
+                         <option>Domestic Cooking</option>
+                          <option>Restaurant / Commercial Kitchen</option>
+                          <option>Hotel & Hospitality</option>
+                          <option>Industrial Facility</option>
+                          <option>Cylinder Refill (Exchange)</option>
+                          <option>New Complete Connection</option>
+                          <option>Bulk Gas Supply</option>
+                          <option>Other Usage</option>
                        </select>
                      </div>
                      <div className="space-y-1">
-                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Delivery Address with Zip Code *</label>
+                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Doorstep Delivery Address *</label>
                        <input
                          type="text"
-                         placeholder="Enter complete international destination street details and ZIP code"
+                         placeholder="Enter complete delivery street address in Kampala / Uganda"
                          value={orderForm.receiverDeliveryAddress}
                          onChange={(e) => setOrderForm({ ...orderForm, receiverDeliveryAddress: e.target.value, destinationAddress: e.target.value })}
                          className="w-full bg-slate-50 border border-slate-200/80 focus:border-primary focus:outline-none px-3 py-2.5 rounded-xl text-xs font-semibold"
@@ -540,10 +538,10 @@ export default function AdminQuotes() {
 
                  {/* ─── CARGO SPECS & PRICING ─── */}
                  <div>
-                   <h4 className="text-sm font-black text-slate-800 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200">Cargo Specs & Pricing</h4>
+                   <h4 className="text-sm font-black text-slate-800 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200">Cylinder Specs & Pricing</h4>
                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                      <div className="space-y-1">
-                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Medicine Type</label>
+                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Gas / Cylinder Type</label>
                        <input
                          type="text"
                          value={orderForm.medicineType}
@@ -563,7 +561,7 @@ export default function AdminQuotes() {
                        />
                      </div>
                      <div className="space-y-1">
-                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Charged Price (₹)</label>
+                       <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Charged Price (UGX)</label>
                        <input
                          type="number"
                          value={orderForm.finalPrice}

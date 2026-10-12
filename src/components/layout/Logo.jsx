@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Logo({ className = "", hideSubtitle = false, darkMode = false }) {
+export default function Logo({ className = "", hideSubtitle = false, darkMode = false, imgClassName = "" }) {
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <img 
@@ -9,17 +9,17 @@ export default function Logo({ className = "", hideSubtitle = false, darkMode = 
         width={48}
         height={48}
         loading="eager"
-        className="h-[38px] md:h-[48px] w-auto object-contain transition-transform duration-200 group-hover:scale-105 shrink-0" 
+        className={`h-[36px] w-auto object-contain transition-transform duration-200 group-hover:scale-105 shrink-0 ${imgClassName || 'md:h-[44px]'}`} 
         onError={(e) => {
           e.target.onerror = null;
           e.target.src = "/logo.png";
         }}
       />
       <div className="flex flex-col justify-center select-none text-left">
-        <span className={`text-base md:text-lg font-black tracking-tight font-display leading-tight uppercase ${
+        <span className={`text-sm md:text-base font-black tracking-tight font-display leading-tight uppercase whitespace-nowrap ${
           darkMode ? 'text-white' : 'text-slate-900'
         }`}>
-          Conch Gas <span className="text-[#FF0000]">Limited</span>
+          Conch Gas <span className="text-[#BC0202]">Limited</span>
         </span>
         {!hideSubtitle && (
           <span className={`text-[8.5px] md:text-[9.5px] font-bold tracking-widest uppercase mt-0.5 leading-none ${

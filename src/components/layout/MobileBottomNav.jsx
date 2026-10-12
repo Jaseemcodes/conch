@@ -1,9 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Banknote, Phone, User } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
+import { Home, Wrench, Phone, ShoppingBag } from "lucide-react";
 
 export default function MobileBottomNav({ settings }) {
-  const { isLoggedIn, isAdmin, openAuthModal } = useAuth();
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -11,11 +9,11 @@ export default function MobileBottomNav({ settings }) {
 
   const whatsappHref = settings?.whatsapp 
     ? `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, "")}` 
-    : "https://wa.me/918882691919";
+    : "https://wa.me/256776500786";
 
   const phoneHref = settings?.phone 
     ? `tel:${settings.phone.replace(/[^0-9+]/g, "")}` 
-    : "tel:+918882691919";
+    : "tel:+256776500786";
 
   return (
     <div className="lg:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#eaeaea] border-t border-slate-300/80 py-2 px-1 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
@@ -24,26 +22,25 @@ export default function MobileBottomNav({ settings }) {
         to="/" 
         className={`flex flex-col items-center gap-1 text-center px-3 py-1.5 rounded-xl transition-all duration-200 ${
           isActive("/") 
-            ? "bg-[#0052cc]/10 text-[#0052cc]" 
+            ? "bg-[#BC0202]/10 text-[#BC0202]" 
             : "text-slate-600 hover:text-slate-900"
         }`}
       >
-        <Home size={18} className={`${isActive("/") ? "text-[#0052cc]" : "text-slate-600"} stroke-[2.5px]`} />
-        <span className={`text-[10px] font-extrabold tracking-wide mt-0.5 ${isActive("/") ? "text-[#0052cc]" : "text-slate-700"}`}>Home</span>
+        <Home size={18} className={`${isActive("/") ? "text-[#BC0202]" : "text-slate-600"} stroke-[2.5px]`} />
+        <span className={`text-[10px] font-extrabold tracking-wide mt-0.5 ${isActive("/") ? "text-[#BC0202]" : "text-slate-700"}`}>Home</span>
       </Link>
 
-      {/* Courier Charges */}
+      {/* Services */}
       <Link 
-        to="/calculator.htm" 
-        state={location.state}
+        to="/services" 
         className={`flex flex-col items-center gap-1 text-center px-3 py-1.5 rounded-xl transition-all duration-200 ${
-          isActive("/calculator.htm") || isActive("/calculator.php")
-            ? "bg-[#0052cc]/10 text-[#0052cc]" 
+          isActive("/services") 
+            ? "bg-[#BC0202]/10 text-[#BC0202]" 
             : "text-slate-600 hover:text-slate-900"
         }`}
       >
-        <Banknote size={18} className={`${isActive("/calculator.htm") || isActive("/calculator.php") ? "text-[#0052cc]" : "text-slate-600"} stroke-[2.5px]`} />
-        <span className={`text-[10px] font-extrabold tracking-wide mt-0.5 ${isActive("/calculator.htm") || isActive("/calculator.php") ? "text-[#0052cc]" : "text-slate-700"}`}>Courier Charges</span>
+        <Wrench size={18} className={`${isActive("/services") ? "text-[#BC0202]" : "text-slate-600"} stroke-[2.2px]`} />
+        <span className={`text-[10px] font-extrabold tracking-wide mt-0.5 ${isActive("/services") ? "text-[#BC0202]" : "text-slate-700"}`}>Services</span>
       </Link>
 
       {/* Whatsapp */}
@@ -68,29 +65,18 @@ export default function MobileBottomNav({ settings }) {
         <span className="text-[10px] font-extrabold tracking-wide text-slate-700 mt-0.5">Call Us</span>
       </a>
 
-      {/* Account / Login */}
-      {isLoggedIn ? (
-        <Link 
-          to={isAdmin ? "/admin/dashboard" : "/my-account"}
-          className={`flex flex-col items-center gap-1 text-center px-3 py-1.5 rounded-xl transition-all duration-200 ${
-            isActive("/my-account") 
-              ? "bg-[#0052cc]/10 text-[#0052cc]" 
-              : "text-slate-600 hover:text-slate-900"
-          }`}
-        >
-          <User size={18} className={`${isActive("/my-account") ? "text-[#0052cc]" : "text-slate-600"} stroke-[2.5px]`} />
-          <span className={`text-[10px] font-extrabold tracking-wide mt-0.5 ${isActive("/my-account") ? "text-[#0052cc]" : "text-slate-700"}`}>Account</span>
-        </Link>
-      ) : (
-        <button 
-          type="button"
-          onClick={() => openAuthModal('login')}
-          className="flex flex-col items-center gap-1 text-center px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition-all duration-200 cursor-pointer"
-        >
-          <User size={18} className="text-slate-600 stroke-[2px]" />
-          <span className="text-[10px] font-extrabold tracking-wide text-slate-700 mt-0.5">Sign In</span>
-        </button>
-      )}
+      {/* Products Catalog */}
+      <Link 
+        to="/products" 
+        className={`flex flex-col items-center gap-1 text-center px-3 py-1.5 rounded-xl transition-all duration-200 ${
+          isActive("/products") 
+            ? "bg-red-50 text-[#BC0202]" 
+            : "text-slate-600 hover:text-slate-900"
+        }`}
+      >
+        <ShoppingBag size={18} className={`${isActive("/products") ? "text-[#BC0202]" : "text-slate-600"} stroke-[2.2px]`} />
+        <span className={`text-[10px] font-extrabold tracking-wide mt-0.5 ${isActive("/products") ? "text-[#BC0202]" : "text-slate-700"}`}>Products</span>
+      </Link>
     </div>
   );
 }

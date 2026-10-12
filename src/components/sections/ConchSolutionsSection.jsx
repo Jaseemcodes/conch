@@ -82,8 +82,8 @@ export default function ConchSolutionsSection({ title, subtitle, content }) {
 
   return (
     <section 
-      id="conch-solutions-section" 
-      className="py-8 md:py-14 border-b border-slate-200/70 relative overflow-hidden bg-white font-sans"
+      id="services" 
+      className="py-8 md:py-14 border-b border-slate-200/70 relative overflow-hidden bg-white font-sans scroll-mt-24"
     >
       {/* Background Decorative Glow */}
       <div className="absolute top-1/3 -left-36 w-80 h-80 bg-red-500/5 rounded-full blur-3xl pointer-events-none -z-10" />
@@ -96,7 +96,7 @@ export default function ConchSolutionsSection({ title, subtitle, content }) {
               LEFT COLUMN - HEADING & CONSULTATION
           ═══════════════════════════════════════ */}
           <motion.div 
-            className="lg:col-span-5 space-y-3.5 lg:sticky lg:top-24"
+            className="lg:col-span-5 space-y-3.5 self-start pt-3 sm:pt-4 lg:pt-11"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -108,7 +108,7 @@ export default function ConchSolutionsSection({ title, subtitle, content }) {
                 <span className="w-2 h-2 rounded-full bg-[#BC0202] animate-pulse" />
                 COMMERCIAL & INDUSTRIAL SERVICES
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-black text-slate-900 tracking-tight leading-[1.14] font-display">
+              <h2 className="text-[31px] sm:text-[39px] md:text-[47px] lg:text-[57px] font-black text-slate-900 tracking-tight leading-[1.12] font-display">
                 Engineered Gas Solutions <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">
                   For Every Business
@@ -173,6 +173,7 @@ export default function ConchSolutionsSection({ title, subtitle, content }) {
               return (
                 <motion.div 
                   key={cat.id} 
+                  id={cat.id}
                   variants={cardVariants}
                   whileHover={{ 
                     y: -5, 

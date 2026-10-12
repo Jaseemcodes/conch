@@ -1,39 +1,12 @@
-import api from "./api";
 import React from "react";
 import { Flame, Truck, ShieldCheck, Clock, MapPin, Zap } from "lucide-react";
 
 let PRICING_DATA = {};
 let PROVIDERS_DATA = [];
-let isPricingLoaded = false;
-let pricingLoadPromise = null;
+let isPricingLoaded = true;
 
 export const loadPricingData = async () => {
-  if (isPricingLoaded) return { PRICING_DATA, PROVIDERS_DATA };
-  if (pricingLoadPromise) return pricingLoadPromise;
-
-  pricingLoadPromise = Promise.all([
-    api.get('/pricing').catch(() => ({ data: { success: false } })),
-    api.get('/providers').catch(() => ({ data: { success: false } }))
-  ]).then(([pricingRes, providersRes]) => {
-    if (pricingRes.data && pricingRes.data.success) {
-      const data = pricingRes.data.data;
-      data.forEach(item => {
-        PRICING_DATA[item.country.toLowerCase()] = item.providers;
-      });
-    }
-    
-    if (providersRes.data && providersRes.data.success) {
-      PROVIDERS_DATA = providersRes.data.data;
-    }
-
-    isPricingLoaded = true;
-    return { PRICING_DATA, PROVIDERS_DATA };
-  }).catch(err => {
-    console.error('Failed to load pricing or providers data', err);
-    return { PRICING_DATA, PROVIDERS_DATA };
-  });
-  
-  return pricingLoadPromise;
+  return { PRICING_DATA, PROVIDERS_DATA };
 };
 
 // Gas Price Calculation Engine (Conch Gas Standard Rates in UGX)
@@ -64,10 +37,10 @@ export const calculateGasPrice = (gasType = 'lpg', weightInKg = 6, serviceType =
     } else if (w <= 13) {
       basePrice = isNew ? 285000 : 98000;
     } else if (w <= 40) {
-      basePrice = isNew ? 580000 : 260000;
+      basePrice = isNew ? 600000 : 240000;
     } else {
       // 45kg commercial
-      basePrice = isNew ? 680000 : 280000;
+      basePrice = isNew ? 620000 : 280000;
     }
   }
 
@@ -81,7 +54,7 @@ export const calculatePrice = (gasOrCountryName, providerName, weightInKg, servi
 
 export const getProvidersForCountry = () => {
   return [
-    { provider: "CONCH EXPRESS", timeline: "Under 2 Hours" },
+    { provider: "CONCH EXPRESS", timeline: "Same Day Express" },
     { provider: "STANDARD TRUCK", timeline: "Within 24 Hours" },
     { provider: "BULK SUPPLY", timeline: "Same Day Dispatch" },
     { provider: "DEPOT PICKUP", timeline: "Instant (Kira Road Depot)" }
@@ -91,7 +64,7 @@ export const getProvidersForCountry = () => {
 export const getDefaultProvider = () => {
   return {
     provider: "CONCH EXPRESS",
-    timeline: "2-4 Hours Doorstep Delivery"
+    timeline: "Express Doorstep Delivery"
   };
 };
 

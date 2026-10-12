@@ -84,12 +84,26 @@ const ProjectCard = ({ imgItem, label = "CONCH GAS PROJECT", footerLeft = "Conch
 
 export default function ServicesPage() {
   useEffect(() => {
-    window.scrollTo(0, 0);
     applyPageSEO(
       "Our Services - Bulk LPG, Tank & Restaurant Kitchen Installation | Conch Gas Uganda",
       "Conch Gas Ltd offers Bulk LPG supply, turnkey storage tank installations, gas pipeline fitting, and restaurant/commercial kitchen gas installations across Uganda.",
       "bulk lpg uganda, tank installation kampala, restaurant kitchen gas piping, commercial kitchen installation, lpg pipeline fitting uganda"
     );
+
+    const hash = window.location.hash?.replace("#", "");
+    const searchParams = new URLSearchParams(window.location.search);
+    const targetId = searchParams.get("service") || hash;
+
+    if (targetId) {
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 150);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   const tankImages = [
@@ -191,7 +205,7 @@ export default function ServicesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-12">
         
         {/* ─── SECTION 1: BULK LPG SUPPLY ─── */}
-        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-8">
+        <div id="bulk-lpg" className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-8 scroll-mt-28">
           <SectionBadge number="01" icon={Truck} />
           <div className="space-y-6 max-w-4xl">
             <div className="space-y-2">
@@ -221,7 +235,7 @@ export default function ServicesPage() {
         </div>
 
         {/* ─── SECTION 2: TANK INSTALLATION ─── */}
-        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-10">
+        <div id="tank-install" className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-10 scroll-mt-28">
           <SectionBadge number="02" icon={Wrench} />
           <div className="space-y-6 max-w-4xl">
             <div className="space-y-2">
@@ -260,7 +274,7 @@ export default function ServicesPage() {
         </div>
 
         {/* ─── SECTION 3: PIPELINE FITTING ─── */}
-        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-10">
+        <div id="pipeline-fitting" className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-10 scroll-mt-28">
           <SectionBadge number="03" icon={Flame} />
           <div className="space-y-6 max-w-4xl">
             <div className="space-y-2">
@@ -299,7 +313,7 @@ export default function ServicesPage() {
         </div>
 
         {/* ─── SECTION 4: RESTAURANT KITCHEN ─── */}
-        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-10">
+        <div id="kitchen-install" className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-10 scroll-mt-28">
           <SectionBadge number="04" icon={UtensilsCrossed} />
           <div className="space-y-6 max-w-4xl">
             <div className="space-y-2">

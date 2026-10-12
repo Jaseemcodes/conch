@@ -180,7 +180,7 @@ export default function CustomerDashboard() {
 
             <div className="flex items-center gap-3">
               <Link
-                to="/calculator.htm"
+                to="/booking.php"
                 className="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-1.5"
               >
                 <Flame size={15} /> Book Gas Refill
@@ -259,10 +259,10 @@ export default function CustomerDashboard() {
                 </div>
                 <h3 className="text-base font-bold text-slate-800 mb-1">No Active Gas Bookings Yet</h3>
                 <p className="text-xs text-slate-500 max-w-sm mx-auto mb-6">
-                  You haven't placed any LPG or Industrial Gas orders yet. Use our calculator to calculate instant delivery charges.
+                  You haven't placed any LPG or Industrial Gas orders yet. Book online now for express doorstep delivery.
                 </p>
                 <Link
-                  to="/calculator.htm"
+                  to="/booking.php"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all"
                 >
                   <Flame size={15} /> Book Your First Cylinder
@@ -296,7 +296,7 @@ export default function CustomerDashboard() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                       <div>
                         <span className="text-slate-400 font-bold uppercase text-[10px] block">Cylinder & Service</span>
                         <p className="font-extrabold text-slate-800 mt-0.5">
@@ -308,13 +308,6 @@ export default function CustomerDashboard() {
                         <span className="text-slate-400 font-bold uppercase text-[10px] block">Delivery Location</span>
                         <p className="font-semibold text-slate-700 truncate mt-0.5">
                           {order.destinationAddress || `${order.originCity || 'Kampala'}, Uganda`}
-                        </p>
-                      </div>
-
-                      <div>
-                        <span className="text-slate-400 font-bold uppercase text-[10px] block">Courier / Vehicle</span>
-                        <p className="font-semibold text-slate-700 mt-0.5">
-                          {order.courierPartner || 'Conch Gas Direct Express'}
                         </p>
                       </div>
                     </div>

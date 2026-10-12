@@ -179,11 +179,9 @@ export default function AdminOrders() {
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200/80 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
                   <th className="px-2 sm:px-3 py-3 whitespace-nowrap">Booking Ref</th>
-                  <th className="px-2 sm:px-3 py-3 min-w-[140px]">Sender Details</th>
-                  <th className="px-2 sm:px-3 py-3 min-w-[140px]">Receiver Details</th>
-                  <th className="px-2 sm:px-3 py-3 min-w-[80px]">Route</th>
-                  <th className="px-2 sm:px-3 py-3 min-w-[70px]">Provider</th>
-                  <th className="px-2 sm:px-3 py-3 min-w-[70px]">Est. Delivery</th>
+                  <th className="px-2 sm:px-3 py-3 min-w-[170px]">Product Ordered</th>
+                  <th className="px-2 sm:px-3 py-3 min-w-[140px]">Customer Details</th>
+                  <th className="px-2 sm:px-3 py-3 min-w-[160px]">Delivery Address</th>
                   <th className="px-2 sm:px-3 py-3 min-w-[100px]">Price</th>
                   <th className="px-2 sm:px-3 py-3 min-w-[120px]">Status</th>
                   <th className="px-2 sm:px-3 py-3 min-w-[80px]">Created Date</th>
@@ -196,58 +194,56 @@ export default function AdminOrders() {
                       <span className="font-extrabold text-slate-900 tracking-wider font-mono">{order.bookingRef}</span>
                     </td>
                     <td className="px-2 sm:px-3 py-3">
-                      {order.originAddress && order.originAddress.includes("Buy Medicines") ? (
-                        <div className="flex flex-col items-start justify-center p-1.5 bg-indigo-50/50 border border-indigo-100/50 rounded-lg max-w-[160px]">
-                          <span className="text-[9px] font-extrabold text-indigo-500 uppercase tracking-wider">Buy on Behalf</span>
-                          <span className="text-[8px] font-semibold text-indigo-400/80 mt-0.5">Receiver details only</span>
-                        </div>
-                      ) : (
-                        <div className="flex flex-col max-w-[160px]">
-                          <span className="font-extrabold text-slate-900 text-xs truncate">{order.customerName}</span>
-                          <span className="text-[9px] text-slate-500 mt-0.5 font-semibold">{order.customerPhone}</span>
-                          {order.customerEmail && (
-                            <span className="text-[9px] text-slate-400 mt-0.5 font-sans break-all">{order.customerEmail}</span>
+                      <div className="flex flex-col max-w-[200px]">
+                        <span className="font-extrabold text-slate-900 text-xs leading-snug">
+                          {order.productTitle || order.gasType || "LPG Cooking Gas"}
+                        </span>
+                        <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                          {order.quantity > 1 && (
+                            <span className="text-[9px] font-black bg-slate-900 text-white px-1.5 py-0.5 rounded">
+                              x{order.quantity}
+                            </span>
                           )}
-                          <span className="text-[9px] text-slate-400 mt-0.5 font-sans whitespace-normal break-words leading-tight">
-                            {order.originAddress || order.customerAddress || order.originCity || "N/A"}
+                          <span className="text-[9px] font-extrabold text-red-600 uppercase tracking-wider bg-red-50/80 px-1.5 py-0.5 rounded">
+                            {order.cylinderSize || "Standard Unit"}
+                          </span>
+                          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50 border border-slate-200/60 px-1.5 py-0.5 rounded">
+                            {order.orderType === "new_cylinder" ? "New" : (order.orderType === "refill" ? "Refill" : "Purchase")}
                           </span>
                         </div>
-                      )}
-                    </td>
-                    <td className="px-2 sm:px-3 py-3">
-                      {(() => {
-                        const rec = parseReceiverDetails(order.destinationAddress, order.destinationCountry);
-                        return (
-                          <div className="flex flex-col max-w-[160px]">
-                            <span className="font-extrabold text-slate-900 text-xs truncate">{rec.name}</span>
-                            <span className="text-[9px] text-slate-500 mt-0.5 font-semibold">{rec.phone}</span>
-                            {rec.email && rec.email !== "N/A" && (
-                              <span className="text-[9px] text-slate-400 mt-0.5 font-sans break-all">{rec.email}</span>
-                            )}
-                            <span className="text-[9px] text-slate-400 mt-0.5 font-sans whitespace-normal break-words leading-tight">
-                              {rec.address}
-                            </span>
-                          </div>
-                        );
-                      })()}
-                    </td>
-                    <td className="px-2 sm:px-3 py-3">
-                      <span className="font-extrabold text-slate-900 bg-[#0052CC]/5 text-[#0052CC] px-2 py-0.5 rounded-full text-[10px] tracking-wide inline-block max-w-full truncate" title={order.destinationCountry}>
-                        {order.destinationCountry}
-                      </span>
-                    </td>
-                    <td className="px-2 sm:px-3 py-3 whitespace-nowrap">
-                      <span className="font-extrabold text-slate-800 text-[10px]">{order.courierPartner || "—"}</span>
-                    </td>
-                    <td className="px-2 sm:px-3 py-3 whitespace-nowrap">
-                      <span className="text-[10px] text-slate-600 font-bold">{order.estimatedDeliveryTime || "—"}</span>
-                    </td>
-                    <td className="px-2 sm:px-3 py-3 whitespace-nowrap">
-                      <div className="flex flex-col">
-                        <span className="text-[9px] text-slate-500">Base: <span className="font-extrabold text-slate-800">₹{order.basePrice?.toLocaleString("en-IN") || 0}</span></span>
-                        <span className="text-[9px] text-emerald-600 mt-0.5">+GST: <span className="font-extrabold">₹{Math.round((order.basePrice || 0) * 0.18).toLocaleString("en-IN")}</span></span>
-                        <span className="text-[10px] font-extrabold text-slate-900 mt-0.5 border-t border-slate-100 pt-0.5">Total: ₹{order.finalPrice?.toLocaleString("en-IN") || 0}</span>
                       </div>
+                    </td>
+                    <td className="px-2 sm:px-3 py-3">
+                      <div className="flex flex-col max-w-[160px]">
+                        <span className="font-extrabold text-slate-900 text-xs truncate">
+                          {order.customerName || "Customer"}
+                        </span>
+                        <span className="text-[10px] text-slate-600 mt-0.5 font-bold font-mono">
+                          {order.customerPhone || "—"}
+                        </span>
+                        {order.customerEmail && (
+                          <span className="text-[9px] text-slate-400 mt-0.5 font-sans break-all">
+                            {order.customerEmail}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-2 sm:px-3 py-3">
+                      <div className="flex flex-col max-w-[180px]">
+                        <span className="text-[10px] text-slate-700 font-semibold whitespace-normal break-words leading-snug">
+                          {order.destinationAddress || order.deliveryArea || order.destinationCity || "Kampala, Uganda"}
+                        </span>
+                        {order.orderNotes && (
+                          <span className="text-[9px] text-slate-400 italic mt-1 line-clamp-2">
+                            Note: {order.orderNotes}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-2 sm:px-3 py-3 whitespace-nowrap">
+                      <span className="text-xs font-black text-slate-900 font-mono">
+                        UGX {Number(order.finalPrice || order.basePrice || 0).toLocaleString()}
+                      </span>
                     </td>
                     <td className="px-2 sm:px-3 py-3 whitespace-nowrap">
                       <select

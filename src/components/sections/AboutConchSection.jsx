@@ -7,7 +7,6 @@ import {
   Truck, 
   Flame, 
   Award, 
-  PhoneCall, 
   ArrowRight, 
   CheckCircle2, 
   Sparkles,
@@ -69,7 +68,7 @@ export default function AboutConchSection({ title, subtitle, content }) {
       <div className="relative my-2 py-2 flex items-center justify-center w-full min-h-[260px] sm:min-h-[320px]">
         <div className="absolute inset-0 bg-radial from-red-500/15 via-red-500/5 to-transparent blur-3xl rounded-full -z-10 animate-pulse-glow" />
         <img 
-          src="/conch_cylinders_transparent.png" 
+          src="/Why-Choose-Us-Conch-Gas-Ltd.webp" 
           alt="Conch Gas 40Kg, 6Kg, 13Kg, 45Kg Cylinders Range"
           width={480}
           height={470}
@@ -77,7 +76,7 @@ export default function AboutConchSection({ title, subtitle, content }) {
           className="w-full max-w-[340px] sm:max-w-[380px] h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500 ease-out"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = "/conch_cylinders_range.png";
+            e.target.src = "/conch_cylinders_transparent.png";
           }}
         />
       </div>
@@ -190,23 +189,15 @@ export default function AboutConchSection({ title, subtitle, content }) {
               })}
             </motion.div>
 
-            {/* Action CTA Buttons */}
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3.5 pt-3">
+            {/* Action CTA Button */}
+            <motion.div variants={itemVariants} className="pt-3">
               <Link 
-                to="/calculator.htm"
-                className="btn-sheen inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] hover:brightness-110 text-white font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                to="/products"
+                className="btn-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] hover:brightness-110 text-white font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
-                <span>Order Gas Online Now</span>
+                <span>View All Products</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              
-              <a 
-                href="tel:+256776500786"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs uppercase tracking-wider border border-slate-200 hover:border-slate-300 shadow-xs hover:scale-[1.01] active:scale-[0.99] transition-all duration-200"
-              >
-                <PhoneCall className="w-4 h-4 text-[#BC0202]" />
-                <span>Call: +256 776 500 786</span>
-              </a>
             </motion.div>
 
           </motion.div>

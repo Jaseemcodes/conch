@@ -535,11 +535,6 @@ export const COUNTRY_CALLING_CODES = [
     "iso": "IS"
   },
   {
-    "code": "+91",
-    "name": "India",
-    "iso": "IN"
-  },
-  {
     "code": "+62",
     "name": "Indonesia",
     "iso": "ID"
@@ -603,11 +598,6 @@ export const COUNTRY_CALLING_CODES = [
     "code": "+7",
     "name": "Kazakhstan",
     "iso": "KZ"
-  },
-  {
-    "code": "+254",
-    "name": "Kenya",
-    "iso": "KE"
   },
   {
     "code": "+686",
@@ -945,11 +935,6 @@ export const COUNTRY_CALLING_CODES = [
     "iso": "RU"
   },
   {
-    "code": "+250",
-    "name": "Rwanda",
-    "iso": "RW"
-  },
-  {
     "code": "+590",
     "name": "Saint Barthélemy",
     "iso": "BL"
@@ -1125,11 +1110,6 @@ export const COUNTRY_CALLING_CODES = [
     "iso": "TJ"
   },
   {
-    "code": "+255",
-    "name": "Tanzania",
-    "iso": "TZ"
-  },
-  {
     "code": "+66",
     "name": "Thailand",
     "iso": "TH"
@@ -1185,11 +1165,6 @@ export const COUNTRY_CALLING_CODES = [
     "iso": "TV"
   },
   {
-    "code": "+256",
-    "name": "Uganda",
-    "iso": "UG"
-  },
-  {
     "code": "+380",
     "name": "Ukraine",
     "iso": "UA"
@@ -1198,16 +1173,6 @@ export const COUNTRY_CALLING_CODES = [
     "code": "+971",
     "name": "United Arab Emirates",
     "iso": "AE"
-  },
-  {
-    "code": "+44",
-    "name": "United Kingdom",
-    "iso": "GB"
-  },
-  {
-    "code": "+1",
-    "name": "United States",
-    "iso": "US"
   },
   {
     "code": "+268",

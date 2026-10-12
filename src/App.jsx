@@ -8,31 +8,20 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTopButton from "./components/layout/ScrollToTopButton";
 
-// Auth Context & Modal
+// Auth Context (for Admin CMS)
 import { AuthProvider } from "./context/AuthContext";
-import AuthModal from "./components/auth/AuthModal";
 
 // Pages (Lazy Loaded)
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
-const PopularCountries = lazy(() => import("./pages/PopularCountries"));
-const PopularLocations = lazy(() => import("./pages/PopularLocations"));
-const Blog = lazy(() => import("./pages/Blog"));
-const Faq = lazy(() => import("./pages/Faq"));
 const Contact = lazy(() => import("./pages/Contact"));
 const ServiceProvider = lazy(() => import("./pages/ServiceProvider"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Thanks = lazy(() => import("./pages/Thanks"));
 const SpecialRates = lazy(() => import("./pages/SpecialRates"));
-const CalculatorPage = lazy(() => import("./pages/CalculatorPage"));
-const SlugResolver = lazy(() => import("./pages/SlugResolver"));
-const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const CustomerDashboard = lazy(() => import("./pages/CustomerDashboard"));
 const ProductsCatalogPage = lazy(() => import("./pages/ProductsCatalogPage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 const GasRefillsPage = lazy(() => import("./pages/GasRefillsPage"));
-const NewConnectionsPage = lazy(() => import("./pages/NewConnectionsPage"));
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 
 // Admin Pages (Lazy Loaded)
@@ -45,18 +34,9 @@ const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
 
 // Expanded Admin Pages
-const AdminCountries = lazy(() => import("./pages/admin/AdminCountries"));
-const AdminCountryEdit = lazy(() => import("./pages/admin/AdminCountryEdit"));
-const AdminLocations = lazy(() => import("./pages/admin/AdminLocations"));
-const AdminLocationEdit = lazy(() => import("./pages/admin/AdminLocationEdit"));
-const AdminBlogs = lazy(() => import("./pages/admin/AdminBlogs"));
-const AdminFaqs = lazy(() => import("./pages/admin/AdminFaqs"));
 const AdminTestimonials = lazy(() => import("./pages/admin/AdminTestimonials"));
-const AdminHomepage = lazy(() => import("./pages/admin/AdminHomepage"));
-const AdminAbout = lazy(() => import("./pages/admin/AdminAbout"));
-const AdminPricing = lazy(() => import("./pages/admin/AdminPricing"));
-const AdminRefundPolicy = lazy(() => import("./pages/admin/AdminRefundPolicy"));
-const AdminPrivacyPolicy = lazy(() => import("./pages/admin/AdminPrivacyPolicy"));
+const AdminSEO = lazy(() => import("./pages/admin/AdminSEO"));
+const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
 
 // Helper component to scroll window to top on route navigation change
 function ScrollToTop() {
@@ -157,34 +137,32 @@ function AppContent() {
               <Route path="/about.htm" element={<About />} />
               <Route path="/about" element={<About />} />
               
-              {/* Product & Services Routes */}
+              {/* Product Routes */}
               <Route path="/products" element={<ProductsCatalogPage />} />
               <Route path="/products/:slug" element={<ProductPage />} />
               <Route path="/products/:categorySlug/:slug" element={<ProductPage />} />
               <Route path="/gas-refills" element={<GasRefillsPage />} />
-              <Route path="/new-connections" element={<NewConnectionsPage />} />
-              <Route path="/services" element={<ServicesPage />} />
 
-              <Route path="/countries.php" element={<PopularCountries />} />
-              <Route path="/location.php" element={<PopularLocations />} />
-              <Route path="/blog.htm" element={<Blog />} />
-              <Route path="/blog-details.php" element={<Blog />} />
-              <Route path="/faq.htm" element={<Faq />} />
+              {/* Service Routes */}
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/services.htm" element={<ServicesPage />} />
+              <Route path="/services.html" element={<ServicesPage />} />
+              <Route path="/bulk-lpg-supply" element={<Navigate to="/services?service=bulk-lpg" replace />} />
+              <Route path="/tank-installation" element={<Navigate to="/services?service=tank-install" replace />} />
+              <Route path="/lpg-pipeline-fitting" element={<Navigate to="/services?service=pipeline-fitting" replace />} />
+              <Route path="/restaurant-kitchen-installation" element={<Navigate to="/services?service=kitchen-install" replace />} />
+
               <Route path="/contact.htm" element={<Contact />} />
               <Route path="/service-provider.php" element={<ServiceProvider />} />
               <Route path="/booking.php" element={<Booking />} />
               <Route path="/thanks.php" element={<Thanks />} />
               <Route path="/special-rates.php" element={<SpecialRates />} />
-              <Route path="/calculator.htm" element={<CalculatorPage />} />
-              <Route path="/calculator.php" element={<Navigate to="/calculator.htm" replace />} />
-              <Route path="/refund-policy" element={<RefundPolicy />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/refund.htm" element={<RefundPolicy />} />
-              <Route path="/privacy.htm" element={<PrivacyPolicy />} />
+              <Route path="/calculator.htm" element={<Navigate to="/products" replace />} />
+              <Route path="/calculator.php" element={<Navigate to="/products" replace />} />
               
-              {/* Customer Account Routes */}
-              <Route path="/my-account" element={<CustomerDashboard />} />
-              <Route path="/customer/dashboard" element={<CustomerDashboard />} />
+              {/* Customer Account Routes (Disabled - Direct Guest Checkout) */}
+              <Route path="/my-account" element={<Navigate to="/products" replace />} />
+              <Route path="/customer/dashboard" element={<Navigate to="/products" replace />} />
               <Route path="/customer/login" element={<Navigate to="/" replace />} />
 
               {/* Admin Routes */}
@@ -193,23 +171,12 @@ function AppContent() {
               <Route path="/admin/orders" element={<AdminLayout><AdminOrders /></AdminLayout>} />
               <Route path="/admin/quotes" element={<AdminLayout><AdminQuotes /></AdminLayout>} />
               <Route path="/admin/contacts" element={<AdminLayout><AdminContacts /></AdminLayout>} />
-              <Route path="/admin/countries" element={<AdminLayout><AdminCountries /></AdminLayout>} />
-              <Route path="/admin/countries/:id/edit" element={<AdminLayout><AdminCountryEdit /></AdminLayout>} />
-              <Route path="/admin/locations" element={<AdminLayout><AdminLocations /></AdminLayout>} />
-              <Route path="/admin/locations/:id/edit" element={<AdminLayout><AdminLocationEdit /></AdminLayout>} />
-              <Route path="/admin/blogs" element={<AdminLayout><AdminBlogs /></AdminLayout>} />
-              <Route path="/admin/faqs" element={<AdminLayout><AdminFaqs /></AdminLayout>} />
               <Route path="/admin/testimonials" element={<AdminLayout><AdminTestimonials /></AdminLayout>} />
-              <Route path="/admin/homepage" element={<AdminLayout><AdminHomepage /></AdminLayout>} />
-              <Route path="/admin/about" element={<AdminLayout><AdminAbout /></AdminLayout>} />
-              <Route path="/admin/pricing" element={<AdminLayout><AdminPricing /></AdminLayout>} />
+              <Route path="/admin/products" element={<AdminLayout><AdminProducts /></AdminLayout>} />
+              <Route path="/admin/seo" element={<AdminLayout><AdminSEO /></AdminLayout>} />
               <Route path="/admin/settings" element={<AdminLayout><AdminSettings /></AdminLayout>} />
-              <Route path="/admin/refund-policy" element={<AdminLayout><AdminRefundPolicy /></AdminLayout>} />
-              <Route path="/admin/privacy-policy" element={<AdminLayout><AdminPrivacyPolicy /></AdminLayout>} />
               <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
 
-              {/* Root-level dynamic routes should be placed last before catch-all */}
-              <Route path="/:slug" element={<SlugResolver />} />
               {/* Catch all fallback redirects to Home */}
               <Route path="*" element={<Home />} />
             </Routes>
@@ -220,8 +187,6 @@ function AppContent() {
         {!isAdminRoute && <Footer settings={settings} />}
         {!isAdminRoute && <ScrollToTopButton />}
       </div>
-      {/* Global Customer Auth Modal */}
-      <AuthModal />
     </>
   );
 }

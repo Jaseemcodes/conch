@@ -23,8 +23,8 @@ import {
   HelpCircle,
   Globe
 } from "lucide-react";
+import { usePageSEO } from "../utils/seo";
 import { TOP_BAR } from "../constants";
-import { applyPageSEO } from "../utils/seo";
 
 /* ─── Section number badge (Lightweight / Pure CSS) ─── */
 const SectionBadge = ({ number, icon: Icon, title = "" }) => (
@@ -108,13 +108,11 @@ export default function About() {
   const [openFaqIndex, setOpenFaqIndex] = useState(-1);
   const [openDeliveryReasonIndex, setOpenDeliveryReasonIndex] = useState(-1);
 
-  useEffect(() => {
-    applyPageSEO(
-      "About Us - Conch Gas Uganda | Premium LPG & Industrial Gas Supplier",
-      "Discover Conch Gas Ltd (part of Conch Group Limited with 15+ years experience) — Uganda's leading LPG, cooking gas, and industrial gas delivery company.",
-      "about conch gas, conch group uganda, lpg supplier kampala, raj monga director, cooking gas safety, industrial gas delivery"
-    );
-  }, []);
+  usePageSEO("about", {
+    title: "About Us - Conch Gas Uganda | Premium LPG & Industrial Gas Supplier",
+    description: "Discover Conch Gas Ltd (part of Conch Group Limited with 15+ years experience) — Uganda's leading LPG, cooking gas, and industrial gas delivery company.",
+    keywords: "about conch gas, conch group uganda, lpg supplier kampala, raj monga director, cooking gas safety, industrial gas delivery"
+  });
 
   useEffect(() => {
     const tabParam = searchParams.get("tab") || (location.hash ? location.hash.replace("#", "") : null);
@@ -268,7 +266,7 @@ export default function About() {
       >
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40"
-          style={{ backgroundImage: `url('/hero_gas_banner.jpg')` }}
+          style={{ backgroundImage: `url('/new_hero.jpg')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30" />
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000]" />

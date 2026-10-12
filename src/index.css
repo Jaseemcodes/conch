@@ -43,13 +43,6 @@ code, pre, .font-mono {
   background: #cbd5e1; /* slate-300 */
 }
 
-/* Documentation section hovered scrollbar styling to fit the dark gradient background */
-#doc-section .group:hover .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3) !important;
-}
-#doc-section .group:hover .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
 
 
 /* Dark scrollbar for dark sidebars */
@@ -143,6 +136,33 @@ code, pre, .font-mono {
 .custom-slider::-moz-range-thumb:hover {
   transform: scale(1.15);
   background: #FF0000;
+}
+
+.custom-slider:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.custom-slider:disabled::-webkit-slider-runnable-track {
+  cursor: not-allowed;
+  background: #cbd5e1;
+}
+
+.custom-slider:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+  background: #94a3b8;
+  transform: none;
+}
+
+.custom-slider:disabled::-moz-range-track {
+  cursor: not-allowed;
+  background: #cbd5e1;
+}
+
+.custom-slider:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+  background: #94a3b8;
+  transform: none;
 }
 
 /* Quill Rich Text Editor styles compatibility for Tailwind CSS Preflight */

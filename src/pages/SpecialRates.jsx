@@ -12,9 +12,8 @@ export default function SpecialRates() {
     countryCode: "UG",
     location: "Kampala (Kira Road Depot)",
     gasType: "LPG Commercial & Industrial",
-    medicineType: "LPG Commercial Gas",
-    mobile: "0700000000",
-    prescription: "YES",
+    mobile: "0776500786",
+    cylinderExchange: true,
     weight: "45 KG (Bulk)",
     serviceType: "DOORSTEP REFILL (EXCHANGE)"
   };
@@ -94,7 +93,7 @@ export default function SpecialRates() {
           </div>
 
           <button 
-            onClick={() => navigate("/calculator.htm", { state: { calculatedQuote } })}
+            onClick={() => navigate("/", { state: { calculatedQuote } })}
             className="px-5 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-extrabold text-xs shadow-3xs hover:scale-[1.01] active:scale-[0.99] transition-all select-none cursor-pointer"
           >
             Modify Selection
@@ -128,7 +127,7 @@ export default function SpecialRates() {
 
           <div className="flex flex-col items-center gap-3 w-full max-w-xs pt-4">
             <a 
-              href="tel:+256700000000"
+              href="tel:+256776500786"
               className="w-full text-center py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs shadow-md shadow-red-600/20 transition-all hover:scale-[1.01] duration-200 cursor-pointer"
             >
               📞 Call Conch Gas Kira Road
@@ -139,7 +138,7 @@ export default function SpecialRates() {
             </div>
             
             <a 
-              href={`https://wa.me/256700000000?text=Hello%20Conch%20Gas!%20I%20am%20inquiring%20about%20bulk%20commercial%20gas%20supply%20(${calculatedQuote.weight}%20KG)%20in%20${calculatedQuote.location || "Kampala"}.%20Please%20share%20contract%20pricing.`}
+              href={`https://wa.me/256776500786?text=Hello%20Conch%20Gas!%20I%20am%20inquiring%20about%20bulk%20commercial%20gas%20supply%20(${calculatedQuote.weight}%20KG)%20in%20${calculatedQuote.location || "Kampala"}.%20Please%20share%20contract%20pricing.`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full text-center py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.01] duration-200 cursor-pointer"

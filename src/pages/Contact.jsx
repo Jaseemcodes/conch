@@ -9,7 +9,7 @@ import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { COUNTRY_CALLING_CODES } from "../constants/countryCodes";
 import api from "../utils/api";
-import { applyPageSEO } from "../utils/seo";
+import { usePageSEO } from "../utils/seo";
 
 const DEFAULT_SECTIONS = [
   {
@@ -62,41 +62,28 @@ const DEFAULT_SECTIONS = [
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submissionData, setSubmissionData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [sections, setSections] = useState([]);
-  const [apiLoaded, setApiLoaded] = useState(false);
+  const [isLoading] = useState(false);
+  const [sections] = useState(DEFAULT_SECTIONS);
   const [countryCode, setCountryCode] = useState("+256");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    api.get('/contacts/sections')
-      .then(res => {
-        if (res.data && res.data.success && res.data.data) {
-          setSections(res.data.data);
-          setApiLoaded(true);
-        }
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching contact sections:', err);
-        setApiLoaded(false);
-        setIsLoading(false);
-      });
   }, []);
 
   useEffect(() => {
-    const seoSec = sections.find(s => s.metaViewTitle || s.metaDescription || s.metaKeywords) || sections[0];
-    if (seoSec) {
-      applyPageSEO(
-        seoSec.metaViewTitle,
-        seoSec.metaDescription,
-        seoSec.metaKeywords,
-        "Contact Us - Conch Gas Uganda",
-        "Contact Conch Gas for LPG cylinder delivery, industrial gases, bulk gas solutions, and customer support in Kampala, Uganda.",
-        "conch gas contact, lpg gas uganda, gas cylinder delivery kampala, kira road gas depot"
-      );
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        setIsSubmitted(false);
+      }, 6000);
+      return () => clearTimeout(timer);
     }
-  }, [sections]);
+  }, [isSubmitted]);
+
+  usePageSEO("contact", {
+    title: "Contact Us - Conch Gas Uganda",
+    description: "Contact Conch Gas for LPG cylinder delivery, industrial gases, bulk gas solutions, and customer support in Kampala, Uganda.",
+    keywords: "conch gas contact, lpg gas uganda, gas cylinder delivery kampala, kira road gas depot"
+  });
 
   const getSection = (key) => {
     const sec = sections.find(s => s.key === key);
@@ -396,25 +383,6 @@ export default function Contact() {
                       <p className="max-w-md mx-auto text-sm text-slate-500 font-sans leading-relaxed font-medium">
                         Thank you, <span className="font-extrabold text-slate-800">{submissionData?.name}</span>. Our Conch Gas customer support team has received your query registered with email <span className="font-extrabold text-slate-800">{submissionData?.email}</span>. We will follow up with you promptly.
                       </p>
-                      
-                      <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-                        <a
-                          href="https://wa.me/256703978198"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-sm font-bold text-center block w-full sm:w-auto transition-colors shadow-sm"
-                        >
-                          💬 Chat on WhatsApp (+256 703 978 198)
-                        </a>
-                        <button
-                          id="reset-contact-btn"
-                          type="button"
-                          onClick={() => setIsSubmitted(false)}
-                          className="px-6 py-3.5 rounded-xl border border-slate-200 text-sm font-bold w-full sm:w-auto hover:bg-slate-50 transition-colors"
-                        >
-                          Submit Another Query
-                        </button>
-                      </div>
                     </motion.div>
                   ) : (
                     /* Simple raw form with fields details */
@@ -463,8 +431,8 @@ export default function Contact() {
                             onChange={(e) => setCountryCode(e.target.value)}
                             className="w-[85px] px-2 bg-slate-100/50 text-xs font-semibold text-slate-800 focus:outline-none border-r border-slate-200 cursor-pointer"
                           >
-                            {COUNTRY_CALLING_CODES.map(c => (
-                              <option key={c.iso} value={c.code}>{c.iso} {c.code}</option>
+                            {COUNTRY_CALLING_CODES.map((c, idx) => (
+                              <option key={`${c.iso}-${idx}`} value={c.code}>{c.iso} {c.code}</option>
                             ))}
                           </select>
                           <input

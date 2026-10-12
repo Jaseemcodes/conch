@@ -11,14 +11,9 @@ import {
   X, 
   User as UserIcon,
   Shield,
-  Globe,
-  MapPin,
-  BookOpen,
-  HelpCircle,
   Star,
-  Layers,
-  DollarSign,
-  Image
+  Globe,
+  Layers
 } from "lucide-react";
 import api from "../../utils/api";
 import Logo from "../layout/Logo";
@@ -42,18 +37,11 @@ export default function AdminLayout({ children }) {
       ]
     },
     {
-      title: "Directories & Content",
+      title: "Content & CMS",
       items: [
-        { name: "Countries", path: "/admin/countries", icon: Globe },
-        { name: "Locations", path: "/admin/locations", icon: MapPin },
-        { name: "Courier Pricing", path: "/admin/pricing", icon: DollarSign },
-        { name: "Blogs", path: "/admin/blogs", icon: BookOpen },
-        { name: "FAQs", path: "/admin/faqs", icon: HelpCircle },
-        { name: "Homepage CMS", path: "/admin/homepage", icon: Layers },
-        { name: "About Page CMS", path: "/admin/about", icon: Layers },
-        { name: "Refund Policy CMS", path: "/admin/refund-policy", icon: Layers },
-        { name: "Privacy Policy CMS", path: "/admin/privacy-policy", icon: Layers },
-        { name: "Contact Page CMS", path: "/admin/contacts?mode=cms", icon: Mail },
+        { name: "Products & Categories", path: "/admin/products", icon: Layers },
+        { name: "Customer Reviews", path: "/admin/testimonials", icon: Star },
+        { name: "SEO Management", path: "/admin/seo", icon: Globe },
       ]
     },
     {
@@ -121,9 +109,7 @@ export default function AdminLayout({ children }) {
         {section.items.map((item) => {
           const Icon = item.icon;
           const isActive = (item.path === "/admin/dashboard" && (location.pathname === "/admin" || location.pathname === "/admin/dashboard")) ||
-                           (item.path === "/admin/contacts" && location.pathname === "/admin/contacts" && !location.search.includes("mode=cms")) ||
-                           (item.path === "/admin/contacts?mode=cms" && location.pathname === "/admin/contacts" && location.search.includes("mode=cms")) ||
-                           (item.path !== "/admin/dashboard" && item.path !== "/admin/contacts" && item.path !== "/admin/contacts?mode=cms" && location.pathname === item.path);
+                           (item.path !== "/admin/dashboard" && location.pathname === item.path);
           return (
             <Link
               key={item.name}
@@ -149,9 +135,11 @@ export default function AdminLayout({ children }) {
       {/* 1. Desktop Sidebar */}
       <aside className="hidden lg:flex flex-col w-64 bg-slate-900 text-slate-300 border-r border-slate-800 shrink-0">
         {/* Brand Header */}
-        <div className="py-6 flex flex-col items-center justify-center border-b border-slate-800 gap-1 shrink-0">
-          <Logo className="scale-[0.8] origin-center" hideSubtitle={true} />
-          <span className="font-extrabold text-[10px] text-[#03ADA4] tracking-widest uppercase bg-[#03ADA4]/10 px-3 py-1 rounded-full mt-2.5">
+        <div className="py-6 flex flex-col items-center justify-center border-b border-slate-800 gap-1 shrink-0 px-4">
+          <Link to="/admin/dashboard" className="hover:opacity-90 transition-opacity">
+            <Logo darkMode={true} hideSubtitle={true} imgClassName="h-[34px]" />
+          </Link>
+          <span className="font-extrabold text-[10px] text-[#03ADA4] tracking-widest uppercase bg-[#03ADA4]/10 px-3 py-1 rounded-full mt-2">
             Admin Portal
           </span>
         </div>
@@ -195,7 +183,9 @@ export default function AdminLayout({ children }) {
       }`}>
         <div className="py-6 flex items-center justify-between px-6 border-b border-slate-800 shrink-0">
           <div className="flex flex-col items-start gap-1">
-            <Logo className="scale-[0.7] origin-left -ml-1.5" hideSubtitle={true} />
+            <Link to="/admin/dashboard" onClick={() => setIsMobileOpen(false)} className="hover:opacity-90 transition-opacity">
+              <Logo darkMode={true} hideSubtitle={true} imgClassName="h-[32px]" />
+            </Link>
             <span className="font-extrabold text-[9px] text-[#03ADA4] tracking-widest uppercase bg-[#03ADA4]/10 px-2.5 py-0.5 rounded-full mt-1.5">
               Admin Portal
             </span>
@@ -244,12 +234,7 @@ export default function AdminLayout({ children }) {
               <Menu size={20} />
             </button>
             <h2 className="text-xs font-extrabold text-slate-900 uppercase tracking-widest">
-              {allNavItems.find(i => {
-                if (i.path.includes("?")) {
-                  return (location.pathname + location.search) === i.path;
-                }
-                return location.pathname === i.path && !location.search.includes("mode=cms");
-              })?.name || "Dashboard"}
+              {allNavItems.find(i => location.pathname === i.path)?.name || "Dashboard"}
             </h2>
           </div>
 
