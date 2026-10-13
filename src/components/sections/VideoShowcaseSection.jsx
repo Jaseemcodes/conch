@@ -86,15 +86,15 @@ export default function VideoShowcaseSection({ title, subtitle }) {
         <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-[#BC0202]/20 text-[#BC0202] text-xs font-black uppercase tracking-wider shadow-2xs">
             <Flame className="w-3.5 h-3.5 fill-[#BC0202]" />
-            <span>CONCH GAS IN ACTION • LIVE DEMONSTRATIONS</span>
+            <span>CONCH GAS SPOTLIGHT • STORIES & HIGHLIGHTS</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight font-display">
-            {title || "Watch How We Deliver Safety & Quality Across Uganda"}
+            {title || "Explore Conch Gas in Action"}
           </h2>
 
           <p className="text-slate-600 text-xs sm:text-sm md:text-base font-medium leading-relaxed">
-            {subtitle || "See our certified automated refilling process, express doorstep delivery fleet, and industrial kitchen pipeline installations in action."}
+            {subtitle || "Discover what makes Conch Gas Uganda's trusted energy partner — from customer stories and helpful guides to live operations and behind-the-scenes highlights."}
           </p>
         </div>
 
@@ -129,7 +129,7 @@ export default function VideoShowcaseSection({ title, subtitle }) {
               <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-[#BC0202] text-white text-[11px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1.5">
                   <Sparkles className="w-3 h-3" />
-                  Featured Story
+                  Featured Video
                 </span>
                 <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10.5px] font-bold tracking-wide flex items-center gap-1 border border-white/10">
                   <Clock className="w-3 h-3 text-red-400" />
@@ -151,7 +151,7 @@ export default function VideoShowcaseSection({ title, subtitle }) {
               <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 right-4 flex items-center justify-between text-white text-xs">
                 <span className="font-bold tracking-wide flex items-center gap-1.5 text-slate-200">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  UNBS Certified Refilling Standards
+                  {featuredVideo.tag || "Official Conch Gas Video"}
                 </span>
                 <span className="text-[11px] font-semibold text-slate-300 uppercase tracking-widest hidden sm:inline-block">
                   Click To Watch
