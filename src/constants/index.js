@@ -153,10 +153,9 @@ export const FOOTER = {
     title: "QUICK LINKS",
     links: [
       { label: "Home", path: "/" },
-      { label: "About Conch Gas", path: "/about" },
-      { label: "LPG Gas Cylinders", path: "/products" },
-      { label: "Gas Refills & Exchange", path: "/gas-refills" },
-      { label: "Commercial & Bulk Gas", path: "/services" },
+      { label: "About Us", path: "/about" },
+      { label: "Products", path: "/products" },
+      { label: "Services", path: "/services" },
       { label: "Contact Us", path: "/contact" }
     ]
   },
