@@ -64,10 +64,18 @@ export default function Contact() {
   const [submissionData, setSubmissionData] = useState(null);
   const [isLoading] = useState(false);
   const [sections] = useState(DEFAULT_SECTIONS);
+  const [siteSettings, setSiteSettings] = useState(null);
   const [countryCode, setCountryCode] = useState("+256");
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    api.get("/settings")
+      .then(res => {
+        if (res.data?.success && res.data.data) {
+          setSiteSettings(res.data.data);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -291,7 +299,7 @@ export default function Contact() {
                     </div>
                     <div 
                       className="text-sm text-slate-600 leading-relaxed font-medium pt-1"
-                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getSection("contact-intro")?.content?.address || "Plot 155, Kira Road near Kira Road Police Station P.O.Box 26105 Kampala- Uganda") }}
+                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(siteSettings?.address || getSection("contact-intro")?.content?.address || "Plot 155, Kira Road near Kira Road Police Station P.O.Box 26105 Kampala- Uganda") }}
                     />
                   </motion.div>
 
@@ -306,7 +314,7 @@ export default function Contact() {
                       </h4>
                     </div>
                     <div className="space-y-1.5 pt-1">
-                      {["+256 200 900 010", "+256 776 500 786", "+256 703 978 198"].map((phoneNum, idx) => (
+                      {Array.from(new Set([siteSettings?.phone, siteSettings?.whatsapp, "+256 200 900 010", "+256 776 500 786"].filter(Boolean))).map((phoneNum, idx) => (
                         <a
                           key={idx}
                           href={`tel:${phoneNum.replace(/\s+/g, '')}`}
@@ -330,7 +338,7 @@ export default function Contact() {
                       </h4>
                     </div>
                     <div className="space-y-1.5 pt-1">
-                      {["sales@conchgas.com", "info@conchgas.com"].map((emailAddr, idx) => (
+                      {Array.from(new Set([siteSettings?.email, "sales@conchgas.com", "info@conchgas.com"].filter(Boolean))).map((emailAddr, idx) => (
                         <a
                           key={idx}
                           href={`mailto:${emailAddr}`}
@@ -355,8 +363,8 @@ export default function Contact() {
                     </div>
                     <div className="pt-1 flex items-center justify-between text-sm flex-wrap gap-2">
                       <span className="text-slate-800 font-bold">Monday – Sunday</span>
-                      <span className="text-slate-700 font-bold bg-slate-100 px-3 py-1 rounded-lg text-xs">
-                        8:00 am – 18:00 pm
+                      <span className="text-emerald-700 font-bold bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-lg text-xs">
+                        {siteSettings?.workingHours || "Open 24/7"}
                       </span>
                     </div>
                   </motion.div>
