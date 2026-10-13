@@ -93,7 +93,7 @@ export default function AboutConchSection({ title, subtitle, content }) {
           40 KG Commercial
         </span>
         <span className="px-3 py-1 bg-slate-100 text-slate-800 rounded-lg text-[10px] font-bold tracking-wide border border-slate-200 hover:scale-105 transition-transform">
-          45 KG Bulk
+          45 KG Commercial
         </span>
       </div>
 

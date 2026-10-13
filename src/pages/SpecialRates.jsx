@@ -14,7 +14,7 @@ export default function SpecialRates() {
     gasType: "LPG Commercial & Industrial",
     mobile: "0776500786",
     cylinderExchange: true,
-    weight: "45 KG (Bulk)",
+    weight: "45 KG (Commercial)",
     serviceType: "DOORSTEP REFILL (EXCHANGE)"
   };
 
