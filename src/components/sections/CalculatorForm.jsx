@@ -584,19 +584,18 @@ export default function CalculatorForm() {
               <div id="email-option-container" className="pt-2">
                 <div className="flex flex-col gap-1 w-full">
                   <label htmlFor="form-email" className="text-[10.5px] font-bold uppercase tracking-wider text-slate-700">
-                    EMAIL ADDRESS <span className="text-[#BC0202]">*</span>
+                    EMAIL ADDRESS <span className="text-slate-400 text-[10px] font-normal normal-case">(optional)</span>
                   </label>
                   <div className={`flex items-center h-11 relative shadow-sm rounded-xl border ${errors.email ? "border-red-400 focus-within:ring-2 focus-within:ring-[#BC0202]/20 focus-within:border-[#BC0202] bg-red-50/50" : "border-slate-200 focus-within:ring-2 focus-within:ring-[#BC0202]/20 focus-within:border-[#BC0202] bg-white"} transition-all overflow-hidden px-3 gap-2.5`}>
                     <Mail className="w-4 h-4 text-slate-400 shrink-0" />
                     <input
                       id="form-email"
                       type="email"
-                      placeholder="Enter your email address (e.g. name@example.com)"
+                      placeholder="Enter your email address (optional)"
                       {...register("email", { 
-                        required: "Email address is required",
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Please enter a valid email address"
+                        validate: (val) => {
+                          if (!val || !val.trim()) return true;
+                          return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(val.trim()) || "Please enter a valid email address";
                         }
                       })}
                       className="w-full bg-transparent text-[11px] sm:text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none tracking-tight"
