@@ -11,7 +11,7 @@ const DEFAULT_LPG_WEIGHTS = [
   { value: 6, label: "6.0 kg", shortLabel: "6 kg" },
   { value: 13, label: "13.0 kg", shortLabel: "13 kg" },
   { value: 40, label: "40.0 kg", shortLabel: "40 kg" },
-  { value: 45, label: "45 kg+", shortLabel: "45 kg+" }
+  { value: 45, label: "45.0 kg", shortLabel: "45 kg" }
 ];
 
 const GAS_TYPES = [
@@ -132,8 +132,8 @@ export default function CalculatorForm() {
             if (num > 0 && !weightMap.has(num)) {
               weightMap.set(num, {
                 value: num,
-                label: num >= 45 ? `${num} kg+` : `${num.toFixed(1)} kg`,
-                shortLabel: num >= 45 ? `${num} kg+` : `${num} kg`
+                label: `${num.toFixed(1)} kg`,
+                shortLabel: `${num} kg`
               });
             }
           }
@@ -262,12 +262,12 @@ export default function CalculatorForm() {
       finalPrice = getLiveProductPrice(weightVal, serviceType, "lpg_domestic");
       finalGasLabel = selectedGas?.label || (serviceType === "NEW_CONNECTION" ? "LPG Gas New Connection" : "LPG Gas Refill");
       finalWeight = weightVal;
-      if (weightVal >= 45) {
+      if (weightVal > 45) {
         isHeavyCommercial = true;
       }
     }
 
-    // Heavy Commercial 45kg+ or Bulk Commercial Gas
+    // Heavy Commercial / Bulk Gas (> 45kg)
     if (isHeavyCommercial) {
       const specialQuoteObj = {
         country: "Uganda",
