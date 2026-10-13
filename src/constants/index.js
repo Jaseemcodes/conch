@@ -155,6 +155,11 @@ export const FOOTER = {
       { label: "Home", path: "/" },
       { label: "About Us", path: "/about" },
       { label: "Products", path: "/products" },
+      { label: "LPG Gas Cylinders", path: "/products?category=lpg-gas-cylinders" },
+      { label: "Gas Accessories", path: "/products?category=gas-accessories" },
+      { label: "Industrial Gas", path: "/products?category=industrial-gas" },
+      { label: "Refrigerant Gas", path: "/products?category=refrigerant-gas" },
+      { label: "Lubricants", path: "/products?category=lubricants" },
       { label: "Services", path: "/services" },
       { label: "Contact Us", path: "/contact" }
     ]

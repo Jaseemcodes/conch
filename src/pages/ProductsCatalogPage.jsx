@@ -27,7 +27,7 @@ export default function ProductsCatalogPage() {
     const q = searchParams.get("search") || "";
     setSearchQuery(q);
     const cat = searchParams.get("category");
-    if (cat) setSelectedCategory(cat);
+    setSelectedCategory(cat || "all");
   }, [searchParams]);
 
   usePageSEO("products", {
