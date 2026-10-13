@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   Play, 
@@ -8,7 +8,9 @@ import {
   ShieldCheck, 
   Sparkles,
   CheckCircle2,
-  Tv
+  Tv,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 // Curated demo video items with valid YouTube IDs & Conch Gas themed thumbnails
@@ -67,9 +69,40 @@ export const DEMO_VIDEOS = [
 
 export default function VideoShowcaseSection({ title, subtitle }) {
   const [activeVideo, setActiveVideo] = useState(null);
+  const [mobileSlideIdx, setMobileSlideIdx] = useState(0);
+  const mobileSliderRef = useRef(null);
 
   const featuredVideo = DEMO_VIDEOS.find(v => v.isFeatured) || DEMO_VIDEOS[0];
   const compactVideos = DEMO_VIDEOS.filter(v => !v.isFeatured);
+
+  const scrollToSlide = (idx) => {
+    if (!mobileSliderRef.current) return;
+    const container = mobileSliderRef.current;
+    const cards = container.children;
+    if (cards[idx]) {
+      cards[idx].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      setMobileSlideIdx(idx);
+    }
+  };
+
+  const handlePrev = () => {
+    const newIdx = Math.max(0, mobileSlideIdx - 1);
+    scrollToSlide(newIdx);
+  };
+
+  const handleNext = () => {
+    const newIdx = Math.min(DEMO_VIDEOS.length - 1, mobileSlideIdx + 1);
+    scrollToSlide(newIdx);
+  };
+
+  const handleMobileScroll = () => {
+    if (!mobileSliderRef.current) return;
+    const container = mobileSliderRef.current;
+    const scrollLeft = container.scrollLeft;
+    const cardWidth = container.children[0]?.offsetWidth || 300;
+    const idx = Math.round(scrollLeft / (cardWidth + 16));
+    setMobileSlideIdx(Math.min(DEMO_VIDEOS.length - 1, Math.max(0, idx)));
+  };
 
   return (
     <section 
@@ -98,8 +131,8 @@ export default function VideoShowcaseSection({ title, subtitle }) {
           </p>
         </div>
 
-        {/* ─── Videos Grid: Left Main Featured + Right Compact Cards ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        {/* ─── Desktop View: 2-Column Grid (Visible only on lg screens >= 1024px) ─── */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
           {/* ══════════════════════════════════════════════
               LEFT: FEATURED HORIZONTAL VIDEO (16:9 CARD)
@@ -225,6 +258,123 @@ export default function VideoShowcaseSection({ title, subtitle }) {
             ))}
           </div>
 
+        </div>
+
+        {/* ─── Mobile / Tablet View: Touch-Swipeable Horizontal Slider (< lg) ─── */}
+        <div className="block lg:hidden">
+          {/* Swipeable Horizontal Track */}
+          <div 
+            ref={mobileSliderRef}
+            onScroll={handleMobileScroll}
+            className="flex items-stretch gap-4 overflow-x-auto snap-x snap-mandatory py-2 px-1 scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-4 sm:-mx-6 px-4 sm:px-6"
+          >
+            {DEMO_VIDEOS.map((video) => (
+              <div
+                key={video.id}
+                onClick={() => setActiveVideo(video)}
+                className="w-[84vw] max-w-[340px] shrink-0 snap-center bg-white border border-slate-200/90 hover:border-[#BC0202]/40 rounded-3xl p-4 shadow-lg hover:shadow-xl transition-all flex flex-col justify-between cursor-pointer group"
+              >
+                {/* Thumbnail Container */}
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-900 shadow-md">
+                  <img 
+                    src={video.thumbnail} 
+                    alt={video.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-[0.92]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+
+                  {/* Badges on Top */}
+                  <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                    <span className="px-2.5 py-1 rounded-full bg-[#BC0202] text-white text-[10px] font-black uppercase tracking-wider shadow-xs flex items-center gap-1">
+                      {video.isFeatured ? <Sparkles className="w-3 h-3" /> : null}
+                      {video.badge}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold flex items-center gap-1 border border-white/10">
+                      <Clock className="w-2.5 h-2.5 text-red-400" />
+                      {video.duration}
+                    </span>
+                  </div>
+
+                  {/* Center Play Button */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#830000] via-[#BC0202] to-[#FF0000] text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                      <Play className="w-5 h-5 fill-white translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  {/* Bottom Tap to Play bar */}
+                  <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white text-[10.5px]">
+                    <span className="font-semibold text-slate-200 truncate max-w-[170px]">
+                      {video.tag || "Official Video"}
+                    </span>
+                    <span className="text-slate-300 font-bold uppercase tracking-wider text-[9.5px]">
+                      Tap To Play
+                    </span>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="mt-3.5 space-y-1.5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-sm font-black text-slate-900 group-hover:text-[#BC0202] transition-colors line-clamp-2 leading-snug">
+                      {video.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 font-medium line-clamp-2 mt-1 leading-relaxed">
+                      {video.subtitle}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 flex items-center justify-between text-xs text-[#BC0202] font-bold border-t border-slate-100">
+                    <span className="flex items-center gap-1">
+                      <Tv className="w-3.5 h-3.5" />
+                      Watch Video
+                    </span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Controls: Dots + Slide Counter + Prev/Next Buttons */}
+          <div className="flex items-center justify-between mt-4 px-2">
+            {/* Dots */}
+            <div className="flex items-center gap-1.5">
+              {DEMO_VIDEOS.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  onClick={() => scrollToSlide(dotIdx)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    mobileSlideIdx === dotIdx ? "w-6 bg-[#BC0202]" : "w-2 bg-slate-300"
+                  }`}
+                  aria-label={`Slide ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Slide arrows & Counter */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold text-slate-400 mr-1">
+                {mobileSlideIdx + 1} / {DEMO_VIDEOS.length}
+              </span>
+              <button
+                onClick={handlePrev}
+                disabled={mobileSlideIdx === 0}
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-100 text-slate-800 flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
+                aria-label="Previous video"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={mobileSlideIdx === DEMO_VIDEOS.length - 1}
+                className="w-9 h-9 rounded-full bg-gradient-to-r from-[#830000] to-[#BC0202] disabled:opacity-30 disabled:cursor-not-allowed hover:brightness-110 text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
+                aria-label="Next video"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
       </div>
