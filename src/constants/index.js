@@ -137,32 +137,35 @@ export const FOOTER = {
     regInfo: "UNBS Certified | Fully Licensed LPG Distributor in Uganda"
   },
   gasRefills: {
-    title: "GAS REFILLS & SUPPLY",
+    title: "GAS REFILLS & PRODUCTS",
     links: [
-      { label: "6Kg Gas Refill", path: "/gas-refills" },
-      { label: "13Kg Gas Refill", path: "/gas-refills" },
-      { label: "40Kg Commercial Refill", path: "/gas-refills" },
-      { label: "Empty Cylinder Exchange", path: "/gas-refills" },
-      { label: "Industrial Oxygen & Argon", path: "/services.htm" }
+      { label: "6Kg Gas Refill", path: "/products/6kg-cylinder-refill" },
+      { label: "13Kg Gas Refill", path: "/products/13kg-cylinder-refill" },
+      { label: "40Kg Commercial Refill", path: "/products/40kg-cylinder-refill" },
+      { label: "45Kg Commercial Refill", path: "/products/45kg-cylinder-refill" },
+      { label: "Industrial Oxygen Refill", path: "/products/industrial-oxygen-refill" },
+      { label: "Argon Gas 99.99%", path: "/products/argon-gas-99-99" },
+      { label: "R134A Refrigerant Gas", path: "/products/r134a-refrigerant-gas" },
+      { label: "R410A Refrigerant Gas", path: "/products/r410a-refrigerant-gas" }
     ]
   },
   quickLinks: {
     title: "QUICK LINKS",
     links: [
       { label: "Home", path: "/" },
-      { label: "About Conch Gas", path: "/about.htm" },
+      { label: "About Conch Gas", path: "/about" },
       { label: "LPG Gas Cylinders", path: "/products" },
       { label: "Gas Refills & Exchange", path: "/gas-refills" },
-      { label: "Commercial & Bulk Gas", path: "/services.htm" },
-      { label: "Contact Us", path: "/contact.htm" }
+      { label: "Commercial & Bulk Gas", path: "/services" },
+      { label: "Contact Us", path: "/contact" }
     ]
   },
   services: [
     { label: "Domestic Cooking Gas", path: "/products" },
-    { label: "Bulk LPG Supply", path: "/services.htm" },
-    { label: "Commercial Kitchen Installation", path: "/services.htm" },
-    { label: "LPG Pipeline Fitting", path: "/services.htm" },
-    { label: "Industrial Gases (O2, CO2, Argon)", path: "/services.htm" }
+    { label: "Bulk LPG Supply", path: "/services" },
+    { label: "Commercial Kitchen Installation", path: "/services" },
+    { label: "LPG Pipeline Fitting", path: "/services" },
+    { label: "Industrial Gases (O2, CO2, Argon)", path: "/services" }
   ],
   locateUs: {
     title: "DEPOT ADDRESS",
