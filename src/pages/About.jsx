@@ -358,15 +358,15 @@ export default function About() {
 
                   <div className="space-y-4 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
                     <p className="font-semibold text-slate-800 text-base sm:text-lg">
-                      Conch Gas Ltd is a part of Conch Group with 15+ years of experience and achievements in the fields of construction and contracting.
+                      Conch Gas Ltd is Uganda&apos;s premier distributor of clean LPG cooking gas, industrial energy solutions, and certified equipment with 15+ years of dedicated service.
                     </p>
                     <p>
-                      The company first established in New Delhi India with operations extended toward trading and commerce of Oil and petroleum products and mechanical equipments. In 1996, the company further extended its operations to include mechanical works and installations, especially in the field of civil construction, oil pipelines, steel sheeting for warehouses, steel structures for civil use, and other related civil and construction works.
+                      Headquartered in Kampala, Uganda, Conch Gas was established to deliver safe, reliable, and accessible cooking gas and energy infrastructure to Ugandan households, commercial kitchens, healthcare institutions, and industrial plants. We specialize in factory-sealed UNBS-certified LPG cylinders (6kg, 13kg, 40kg, and 45kg), doorstep delivery across Kampala and surrounding districts, professional gas pipeline installations, universal cylinder exchanges, and certified safety regulators.
                     </p>
                   </div>
 
                   <div className="flex flex-wrap gap-2 pt-2">
-                    {["Oil & Petroleum Trading", "Mechanical Installations", "Oil Pipelines", "Civil Construction & Steel Structures"].map((tag, i) => (
+                    {["LPG Cooking Gas Supply", "Doorstep Cylinder Delivery", "Commercial & Industrial Gas", "UNBS Certified Safety Regulators"].map((tag, i) => (
                       <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">
                         <CheckCircle2 size={13} className="text-[#BC0202]" />
                         {tag}
@@ -393,7 +393,7 @@ export default function About() {
 
             {/* SECTION 2: OUR VISION */}
             <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm space-y-6">
-              <SectionBadge number="02" icon={Globe} title="Conch Group Heritage" />
+              <SectionBadge number="02" icon={Globe} title="Uganda Network & Vision" />
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
                 {/* Left Media Card */}
                 <div className="lg:col-span-5 order-2 lg:order-1">
@@ -413,43 +413,21 @@ export default function About() {
                 <div className="lg:col-span-7 space-y-5 order-1 lg:order-2">
                   <div className="space-y-2">
                     <span className="text-[11px] font-black uppercase tracking-widest text-[#BC0202] block">
-                      CONCH GROUP HERITAGE
+                      COMMITTED TO CLEAN ENERGY IN UGANDA
                     </span>
                     <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-display uppercase">
-                      OUR VISION
+                      OUR VISION & NETWORK
                     </h2>
                     <div className="w-14 h-1 bg-[#BC0202] rounded-full" />
                   </div>
 
                   <div className="space-y-4 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
                     <p>
-                      In 1997, the company built the first residential compound of 12 houses and one swimming pool in New Delhi India for the Indian Railways Authority. The works of the company further extended in 1999 to 2005 in different construction and mechanical works. Different road bridges built and completed in India, roundabouts and buildings.
+                      Our vision is to empower every household, school, restaurant, and enterprise across Uganda with clean, affordable, and sustainable cooking energy—accelerating the national transition away from smoky charcoal and firewood toward safe, healthy living.
                     </p>
                     <p>
-                      Since that time many offices and specialities were created and the group was first unified under the name <strong>conch group of companies</strong> with head quarters in <strong>Dubai, UAE</strong>, and with regional offices in <strong>South Sudan, India, Bangladesh, Turkey, and Uganda</strong>.
+                      From our central distribution depot and refilling facility in Kampala, Conch Gas has expanded its reliable supply network across the country. In alignment with national clean energy initiatives supported by the <strong>Uganda Energy Credit Capitalisation Company (UECCC)</strong>, <strong>the Government of Uganda</strong>, and <strong>The World Bank</strong>, we provide seamless door-to-door deliveries, guaranteed exact cylinder weights, and certified emergency technical support to communities nationwide.
                     </p>
-                  </div>
-
-                  {/* Global Badges */}
-                  <div className="pt-2">
-                    <div className="text-xs font-black uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
-                      <Globe size={14} className="text-[#BC0202]" /> Regional Presence & Offices
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        { flag: "🇦🇪", name: "Dubai, UAE (HQ)" },
-                        { flag: "🇺🇬", name: "Uganda (Conch Gas)" },
-                        { flag: "🇮🇳", name: "India (Origins)" },
-                        { flag: "🇸🇸", name: "South Sudan" },
-                        { flag: "🇧🇩", name: "Bangladesh" },
-                        { flag: "🇹🇷", name: "Turkey" }
-                      ].map((loc, i) => (
-                        <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-50/80 border border-red-100 text-slate-800 text-xs font-bold">
-                          <span>{loc.flag}</span>
-                          <span>{loc.name}</span>
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -471,7 +449,7 @@ export default function About() {
                 </div>
 
                 <p className="text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
-                  We offer various C-Gas products to help enhance your cooking. Our Products range from various C-Gas cylinders which include <strong>6 kg gas cylinder</strong>, <strong>13 kg gas cylinder</strong>, <strong>40 kg gas cylinder</strong>. These gas cylinders are refilled with gas to ease cooking at home or from anywhere. We employ various techniques in the use operations to ensure efficiency and continue to be a market serving everyone with gas products dominating the entire globe.
+                  We offer various C-Gas products to help enhance your cooking. Our products range from various C-Gas cylinders which include <strong>6 kg gas cylinder</strong>, <strong>13 kg gas cylinder</strong>, and <strong>40 kg gas cylinder</strong>. These gas cylinders are refilled with clean LPG to ease cooking at home or in commercial kitchens. We employ modern quality and safety operations to ensure high efficiency and continue to be a trusted market leader serving communities across Uganda.
                 </p>
 
                 <div className="space-y-3 pt-2">

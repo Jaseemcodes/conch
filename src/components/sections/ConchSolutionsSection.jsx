@@ -18,7 +18,7 @@ const CONCH_SERVICES = [
     desc: "LPG fuel is extremely versatile providing exceptional convenience to homes and business.",
     icon: Flame,
     color: "text-[#BC0202] bg-red-50 border-red-100",
-    img: "/service_bulk_lpg.jpg",
+    img: "/service_bulk_lpg.png",
     badge: "Commercial & Home",
     link: "/contact.htm?service=bulk-lpg"
   },
@@ -38,7 +38,7 @@ const CONCH_SERVICES = [
     desc: "We at Conch gas carry out a full design and service for LPG tank installations including replacement of LPG tanks.",
     icon: ShieldCheck,
     color: "text-[#830000] bg-slate-50 border-slate-200",
-    img: "/service_tank_install.jpg",
+    img: "/installing of lpg tank.webp",
     badge: "Bulk Tanks",
     link: "/contact.htm?service=tank-installations"
   },
@@ -48,7 +48,7 @@ const CONCH_SERVICES = [
     desc: "We provide LPG Gas Manifold Installation for Oxygen, Nitrogen, Argon, CO2, Ammonia application.",
     icon: Wrench,
     color: "text-[#BC0202] bg-red-50 border-red-100",
-    img: "/service_pipeline_fitting.jpg",
+    img: "/lpg pipe installation.webp",
     badge: "Industrial Manifolds",
     link: "/contact.htm?service=pipeline-fitting"
   }

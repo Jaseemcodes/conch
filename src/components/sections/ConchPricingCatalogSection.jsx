@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { 
   Flame, 
@@ -6,9 +6,25 @@ import {
   ArrowRight, 
   Truck, 
   PhoneCall,
-  Loader2
+  Loader2,
+  Play,
+  X,
+  Sparkles,
+  CheckCircle2,
+  Clock,
+  ShieldCheck
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import api from "../../utils/api";
+
+// Configurable product video showcase item
+export const PRODUCT_SHOWCASE_VIDEO = {
+  videoUrl: "/conch_products_video.mp4",
+  title: "Conch Gas Complete Product Range & Cylinders in Action",
+  subtitle: "Take a visual tour of our certified 6kg, 13kg, 40kg, and 45kg cylinders, safety regulators, and prompt doorstep delivery across Uganda.",
+  duration: "1:13",
+  thumbnail: "/Why-Choose-Us-Conch-Gas-Ltd.webp"
+};
 
 // Helper to determine category badge
 const getCategoryBadge = (cat) => {
@@ -55,6 +71,15 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isProductVideoPlaying, setIsProductVideoPlaying] = useState(false);
+  const productVideoRef = useRef(null);
+
+  const handlePlayProductVideo = () => {
+    if (productVideoRef.current) {
+      productVideoRef.current.play();
+      setIsProductVideoPlaying(true);
+    }
+  };
 
   // Fetch live categories and products from backend
   useEffect(() => {
@@ -283,6 +308,94 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
         </div>
 
         {/* ═══════════════════════════════════════
+            PRODUCT VIDEO SHOWCASE SPOTLIGHT (Option 2)
+        ═══════════════════════════════════════ */}
+        <div className="mb-8 sm:mb-12 bg-gradient-to-br from-white via-slate-50 to-red-50/30 border border-slate-200/90 hover:border-[#BC0202]/30 rounded-3xl p-4 sm:p-7 md:p-8 shadow-lg transition-all duration-300">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+            
+            {/* Left Video Player Column (Inline Play) */}
+            <div className="lg:col-span-6">
+              <div className="relative w-full aspect-video sm:aspect-[16/9] rounded-2xl overflow-hidden bg-black shadow-xl border border-slate-200/80 group">
+                <video
+                  ref={productVideoRef}
+                  src={PRODUCT_SHOWCASE_VIDEO.videoUrl}
+                  poster={PRODUCT_SHOWCASE_VIDEO.thumbnail}
+                  controls={isProductVideoPlaying}
+                  playsInline
+                  onPlay={() => setIsProductVideoPlaying(true)}
+                  onPause={() => setIsProductVideoPlaying(false)}
+                  onEnded={() => setIsProductVideoPlaying(false)}
+                  className="w-full h-full object-cover block"
+                />
+
+                {!isProductVideoPlaying && (
+                  <div 
+                    onClick={handlePlayProductVideo}
+                    className="absolute inset-0 bg-black/25 hover:bg-black/35 transition-colors duration-300 flex items-center justify-center cursor-pointer"
+                  >
+                    {/* Big Center Play Button */}
+                    <div className="relative flex items-center justify-center group/btn">
+                      <span className="absolute w-16 h-16 sm:w-20 sm:h-20 bg-red-600/30 rounded-full animate-ping pointer-events-none" />
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#830000] via-[#BC0202] to-[#FF0000] text-white flex items-center justify-center shadow-2xl group-hover/btn:scale-110 transition-transform duration-300 border-2 border-white/60">
+                        <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white ml-0.5" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Content Column */}
+            <div className="lg:col-span-6 space-y-3.5">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-tight font-display">
+                See Our Genuine Cylinders & Equipment in Action
+              </h3>
+
+              <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed">
+                Take a quick visual tour of our full LPG cylinder range (6kg, 13kg, 40kg, 45kg), certified safety regulators, and prompt doorstep delivery across Uganda.
+              </p>
+
+              {/* 4 Quick Benefit Bullets */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-slate-700 font-bold">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>100% Full Weight Guarantee</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>UNBS Certified Safe Fittings</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Universal Cylinder Exchange</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Fast Doorstep Delivery</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex items-center gap-3 flex-wrap">
+                <button
+                  type="button"
+                  onClick={handlePlayProductVideo}
+                  className="btn-sheen inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] text-white font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                >
+                  <Play className="w-4 h-4 fill-white" />
+                  <span>Watch Product Video</span>
+                </button>
+                <span className="text-xs text-slate-400 font-semibold flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5" />
+                  Duration: {PRODUCT_SHOWCASE_VIDEO.duration}
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════
             LOADING SKELETON
         ═══════════════════════════════════════ */}
         {isLoading && (
@@ -377,6 +490,7 @@ export default function ConchPricingCatalogSection({ title, subtitle }) {
         </div>
 
       </div>
+
     </section>
   );
 }

@@ -35,7 +35,7 @@ const DEFAULT_SECTIONS = [
       phoneTitle: "Direct Phone Lines",
       phone: "+256 200 900 010",
       phones: ["+256 200 900 010", "+256 776 500 786", "+256 703 978 198"],
-      hoursTitle: "Schedule",
+      hoursTitle: "Working Hours",
       hours: "Mon - Sun: 8:00 am - 18:00 pm",
       schedule: [
         { day: "Monday", hours: "8:00 am - 18:00 pm" },
@@ -351,14 +351,14 @@ export default function Contact() {
                     </div>
                   </motion.div>
 
-                  {/* Schedule */}
+                  {/* Working Hours */}
                   <motion.div variants={leftCardVariants} whileHover={{ y: -6, transition: { type: "spring", stiffness: 200, damping: 18 } }} className="bg-white border border-slate-200/70 p-5 rounded-3xl space-y-2.5 shadow-sm hover:shadow-lg hover:border-slate-300 transition-all">
                     <div className="flex items-center gap-3">
                       <span className="inline-flex p-2.5 bg-red-50 text-primary rounded-xl flex-shrink-0">
                         <Clock size={20} />
                       </span>
                       <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider font-display">
-                        {getSection("contact-intro")?.content?.hoursTitle || "Schedule"}
+                        {getSection("contact-intro")?.content?.hoursTitle || "Working Hours"}
                       </h4>
                     </div>
                     <div className="pt-1 flex items-center justify-between text-sm flex-wrap gap-2">

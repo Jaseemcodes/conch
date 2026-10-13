@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from "motion/react";
-import { Banknote, Truck, HandCoins, Smartphone, ShieldCheck, Check } from "lucide-react";
+import { 
+  Banknote, 
+  Truck, 
+  HandCoins, 
+  Smartphone, 
+  Play
+} from "lucide-react";
 
 const PROMISES_DATA = [
   {
@@ -56,41 +62,96 @@ const cardVariants = {
 };
 
 export default function StatsSection({ title, subtitle }) {
-  return (
-    <div id="stats-section" className="relative flex flex-col bg-gradient-to-b from-slate-50/80 via-white to-slate-50/60 py-8 md:py-12 font-sans border-y border-slate-200/70 overflow-hidden">
-      
-      {/* Subtle Ambient Glows */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 bg-red-500/[0.03] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-[#830000]/[0.03] rounded-full blur-3xl pointer-events-none" />
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
 
-      {/* Top Intro Part */}
-      <motion.div 
-        className="pb-5 md:pb-7 relative z-10"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-[#BC0202]/20 mb-2.5 shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-[#BC0202] animate-pulse" />
-            <span className="text-[#BC0202] text-[10px] md:text-[11px] font-black uppercase tracking-widest">
-              {title || "WHY CHOOSE CONCH GAS"}
-            </span>
-          </div>
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  return (
+    <div id="stats-section" className="relative flex flex-col bg-gradient-to-b from-slate-50/80 via-white to-slate-50/60 py-10 md:py-16 font-sans border-y border-slate-200/70 overflow-hidden">
+      
+      {/* Subtle Ambient Background Accents */}
+      <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-80 h-80 bg-red-500/[0.03] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 -translate-y-1/2 w-80 h-80 bg-[#830000]/[0.03] rounded-full blur-3xl pointer-events-none" />
+
+      {/* ═══════ Split 2-Column: Left Text + Right Video ═══════ */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 mb-10 md:mb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-2.5 font-display">
-            Safe, Reliable & Affordable <br className="hidden sm:block" />
-            <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">
-              Gas Solutions for Every Home
-            </span>
-          </h2>
-          
-          <p className="text-slate-500 text-xs sm:text-sm font-medium leading-relaxed max-w-2xl">
-            {subtitle || "Conch Gas Ltd is Uganda's premier distributor of LPG cooking gas and industrial gases. Guided by safety, speed, and affordability, we deliver factory-sealed cylinders directly to your doorstep."}
-          </p>
+          {/* Left Column: Heading & Description */}
+          <motion.div 
+            className="lg:col-span-5 flex flex-col items-start text-left"
+            initial={{ opacity: 0, x: -25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 border border-[#BC0202]/20 mb-3.5 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#BC0202] animate-pulse" />
+              <span className="text-[#BC0202] text-[10px] md:text-[11px] font-black uppercase tracking-widest">
+                {title || "WHY CHOOSE CONCH GAS"}
+              </span>
+            </div>
+            
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-3.5 font-display">
+              Safe, Reliable & Affordable <br className="hidden sm:block" />
+              <span className="bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] bg-clip-text text-transparent">
+                Gas Solutions for Every Home
+              </span>
+            </h2>
+            
+            <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed max-w-xl">
+              {subtitle || "Conch Gas Ltd is Uganda's premier distributor of LPG cooking gas and industrial gases. Guided by safety, speed, and affordability, we deliver factory-sealed cylinders directly to your doorstep."}
+            </p>
+          </motion.div>
+
+          {/* Right Column: Clean Large Video Player */}
+          <motion.div 
+            className="lg:col-span-7 w-full"
+            initial={{ opacity: 0, x: 25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-black shadow-2xl shadow-slate-900/10 border-4 border-white ring-1 ring-slate-200/80 group">
+              {/* Native HTML5 Video Element */}
+              <video
+                ref={videoRef}
+                src="/conch_clean_cooking_commercial.mp4"
+                poster="/clean_cooking_poster.jpg"
+                controls={isPlaying}
+                playsInline
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onEnded={() => setIsPlaying(false)}
+                className="w-full aspect-video object-cover block"
+              />
+
+              {/* Clean Play Overlay (Shown only before video plays) */}
+              {!isPlaying && (
+                <div 
+                  onClick={handlePlay}
+                  className="absolute inset-0 bg-black/25 hover:bg-black/35 transition-colors duration-300 flex items-center justify-center cursor-pointer"
+                >
+                  {/* Center Play Button */}
+                  <div className="relative group/btn">
+                    <div className="absolute -inset-3 rounded-full bg-red-600/30 animate-ping opacity-60 pointer-events-none" />
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-r from-[#830000] via-[#BC0202] to-[#FF0000] text-white shadow-2xl shadow-red-950/60 flex items-center justify-center transition-transform duration-300 group-hover/btn:scale-110 border-2 border-white/60">
+                      <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1" />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
         </div>
-      </motion.div>
+      </div>
 
       {/* 4 Cards Grid - 2 columns on mobile, 4 on desktop */}
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full relative z-10">

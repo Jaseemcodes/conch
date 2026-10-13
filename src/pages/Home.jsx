@@ -10,7 +10,6 @@ import ConchPricingCatalogSection from "../components/sections/ConchPricingCatal
 import ConchBestSellerSection from "../components/sections/ConchBestSellerSection";
 
 // Below-the-fold sections are lazy loaded to reduce initial JS payload
-const VideoShowcaseSection = lazy(() => import("../components/sections/VideoShowcaseSection"));
 const TestimonialsSection = lazy(() => import("../components/sections/TestimonialsSection"));
 
 // Map section database keys to local components
@@ -21,7 +20,6 @@ const componentMap = {
   "conch-solutions": ConchSolutionsSection,
   "pricing-catalog": ConchPricingCatalogSection,
   "bestseller": ConchBestSellerSection,
-  "video-showcase": VideoShowcaseSection,
   "testimonials": TestimonialsSection
 };
 
@@ -32,7 +30,6 @@ const DEFAULT_SECTIONS = [
   { key: "conch-solutions" },
   { key: "pricing-catalog" },
   { key: "bestseller" },
-  { key: "video-showcase" },
   { key: "testimonials" }
 ];
 
