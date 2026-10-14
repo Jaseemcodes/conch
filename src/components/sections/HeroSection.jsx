@@ -84,7 +84,6 @@ export default function HeroSection({ content }) {
                   "Factory-Sealed Cylinders & Full Weight",
                   "Free Doorstep Gas Pickup & Delivery",
                   "Cheapest Refill & Cylinder Rates",
-                  "Universal Empty Cylinder Exchange",
                   "Free Safety & Leak Testing Support",
                   "24x7 Customer Support & Hotline"
                 ].map((bullet, idx) => (
